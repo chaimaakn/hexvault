@@ -1,16 +1,4 @@
-# Environnement virtuel
-venv/
-myenv/
-
-# Fichiers Python compilés
-__pycache__/
-*.pyc
-*.pyo
-
-# Fichiers de base de données SQLite
-db.sqlite3
-
-playgroundnd/migrations/0001_initial.py
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules

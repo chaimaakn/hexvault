@@ -1,0 +1,34 @@
+.navbar{
+    display: flex;
+    justify-self: center;
+    background-color: rgb(71 69 69 / 0.3);
+    gap: 40px;
+    padding: 10px 40px;
+    border-radius: 1000px;
+   
+   }
+   .header{
+       
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       padding: 10px 20px;
+      background-color: black;
+       
+      
+   }
+   a{
+       text-decoration: none;
+       color: white;
+      
+   }
+   .buttons{
+      display: flex;
+      align-items: center;
+      padding-right: 5%;
+      gap: 20px;
+   }
+   .header .Logo img {
+       max-height: 40px; 
+       height: auto;
+     }
