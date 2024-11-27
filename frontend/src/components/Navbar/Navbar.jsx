@@ -5,7 +5,7 @@ import Logo from '../../assets/logo.png';
 
 const Navbar = () => {
   return (
-    <header className="header">
+    <div className="header">
       <a href="/" className="Logo"><img src={Logo} alt="" /></a>
 
       <nav className="navbar">
@@ -24,7 +24,7 @@ const Navbar = () => {
       <button>Start now </button>
       </div>
       
-    </header>
+    </div>
   )
 }
 

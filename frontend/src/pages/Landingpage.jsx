@@ -7,8 +7,14 @@ import Background from '../components/Background';
 function LandingPage() {
   return (
     <div ClassName="landing-page">
-      <Navbar />
-      <Background />
+      <div className='nb'>
+        <Navbar />
+      </div>
+      
+      <div className='bg'>
+        <Background />
+      </div>
+      
       
       
     </div>
