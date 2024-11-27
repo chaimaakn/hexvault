@@ -1,10 +1,10 @@
+import Landingpage from './pages/Landingpage';
 
-import './App.css';
 
 function App() {
   return (
     <div className="App">
-     
+      <Landingpage />
     </div>
   );
 }
