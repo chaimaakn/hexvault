@@ -90,7 +90,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
 
     # Champs principaux
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,unique=True)
     username = models.CharField(
         max_length=50, 
         unique=True, 
@@ -159,6 +159,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """
         Valide le username
         """
+        if not self.username:
+          raise ValidationError("Le nom d'utilisateur ne peut pas être vide.")
+        if not isinstance(self.username, str):
+            raise ValidationError("Le nom d'utilisateur doit être une chaîne de caractères.")
         if len(self.username) < 3:
             raise ValidationError("Le nom d'utilisateur doit faire au moins 3 caractères")
         
