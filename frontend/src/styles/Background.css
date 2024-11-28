@@ -37,17 +37,13 @@ body {
   .animated .two {
     border-radius: 100%;
     width: 500px;
-    height: 800px;
+    height: 500px;
     background-color: #58725C;
     bottom: -30px;
     left: -80px;
-    animation: flyPlus 10s linear infinite;
-    -webkit-animation: flyPlus 10s linear infinite;
-    transform: rotate(0) translate(200px) rotate(0);
-    -webkit-transform: rotate(0) translate(200px) rotate(0);
-    -moz-transform: rotate(0) translate(200px) rotate(0);
-    -ms-transform: rotate(0) translate(200px) rotate(0);
-    -o-transform: rotate(0) translate(200px) rotate(0);
+    animation: fly 12s linear infinite;
+    transform: rotate(0) translate(80px) rotate(0);
+  
   }
   .animated .three {
     border-radius: 100%;
