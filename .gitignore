@@ -33,3 +33,4 @@ playgroundnd/migrations/0001_initial.py
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.env

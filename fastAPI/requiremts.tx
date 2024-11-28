@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+motor
+beanie
+pydantic
+passlib[bcrypt]
+pymongo
+email-validator
+python-multipart
