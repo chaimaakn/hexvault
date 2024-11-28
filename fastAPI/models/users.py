@@ -76,3 +76,6 @@ class UserCreate(BaseModel):
         """
         assert v.isalnum(), 'Le username doit être alphanumériques'
         return v
+class UserLogin(BaseModel):
+    username: str
+    password: str
