@@ -7,7 +7,9 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 from routers.userRoute import router as userRoute
-
+from routers.fnctsRoute import router as fnctsRoute
+from routers.historiqueRoute import router as historiqueRoute
+from routers.attaqueRoute import router as attaqueRoute
 
 app = FastAPI(title="hexvault")
 
@@ -32,6 +34,9 @@ async def shutdown_event():
     client.close()
 
 app.include_router(userRoute, prefix="/user", tags=["Utilisateur"])
+app.include_router(fnctsRoute, prefix="/fonctions", tags=["fonctions"])
+app.include_router(historiqueRoute, prefix="/history", tags=["history"])
+app.include_router(attaqueRoute, prefix="/attaque", tags=["attaque"])
 
 if __name__ == "__main__":
     import uvicorn
