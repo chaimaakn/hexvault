@@ -1,14 +1,17 @@
 from beanie import Document
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import Field 
 from datetime import datetime
 
 class History(Document):
     id_utilisateur: str = Field(..., description="ID de l'utilisateur ayant effectué l'action")
     id_fonction: str = Field(..., description="ID de la fonctionnalité utilisée")
-    message_entrer: Optional[str] = Field(None, description="Le message ou mot de passe saisi par l'utilisateur")
+    message_entrer: str = Field(
+        ..., description="Le message ou mot de passe saisi par l'utilisateur"
+    )
     resultat_obtenu: str = Field(..., description="Résultat obtenu après l'exécution de la fonctionnalité")
-    timestamp: datetime = Field(default_factory=datetime.utcnow, description="Horodatage de l'action")
+    timestamp: datetime = Field(
+        default_factory=datetime.utcnow, description="Horodatage de l'action"
+    )
 
     class Settings:
         name = "histories"
@@ -23,3 +26,4 @@ class History(Document):
                 "timestamp": "2024-11-28T12:34:56.789Z"
             }
         }
+

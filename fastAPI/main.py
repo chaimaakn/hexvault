@@ -2,7 +2,9 @@ from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 from pymongo.mongo_client import MongoClient
-from models.users import Userhexvault  
+from models.users import Userhexvault 
+from models.fncts import PasswordFeature 
+from models.historique import History
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -10,6 +12,7 @@ from routers.userRoute import router as userRoute
 from routers.fnctsRoute import router as fnctsRoute
 from routers.historiqueRoute import router as historiqueRoute
 from routers.attaqueRoute import router as attaqueRoute
+from routers.encryptRoute import router as encryptRoute
 
 app = FastAPI(title="hexvault")
 
@@ -24,7 +27,11 @@ async def startup_event():
     await init_beanie(
         database=client[DATABASE_NAME], 
         document_models=[
-            Userhexvault,  
+            Userhexvault,
+            PasswordFeature,
+            History
+            
+              
         ]
     )
 
@@ -37,6 +44,7 @@ app.include_router(userRoute, prefix="/user", tags=["Utilisateur"])
 app.include_router(fnctsRoute, prefix="/fonctions", tags=["fonctions"])
 app.include_router(historiqueRoute, prefix="/history", tags=["history"])
 app.include_router(attaqueRoute, prefix="/attaque", tags=["attaque"])
+app.include_router(encryptRoute, prefix="/encrypt", tags=["encrypt"])
 
 if __name__ == "__main__":
     import uvicorn

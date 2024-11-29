@@ -7,7 +7,7 @@ router = APIRouter()
 async def add_history_entry(
     id_utilisateur: str,
     id_fonction: str,
-    message_entrer: Optional[str],
+    message_entrer: str,
     resultat_obtenu: str
 ):
     try:

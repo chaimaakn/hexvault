@@ -1,6 +1,6 @@
 from typing import List, Optional
 from beanie import Document
-from pydantic import BaseModel, Field, validator
+from pydantic import Field, validator
 
 class PasswordFeature(Document):
     """
@@ -10,7 +10,7 @@ class PasswordFeature(Document):
     type: str = Field(
         ...,
         description="Type de fonctionnalité (attaque, cryptage, décryptage, test password)",
-        regex="^(attaque|cryptage|décryptage|test password)$"
+        pattern="^(attaque|cryptage|décryptage|test password)$"  # Utilisez `pattern` ici
     )
     dictionnaire: bool = Field(..., description="Utilise un dictionnaire ? (oui/non)")
     threads: bool = Field(..., description="Supporte les threads ? (oui/non)")
