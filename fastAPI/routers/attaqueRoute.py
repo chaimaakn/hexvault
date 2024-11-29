@@ -1,11 +1,7 @@
 import hashlib
 from fastapi import APIRouter, HTTPException
 
-router = APIRouter(
-    prefix="/attack",
-    tags=["Attack"],
-    responses={404: {"description": "Not Found"}},
-)
+router = APIRouter()
 
 def hash_password(password: str, algorithm: str) -> str:
     """
