@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import Languageselect from '../LanguageSelector';
 import { TbSquareArrowRightFilled } from 'react-icons/tb'; 
+import { FaAngleDown } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
@@ -13,19 +14,18 @@ const Navbar = () => {
 
       <nav className="custom-navbar">
         <a href="/">Home</a>
-        <Dropdown className="services-dropdown">
-          <DropdownButton 
-            variant="link" 
-            id="dropdown-basic-button" 
-            title="Services"
-            className="services-button"
-          >
-            <Dropdown.Item href="#/action-1">Encryption/Decryption</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Attack simulation</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Password testing</Dropdown.Item>
-            <Dropdown.Item href="#/action-4">Time prediction</Dropdown.Item>
-          </DropdownButton>
-        </Dropdown>
+
+        <div className="services-dropdown">
+            <a href="/" className="services-link">
+                 Services <FaAngleDown className="dropdown-arrow" />
+            </a>
+            <div className="dropdown-menu">
+            <a href="/">Encryption/Decryption</a>
+            <a href="/">Attack simulation</a>
+            <a href="/">Password testing</a>
+            <a href="/">Time prediction</a>
+            </div>
+        </div>
         <a href="/">About us</a>
         <a href="/">Contact us</a>
         <a href="/">FAQ</a>
