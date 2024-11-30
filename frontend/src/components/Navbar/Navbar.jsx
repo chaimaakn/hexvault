@@ -3,6 +3,7 @@ import './Navbar.css'
 import Logo from '../../assets/logo.png';
 import Button from 'react-bootstrap/Button';
 import Languageselect from '../LanguageSelector';
+import { TbSquareArrowRightFilled } from 'react-icons/tb'; 
 
 const Navbar = () => {
   return (
@@ -20,7 +21,7 @@ const Navbar = () => {
       <div className='buttons'>
       <Languageselect/>
       
-      <Button  variant="light">Start now</Button>
+      <Button  className="enlarge" variant="light">Start now <TbSquareArrowRightFilled style={{ marginLeft: '8px',color:'#0CB074' }} /></Button>
       </div>
       
     </div>
