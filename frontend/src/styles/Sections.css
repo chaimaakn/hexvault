@@ -36,4 +36,68 @@
     flex-direction: row;
     gap: 20px;
   }
-  
+#slogan-shiny{
+  position: relative;
+  font-size: 2em;
+  letter-spacing: 4px;
+  overflow: hidden;
+  background: linear-gradient(90deg, #0CB074, #fff, #0CB074);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  animation: animate 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+@keyframes animate {
+  0% {
+    background-position: -500%;
+  }
+  100% {
+    background-position: 500%;
+  }
+}
+#main-slogan{
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5), -2px -2px 5px rgba(0, 0, 0, 0.5);
+}
+.hscroll-line {
+	
+	height: 1px;
+	position: absolute;
+	overflow: hidden;
+  width:50px;
+  transform: rotate(90deg);
+  tranform-origin:50% 50%;
+ 
+}
+
+
+.hscroll-line::before,
+.hscroll-line::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	content: ""
+}
+
+.hscroll-line:before {
+	background: #ffffff3b;
+}
+
+.hscroll-line::after {
+	background: #FFD92A;
+	animation: move 3s infinite
+}
+
+@keyframes move {
+	0% {
+		transform: translate3d(-200%, 0, 0)
+	}
+	60% {
+		transform: translate3d(100%, 0, 0)
+	}
+	100% {
+		transform: translate3d(100%, 0, 0)
+	}
+}

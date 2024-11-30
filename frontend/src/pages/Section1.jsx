@@ -13,6 +13,7 @@ function Section1() {
       </div>
        <div className='main-text'>
         <Hero/>
+        <div class="hscroll-line"></div>
        </div>
     </div>
   )
