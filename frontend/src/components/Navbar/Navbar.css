@@ -50,6 +50,7 @@
       transform: scale(1.1);
      
     }
+    
     .enlarge{
       display: flex;
       align-items: center; 
@@ -60,5 +61,43 @@
     .enlarge:hover {
       transform: scale(1.1);
     }
+  
+.services-button{
+  text-decoration: none;
+  color: white;
+  box-sizing: border-box; 
+  border-radius: 1000px; 
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
+.services-button:hover {
+  background: radial-gradient(circle, #8DC988, #2A3A26);
+  transform: scale(1.1);
      
+}
+
+.services-dropdown .dropdown-menu a {
+  display: block;
+  text-decoration: none;
+  color: white; 
+  padding: 8px 16px;
+  font-size: 14px;
+  background: none; /* Removes any inherited background */
+  border-radius: 0;
+  transition: background-color 0.3s ease;
+}
+.services-dropdown .dropdown-menu  {
+  display: none;
+  background-color: #2A3A26;
+  text-decoration: none;
+}
+.services-dropdown:hover .dropdown-menu {
+  display: block; 
+}
+.services-button::after {
+  display: none;
+}
+
+
+
+  
