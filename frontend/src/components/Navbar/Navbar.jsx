@@ -1,14 +1,15 @@
 import React from 'react'
 import './Navbar.css'
 import Logo from '../../assets/logo.png';
-
+import Button from 'react-bootstrap/Button';
+import Languageselect from '../LanguageSelector';
 
 const Navbar = () => {
   return (
     <div className="header">
       <a href="/" className="Logo"><img src={Logo} alt="" /></a>
 
-      <nav className="navbar">
+      <nav className="custom-navbar">
         <a href="/">Home</a>
         <a href="/">Services</a>
         <a href="/">About us</a>
@@ -17,11 +18,9 @@ const Navbar = () => {
       </nav>
 
       <div className='buttons'>
-        <select name="" id="">
-        <option value="">english</option>
-        <option value="">french</option>
-      </select>
-      <button>Start now </button>
+      <Languageselect/>
+      
+      <Button  variant="light">Start now</Button>
       </div>
       
     </div>
