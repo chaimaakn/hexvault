@@ -12,7 +12,7 @@ import os,sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 load_dotenv()
-from userservice.main import router as user_router
+from  userservice.main import router as user_router
 from  featuresserivce.main import router as features_router
 from logservice.main import router as log_router
 
@@ -44,6 +44,9 @@ async def startup_event():
               
         ]
     )
+@app.get("/")
+async def root():
+    return {"message": "Bienvenue dans hexvault"}
 
 @app.on_event("shutdown")
 async def shutdown_event():
