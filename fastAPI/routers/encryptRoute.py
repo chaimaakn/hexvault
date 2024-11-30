@@ -49,17 +49,13 @@ class DecryptRequest(BaseModel):
 # Routes du router
 @router.get("/generate-key/AES", response_model=str)
 async def generate_key():
-    """
-    Génère une clé AES de 32 octets encodée en base64.
-    """
+
     key = os.urandom(32)
     return base64.b64encode(key).decode('utf-8')
 
 @router.post("/encrypt/AES", response_model=str)
 async def encrypt(request: EncryptRequest):
-    """
-    Chiffre un message en utilisant une clé AES encodée en base64.
-    """
+
     try:
         encrypted_message = encrypt_messageaes(request.message, request.key)
         return encrypted_message
@@ -68,9 +64,7 @@ async def encrypt(request: EncryptRequest):
 
 @router.post("/decrypt/AES", response_model=str)
 async def decrypt(request: DecryptRequest):
-    """
-    Déchiffre un message en utilisant une clé AES encodée en base64.
-    """
+
     try:
         decrypted_message = decrypt_messageaes(request.encrypted_message, request.key)
         return decrypted_message

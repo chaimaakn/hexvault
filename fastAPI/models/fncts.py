@@ -24,7 +24,7 @@ class PasswordFeature(Document):
             "example": {
                 "nom": "Brute Force Attack",
                 "type": "attaque",
-                "dictionnaire": True,
+                "dictionnaire": True,# si on la fait par les requete on fait pas la premiére lettre en majiscule
                 "threads": True,
                 "fonctions_hachage": ["md5", "sha1", "bcrypt"]
             }
