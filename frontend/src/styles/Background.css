@@ -13,7 +13,7 @@ body {
   .wrapper {
     width: 100%;
     height: 100%;
-    background: #1B2D1F;
+    background: #2A3A26;
     position: relative;
     overflow: hidden;
   }
@@ -27,7 +27,7 @@ body {
     border-radius: 100%;
     width: 600px;
     height: 600px;
-    background-color: #58725C;
+    background:radial-gradient(circle,#40503A,#7FAC76) ;
     left: -50px;
     top: -300px;
     z-index: 3;
@@ -38,7 +38,7 @@ body {
     border-radius: 100%;
     width: 500px;
     height: 500px;
-    background-color: #58725C;
+    background:radial-gradient(circle,#40503A,#7FAC76);
     bottom: -30px;
     left: -80px;
     animation: fly 12s linear infinite;
@@ -51,7 +51,7 @@ body {
     height: 450px;
     bottom: -80px;
     right: -100px;
-    background-color: #58725C;
+    background: radial-gradient(circle,#40503A,#7FAC76);
     animation: flyPlus 10s linear infinite;
     -webkit-animation: flyPlus 10s linear infinite;
     transform: rotate(0) translate(200px) rotate(0);
@@ -67,7 +67,7 @@ body {
     margin: auto;
     bottom: 0;
     right: 0;
-    background-color: #58725C;
+    background:radial-gradient(circle,#40503A,#7FAC76);
     animation: flyPlus 15s linear infinite;
     -webkit-animation: flyPlus 15s linear infinite;
     transform: rotate(0) translate(200px) rotate(0);
