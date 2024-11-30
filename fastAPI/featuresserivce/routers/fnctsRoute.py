@@ -1,26 +1,26 @@
 from fastapi import APIRouter
 from typing import List
-from models.fncts import PasswordFeature
-import controllers.controllersFcts as controller  
+from ..models.fncts import PasswordFeature
+from ..controllers.controllersFcts import create_feature,list_features,get_feature,update_feature,delete_feature  
 
 router = APIRouter()
 
 @router.post("/create", response_model=PasswordFeature)
 async def create_feature(feature: PasswordFeature):
-    return await controller.create_feature(feature)
+    return await create_feature(feature)
 
 @router.get("/list", response_model=List[PasswordFeature])
 async def list_features():
-    return await controller.list_features()
+    return await list_features()
 
 @router.get("/{feature_id}", response_model=PasswordFeature)
 async def get_feature(feature_id: str):
-    return await controller.get_feature(feature_id)
+    return await get_feature(feature_id)
 
 @router.put("/modifie/{feature_id}", response_model=PasswordFeature)
 async def update_feature(feature_id: str, updated_data: PasswordFeature):
-    return await controller.update_feature(feature_id, updated_data)
+    return await update_feature(feature_id, updated_data)
 
 @router.delete("/delete/{feature_id}")
 async def delete_feature(feature_id: str):
-    return await controller.delete_feature(feature_id)
+    return await delete_feature(feature_id)
