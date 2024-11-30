@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from models.historique  import History
+from ..models.historique  import History
 
 router = APIRouter()
 

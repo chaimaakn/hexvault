@@ -2,19 +2,29 @@ from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 from pymongo.mongo_client import MongoClient
-from models.users import Userhexvault 
-from models.fncts import PasswordFeature 
-from models.historique import History
+from userservice.models.users import Userhexvault 
+from featuresserivce.models.fncts import PasswordFeature 
+from logservice.models.historique import History
 from dotenv import load_dotenv
-import os
+from fastapi.middleware.cors import CORSMiddleware
+import os,sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 load_dotenv()
-from routers.userRoute import router as userRoute
-from routers.fnctsRoute import router as fnctsRoute
-from routers.historiqueRoute import router as historiqueRoute
-from routers.attaqueRoute import router as attaqueRoute
-from routers.encryptRoute import router as encryptRoute
+from  userservice.main import router as user_router
+from  featuresserivce.main import router as features_router
+from logservice.main import router as log_router
 
 app = FastAPI(title="hexvault")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Autoriser toutes les origines
+    allow_credentials=True,
+    allow_methods=["*"],  # Autoriser toutes les méthodes HTTP
+    allow_headers=["*"],  # Autoriser tous les en-têtes
+)
 
 MONGO_URI = os.getenv("MONGO_URI")
 DATABASE_NAME = os.getenv("DATABASE_NAME")
@@ -34,17 +44,19 @@ async def startup_event():
               
         ]
     )
+@app.get("/")
+async def root():
+    return {"message": "Bienvenue dans hexvault"}
 
 @app.on_event("shutdown")
 async def shutdown_event():
     client = AsyncIOMotorClient(MONGO_URI)
     client.close()
 
-app.include_router(userRoute, prefix="/user", tags=["Utilisateur"])
-app.include_router(fnctsRoute, prefix="/fonctions", tags=["fonctions"])
-app.include_router(historiqueRoute, prefix="/history", tags=["history"])
-app.include_router(attaqueRoute, prefix="/attaque", tags=["attaque"])
-app.include_router(encryptRoute, prefix="/encrypt", tags=["encrypt"])
+app.include_router(user_router, prefix="/user", tags=["Utilisateur"])
+app.include_router(features_router, prefix="/fonctions", tags=["fonctions"])
+app.include_router(log_router, prefix="/history", tags=["history"])
+
 
 if __name__ == "__main__":
     import uvicorn
