@@ -16,7 +16,6 @@ async def list_features_db():
 @router.get("/{feature_id}", response_model=PasswordFeature)
 async def get_feature_db(feature_id: str):
     return await get_feature(feature_id)
-
 @router.put("/modifie/{feature_id}", response_model=PasswordFeature)
 async def update_feature_db(feature_id: str, updated_data: PasswordFeature):
     return await update_feature(feature_id, updated_data)
