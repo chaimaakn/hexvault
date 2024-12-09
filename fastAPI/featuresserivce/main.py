@@ -11,7 +11,7 @@ load_dotenv()
 
 app = FastAPI(title="Features Service")
 
-# Exportez le routeur
+# Exportez le routeur 
 router = feature_router
 
 SERVER_HOST = os.getenv("SERVER_HOST")
