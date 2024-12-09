@@ -18,7 +18,7 @@ router = feature_router
 SERVER_HOST = os.getenv("SERVER_HOST")
 SERVER_PORT = os.getenv("SERVER_PORT")
 MONGO_URI = os.getenv("MONGO_URI")
-DATABASE_NAME = os.getenv("DATABASE_NAME")
+DATABASE_NAME = "hexvaultfeatures"
 
 @app.on_event("startup")
 async def startup_event():
