@@ -1,12 +1,11 @@
-from fastapi import APIRouter, HTTPException
-from services.servicesHash import hash_password
+from fastapi import APIRouter
+from controleur.hashControleur import handle_hash_request
 
 router = APIRouter()
 
 @router.get("/hash")
 async def get_hashed_password(password: str, algorithm: str):
-    try:
-        hashed_password = hash_password(password, algorithm)
-        return {"algorithm": algorithm, "hashed_password": hashed_password}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    """
+    Appelle la fonction contrôleur pour traiter la requête de hachage.
+    """
+    return handle_hash_request(password, algorithm)
