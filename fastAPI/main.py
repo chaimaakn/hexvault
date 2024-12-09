@@ -17,7 +17,7 @@ from  featuresserivce.main import router as features_router
 from logservice.main import router as log_router
 
 app = FastAPI(title="hexvault")
-#test to push ........
+#test to push ........test123
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Autoriser toutes les origines
