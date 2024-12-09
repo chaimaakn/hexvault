@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from typing import List
 from models.fncts import PasswordFeature
-from controllers.controllersFcts import create_feature,list_features,get_feature,update_feature,delete_feature  
+from services.servicesFcts import create_feature,list_features,get_feature,update_feature,delete_feature  
 
 router = APIRouter()
 
