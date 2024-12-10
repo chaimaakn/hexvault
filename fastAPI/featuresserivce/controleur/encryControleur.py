@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from services.servicesEncry import encrypt_message_aes, decrypt_message_aes,encrypt_message_3ds,decrypt_message_3ds
+from services.servicesEncry import encrypt_message_aes, decrypt_message_aes,encrypt_message_3ds,decrypt_message_3ds,encrypt_message_RC4,decrypt_message_RC4
 from models.encry import EncryptRequest, DecryptRequest
 import os
 import base64
@@ -46,5 +46,27 @@ def handle_decrypt_3des(request: DecryptRequest) -> str:
     """Traite la requête de déchiffrement 3DES."""
     try:
         return decrypt_message_3ds(request.encrypted_message, request.key)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
+
+    
+#******************************************************RC4***************************************************************
+    
+def generate_key_RC4() -> str:
+    """Génère une clé 3des encodée en base64."""
+    key = os.urandom(16)
+    return base64.b64encode(key).decode('utf-8')
+
+def handle_encrypt_RC4(request: EncryptRequest) -> str:
+    """Traite la requête de chiffrement 3DES."""
+    try:
+        return encrypt_message_RC4(request.message, request.key)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
+    
+def handle_decrypt_RC4(request: DecryptRequest) -> str:
+    """Traite la requête de déchiffrement 3DES."""
+    try:
+        return decrypt_message_RC4(request.encrypted_message, request.key)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")

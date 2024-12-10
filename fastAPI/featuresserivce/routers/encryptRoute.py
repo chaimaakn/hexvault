@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from controleur.encryControleur import generate_key_aes, handle_encrypt_aes, handle_decrypt_aes,generate_key_3des,handle_decrypt_3des,handle_encrypt_3des
+from controleur.encryControleur import generate_key_RC4,handle_decrypt_RC4,handle_encrypt_RC4
 from models.encry import EncryptRequest, DecryptRequest
 
 router = APIRouter()
@@ -41,3 +42,20 @@ async def encrypt(request: EncryptRequest):
 async def decrypt(request: DecryptRequest):
     """Route pour déchiffrer un message 3DES."""
     return handle_decrypt_3des(request)
+
+#***********************************RC4****************************************************
+
+@router.get("/generate-key/RC4", response_model=str)
+async def generate_key():
+    """Route pour générer une clé RC4."""
+    return generate_key_RC4()
+
+@router.post("/encrypt/RC4", response_model=str)
+async def encrypt(request: EncryptRequest):
+    """Route pour chiffrer un message RC4."""
+    return handle_encrypt_RC4(request)
+
+@router.post("/decrypt/RC4", response_model=str)
+async def decrypt(request: DecryptRequest):
+    """Route pour déchiffrer un message RC4."""
+    return handle_decrypt_RC4(request)

@@ -73,3 +73,25 @@ def decrypt_message_3ds(ciphertext:str, key:str)->str:
     padded_message = decryptor.update(actual_ciphertext) + decryptor.finalize()
     message = unpad_message_3ds(padded_message)
     return message
+
+
+#***************************************RC4*****************************************************
+
+def encrypt_message_RC4(message: str, encoded_key: str) -> str:
+    key = base64.b64decode(encoded_key)
+    cipher = Cipher(algorithms.ARC4(key), mode=None, backend=default_backend())
+    encryptor = cipher.encryptor()
+    # Convertir le message en bytes
+    ciphertext = encryptor.update(message.encode('utf-8'))
+    # Encoder en base64 pour renvoyer un format lisible
+    return base64.b64encode(ciphertext).decode('utf-8')
+
+
+def decrypt_message_RC4(encoded_ciphertext: str, encoded_key: str) -> str:
+    ciphertext = base64.b64decode(encoded_ciphertext)
+    key = base64.b64decode(encoded_key)
+    cipher = Cipher(algorithms.ARC4(key), mode=None, backend=default_backend())
+    decryptor = cipher.decryptor()
+    plaintext = decryptor.update(ciphertext)
+    # Décoder les bytes en texte lisible
+    return plaintext.decode('utf-8')
