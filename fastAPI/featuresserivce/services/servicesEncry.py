@@ -95,3 +95,27 @@ def decrypt_message_RC4(encoded_ciphertext: str, encoded_key: str) -> str:
     plaintext = decryptor.update(ciphertext)
     # Décoder les bytes en texte lisible
     return plaintext.decode('utf-8')
+
+
+#***************************************CHACHA20*****************************************************
+
+def encrypt_message_Chacha20(message: str, encoded_key: str) -> str:
+    nonce = os.urandom(16)  # ChaCha20 utilise un nonce de 16 octets
+    key = base64.b64decode(encoded_key)
+    cipher = Cipher(algorithms.ChaCha20(key, nonce), mode=None, backend=default_backend())
+    encryptor = cipher.encryptor()
+    # Encodage du message en bytes avant de le passer au chiffreur
+    ciphertext = encryptor.update(message.encode('utf-8'))  # .encode('utf-8') pour convertir en bytes
+    # Combiner nonce et ciphertext, puis encoder en Base64
+    return base64.b64encode(nonce + ciphertext).decode('utf-8')
+
+def decrypt_message_Chacha20(encoded_ciphertext: str, encoded_key: str) -> str:
+    decoded_ciphertext = base64.b64decode(encoded_ciphertext)
+    key = base64.b64decode(encoded_key)
+    nonce = decoded_ciphertext[:16]  # Extraire le nonce
+    ciphertext = decoded_ciphertext[16:]
+    cipher = Cipher(algorithms.ChaCha20(key, nonce), mode=None, backend=default_backend())
+    decryptor = cipher.decryptor()
+    plaintext = decryptor.update(ciphertext) + decryptor.finalize()
+    # Convertir les bytes décryptés en str
+    return plaintext.decode('utf-8')  # Convertir le message décrypté en texte (str)

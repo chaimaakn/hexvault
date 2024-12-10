@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 from services.servicesEncry import encrypt_message_aes, decrypt_message_aes,encrypt_message_3ds,decrypt_message_3ds,encrypt_message_RC4,decrypt_message_RC4
+from services.servicesEncry import encrypt_message_Chacha20,decrypt_message_Chacha20
 from models.encry import EncryptRequest, DecryptRequest
 import os
 import base64
@@ -68,5 +69,28 @@ def handle_decrypt_RC4(request: DecryptRequest) -> str:
     """Traite la requête de déchiffrement 3DES."""
     try:
         return decrypt_message_RC4(request.encrypted_message, request.key)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
+    
+    
+    
+#******************************************************CHACHA20***************************************************************
+
+def generate_key_Chacha20() -> str:
+    """Génère une clé 3des encodée en base64."""
+    key = os.urandom(32)
+    return base64.b64encode(key).decode('utf-8')
+
+def handle_encrypt_Chacha20(request: EncryptRequest) -> str:
+    """Traite la requête de chiffrement chacha20."""
+    try:
+        return encrypt_message_Chacha20(request.message, request.key)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
+    
+def handle_decrypt_Chacha20(request: DecryptRequest) -> str:
+    """Traite la requête de déchiffrement chacha20."""
+    try:
+        return decrypt_message_Chacha20(request.encrypted_message, request.key)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
