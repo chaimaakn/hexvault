@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from typing import List
 from models.fncts import PasswordFeature
-from controllers.controllersFcts import create_feature,list_features,get_feature,update_feature,delete_feature  
+from services.servicesFcts import create_feature,list_features,get_feature,update_feature,delete_feature  
 
 router = APIRouter()
 
@@ -16,7 +16,6 @@ async def list_features_db():
 @router.get("/{feature_id}", response_model=PasswordFeature)
 async def get_feature_db(feature_id: str):
     return await get_feature(feature_id)
-
 @router.put("/modifie/{feature_id}", response_model=PasswordFeature)
 async def update_feature_db(feature_id: str, updated_data: PasswordFeature):
     return await update_feature(feature_id, updated_data)

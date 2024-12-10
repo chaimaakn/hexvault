@@ -6,6 +6,7 @@ from beanie import init_beanie
 from pymongo.mongo_client import MongoClient
 # Importer le routeur depuis le chemin relatif
 from routers.fnctsRoute import router as feature_router
+from routers.encryptRoute import router as encrypt_router
 from models.fncts import PasswordFeature
 load_dotenv()
 
@@ -17,7 +18,7 @@ router = feature_router
 SERVER_HOST = os.getenv("SERVER_HOST")
 SERVER_PORT = os.getenv("SERVER_PORT")
 MONGO_URI = os.getenv("MONGO_URI")
-DATABASE_NAME = os.getenv("DATABASE_NAME")
+DATABASE_NAME = "hexvaultfeatures"
 
 @app.on_event("startup")
 async def startup_event():
@@ -39,7 +40,7 @@ async def shutdown_event():
     
 # Monter le router des fonctionnalités
 app.include_router(feature_router, prefix="/features", tags=["Features"])
-
+app.include_router(encrypt_router, prefix="/encrypt", tags=["encryption"])
 @app.get("/")
 async def root():
     return {"message": "Bienvenue dans le Features Service!"}
