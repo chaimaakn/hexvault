@@ -1,8 +1,9 @@
 from fastapi import HTTPException
 from services.servicesEncry import encrypt_message_aes, decrypt_message_aes,encrypt_message_3ds,decrypt_message_3ds,encrypt_message_RC4,decrypt_message_RC4
 from services.servicesEncry import encrypt_message_Chacha20,decrypt_message_Chacha20,generate_rsa_keys,rsa_key_to_base64,rsa_base64_to_private_key,rsa_base64_to_public_key,rsa_encrypt_message,rsa_decrypt_message
-
+from services.servicesFcts import create_feature
 from models.encry import EncryptRequest, DecryptRequest
+from models.fncts import PasswordFeature
 import os
 import base64
 
@@ -10,21 +11,50 @@ import base64
 def generate_key_aes() -> str:
     """Génère une clé AES encodée en base64."""
     key = os.urandom(32)
+    
     return base64.b64encode(key).decode('utf-8')
 
 
-def handle_encrypt_aes(request: EncryptRequest) -> str:
+async def handle_encrypt_aes(request: EncryptRequest) -> str:
     """Traite la requête de chiffrement AES."""
     try:
-        return encrypt_message_aes(request.message, request.key)
+        encrypted_message = encrypt_message_aes(request.message, request.key)
+        if request.enregistrement:
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="encrypt",
+              entree=request.message,
+              sortie=encrypted_message,
+              key=request.key,
+              type="encrypt",
+              methode="AES"
+            )
+            await create_feature( feature)
+        return encrypted_message
+    
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
 
+
     
-def handle_decrypt_aes(request: DecryptRequest) -> str:
+async def handle_decrypt_aes(request: DecryptRequest) -> str:
     """Traite la requête de déchiffrement AES."""
     try:
-        return decrypt_message_aes(request.encrypted_message, request.key)
+        
+        message=decrypt_message_aes(request.encrypted_message, request.key)
+        if request.enregistrement:
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="decrypt",
+              entree=request.encrypted_message,
+              sortie=message,
+              key=request.key,
+              type="encrypt",
+              methode="AES"
+            )
+            await create_feature( feature)
+        
+        return message
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
     
@@ -102,7 +132,7 @@ def handle_decrypt_Chacha20(request: DecryptRequest) -> str:
 
 
 
-def handle_generate_keys()->str:
+def handle_generate_keys_rsa()->str:
     """Génère des clés RSA et retourne leur représentation Base64."""
     try:
         private_key, public_key = generate_rsa_keys()
@@ -112,7 +142,7 @@ def handle_generate_keys()->str:
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur lors de la génération des clés : {str(e)}")
 
-def handle_encrypt_message(request: EncryptRequest)->str:
+def handle_encrypt_message_rsa(request: EncryptRequest)->str:
     """Traite une requête de chiffrement RSA."""
     try:
         public_key = rsa_base64_to_public_key(request.key)#public key
@@ -121,7 +151,7 @@ def handle_encrypt_message(request: EncryptRequest)->str:
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
 
-def handle_decrypt_message(request: DecryptRequest)->str:
+def handle_decrypt_message_rsa(request: DecryptRequest)->str:
     """Traite une requête de déchiffrement RSA."""
     try:
         ciphertext = bytes.fromhex(request.encrypted_message)
@@ -130,4 +160,6 @@ def handle_decrypt_message(request: DecryptRequest)->str:
         return {"plaintext": plaintext.decode()}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
+
+
 
