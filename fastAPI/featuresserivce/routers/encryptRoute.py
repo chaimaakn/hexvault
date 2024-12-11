@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from controleur.encryControleur import generate_key_aes, handle_encrypt_aes, handle_decrypt_aes,generate_key_3des,handle_decrypt_3des,handle_encrypt_3des
+from controleur.encryControleur import generate_key_aes, handle_encrypt_aes, handle_decrypt_aes,generate_key_3des,handle_decrypt_3des,handle_encrypt_3des,handle_generate_keys, handle_encrypt_message, handle_decrypt_message
 from controleur.encryControleur import generate_key_RC4,handle_decrypt_RC4,handle_encrypt_RC4,generate_key_Chacha20,handle_decrypt_Chacha20,handle_encrypt_Chacha20
 from models.encry import EncryptRequest, DecryptRequest
 
@@ -77,3 +77,21 @@ async def encrypt(request: EncryptRequest):
 async def decrypt(request: DecryptRequest):
     """Route pour déchiffrer un message Chacha20."""
     return handle_decrypt_Chacha20(request)
+
+
+#***********************************RSA****************************************************
+
+@router.get("/generate-keys/RSA")
+def generate_keys():
+    """Endpoint pour générer des clés RSA."""
+    return handle_generate_keys()
+
+@router.post("/encrypt/RSA")
+def encrypt_message(request:EncryptRequest):
+    """Endpoint pour chiffrer un message."""
+    return handle_encrypt_message(request)
+
+@router.post("/decrypt/RSA")
+def decrypt_message(request:DecryptRequest):
+    """Endpoint pour déchiffrer un message."""
+    return handle_decrypt_message(request)
