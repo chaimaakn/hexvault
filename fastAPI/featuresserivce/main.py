@@ -18,11 +18,11 @@ router = feature_router
 SERVER_HOST = os.getenv("SERVER_HOST")
 SERVER_PORT = os.getenv("SERVER_PORT")
 MONGO_URI = os.getenv("MONGO_URI")
-DATABASE_NAME = "hexvaultfeatures"
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 @app.on_event("startup")
 async def startup_event():
-    client = AsyncIOMotorClient(MONGO_URI)
+    client = AsyncIOMotorClient(MONGO_URI,ssl=True,tlsAllowInvalidCertificates=True)
     await init_beanie(
         database=client[DATABASE_NAME], 
         document_models=[
