@@ -3,6 +3,8 @@ import base64
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes, serialization
 
 
 #*********************************************AES***************************************************************
@@ -119,3 +121,63 @@ def decrypt_message_Chacha20(encoded_ciphertext: str, encoded_key: str) -> str:
     plaintext = decryptor.update(ciphertext) + decryptor.finalize()
     # Convertir les bytes décryptés en str
     return plaintext.decode('utf-8')  # Convertir le message décrypté en texte (str)
+
+
+#***********************************RSA******************************************************
+def generate_rsa_keys():
+    """Génère une paire de clés RSA."""
+    private_key = rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048
+    )
+    public_key = private_key.public_key()
+    return private_key, public_key
+
+def rsa_key_to_base64(key, is_private=False):
+    """Convertit une clé RSA en Base64."""
+    if is_private:
+        key_bytes = key.private_bytes(
+            encoding=serialization.Encoding.DER,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption()
+        )
+    else:
+        key_bytes = key.public_bytes(
+            encoding=serialization.Encoding.DER,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
+    return base64.b64encode(key_bytes).decode('utf-8')
+
+def rsa_base64_to_private_key(b64_key):
+    """Convertit une clé privée Base64 en objet clé RSA."""
+    key_bytes = base64.b64decode(b64_key.encode('utf-8'))
+    return serialization.load_der_private_key(key_bytes, password=None, backend=default_backend())
+
+def rsa_base64_to_public_key(b64_key):
+    """Convertit une clé publique Base64 en objet clé RSA."""
+    key_bytes = base64.b64decode(b64_key.encode('utf-8'))
+    return serialization.load_der_public_key(key_bytes, backend=default_backend())
+
+def rsa_encrypt_message(message, public_key):
+    """Chiffre un message avec une clé publique RSA."""
+    ciphertext = public_key.encrypt(
+        message,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+    return ciphertext
+
+def rsa_decrypt_message(ciphertext, private_key):
+    """Déchiffre un message avec une clé privée RSA."""
+    plaintext = private_key.decrypt(
+        ciphertext,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+    return plaintext
