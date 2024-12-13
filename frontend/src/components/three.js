@@ -1,44 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import Countries from '../assets/custom.geo.json'; // Assuming you imported as Countries
+import Mapearth from '../assets/8081_earthbump10k.jpg'; // Assuming the texture is in this path
 
 const ShaderSphere = () => {
   const mountRef = useRef(null);
 
   useEffect(() => {
-    const vertexShader = `
-      uniform float u_time;
-      uniform float u_maxExtrusion;
-
-      void main() {
-        vec3 newPosition = position;
-        if (u_maxExtrusion > 1.0) {
-          newPosition.xyz = newPosition.xyz * u_maxExtrusion + sin(u_time);
-        } else {
-          newPosition.xyz = newPosition.xyz * u_maxExtrusion;
-        }
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-      }
-    `;
-
-    const fragmentShader = `
-      uniform float u_time;
-      vec3 colorA = vec3(0.0235, 0.2509, 0.1686); 
-      void main() {
-        gl_FragColor = vec4(colorA, 0.9); 
-      }
-    `;
-
     // Scene setup
     const scene = new THREE.Scene();
 
     // Camera setup
     const sizes = { width: window.innerWidth / 2, height: window.innerHeight };
     const camera = new THREE.PerspectiveCamera(30, sizes.width / sizes.height, 1, 1000);
-    camera.position.x = 100;
-    camera.position.y = 0;
-    camera.position.z = 0;
+    camera.position.z = 50; // Adjusted to bring the camera closer
     camera.updateProjectionMatrix();
 
     // Lighting setup
@@ -73,36 +48,36 @@ const ShaderSphere = () => {
     const ambientlight = new THREE.AmbientLight(0xbbbbbb, 0.3);
     scene.add(ambientlight);
 
+    // Texture loader
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load(Mapearth, () => {
+      console.log("Texture loaded successfully");
+    }, undefined, (err) => {
+      console.error("Error loading texture", err);
+    });
+
     // Sphere geometry and material
     const sphereGeometry = new THREE.SphereGeometry(19.5, 35, 35);
-    const shaderMaterial = new THREE.ShaderMaterial({
-      vertexShader,
-      fragmentShader,
-      uniforms: {
-        u_time: { value: 1.0 },
-        u_maxExtrusion: { value: 1.0 },
-      },
-      side: THREE.DoubleSide,
+    const sphereMaterial = new THREE.MeshBasicMaterial({
+      map: texture, // Apply texture to sphere
+      color: 0x00ff00, // Green color fallback for debugging
     });
-    const sphere = new THREE.Mesh(sphereGeometry, shaderMaterial);
+    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     scene.add(sphere);
-
-    
 
     // Animation loop
     const clock = new THREE.Clock();
     const animate = () => {
       requestAnimationFrame(animate);
-      shaderMaterial.uniforms.u_time.value += clock.getDelta();
       controls.update();
       renderer.render(scene, camera);
     };
 
     animate();
 
-    // Handle resize
+    // Handle window resize
     const handleResize = () => {
-      sizes.width = window.innerWidth/2;
+      sizes.width = window.innerWidth / 2;
       sizes.height = window.innerHeight;
       camera.aspect = sizes.width / sizes.height;
       camera.updateProjectionMatrix();
@@ -121,7 +96,7 @@ const ShaderSphere = () => {
     width: '100%',
     height: '100%',
     position: 'relative',
-    overflow: 'hidden', // Prevent overflowing of the globe
+    overflow: 'hidden',
   }} />;
 };
 
