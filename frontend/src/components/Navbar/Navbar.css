@@ -14,6 +14,7 @@
        align-items: center;
        padding: 5px 15px;
        z-index: 99;
+      
        
       
    }
@@ -34,6 +35,8 @@
       align-items: center;
       padding-right: 5%;
       gap: 40px;
+      white-space: nowrap;
+       
    }
    .header .Logo img {
        max-height: 40px; 
@@ -102,6 +105,19 @@
       transform: rotate(180deg); /* Flip the arrow when hovered */
     }
     
+    /* Styles for medium screens (tablets) */
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 20px;
+    flex-direction: column; /* Stack items vertically */
+  }
+  .custom-navbar {
+    flex-direction: column; /* Stack navbar links */
+    gap: 10px;
+  }
+}
+
+
  
     
    
