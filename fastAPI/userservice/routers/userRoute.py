@@ -13,6 +13,6 @@ async def register_user(user: UserCreate):
 
 #Rajouter l'autentification
 @router.post("/login")
-async def login_user(form_data: UserLogin):
+async def login_user_db(form_data: UserLogin):
     return await login_user(form_data)
 

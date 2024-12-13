@@ -1,72 +1,98 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import padding
-import os
-import base64
+from fastapi import APIRouter
+from controleur.encryControleur import generate_key_aes, handle_encrypt_aes, handle_decrypt_aes,generate_key_3des,handle_decrypt_3des,handle_encrypt_3des,handle_generate_keys_rsa, handle_encrypt_message_rsa, handle_decrypt_message_rsa
+from controleur.encryControleur import generate_key_RC4,handle_decrypt_RC4,handle_encrypt_RC4,generate_key_Chacha20,handle_decrypt_Chacha20,handle_encrypt_Chacha20
+from models.encry import EncryptRequest, DecryptRequest
 
-# Création du router
 router = APIRouter()
 
-# Utilitaires de chiffrement/déchiffrement
-def pad_messageaes(message: bytes) -> bytes:
-    padder = padding.PKCS7(algorithms.AES.block_size).padder()
-    return padder.update(message) + padder.finalize()
 
-def unpad_messageaes(padded_message: bytes) -> bytes:
-    unpadder = padding.PKCS7(algorithms.AES.block_size).unpadder()
-    return unpadder.update(padded_message) + unpadder.finalize()
+#********************************AES*************************************************
 
-def encrypt_messageaes(message: str, encoded_key: str) -> str:
-    iv = os.urandom(16)
-    key = base64.b64decode(encoded_key)
-    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
-    encryptor = cipher.encryptor()
-    padded_message = pad_messageaes(message.encode('utf-8'))
-    ciphertext = encryptor.update(padded_message) + encryptor.finalize()
-    return base64.b64encode(iv + ciphertext).decode('utf-8')
 
-def decrypt_messageaes(encoded_ciphertext: str, encoded_key: str) -> str:
-    ciphertext = base64.b64decode(encoded_ciphertext)
-    key = base64.b64decode(encoded_key)
-    iv = ciphertext[:16]
-    actual_ciphertext = ciphertext[16:]
-    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
-    decryptor = cipher.decryptor()
-    padded_message = decryptor.update(actual_ciphertext) + decryptor.finalize()
-    return unpad_messageaes(padded_message).decode('utf-8')
-
-# Modèles de données pour les requêtes
-class EncryptRequest(BaseModel):
-    message: str
-    key: str
-
-class DecryptRequest(BaseModel):
-    encrypted_message: str
-    key: str
-
-# Routes du router
 @router.get("/generate-key/AES", response_model=str)
 async def generate_key():
-
-    key = os.urandom(32)
-    return base64.b64encode(key).decode('utf-8')
+    """Route pour générer une clé AES."""
+    return generate_key_aes()
 
 @router.post("/encrypt/AES", response_model=str)
 async def encrypt(request: EncryptRequest):
-
-    try:
-        encrypted_message = encrypt_messageaes(request.message, request.key)
-        return encrypted_message
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
+    """Route pour chiffrer un message AES."""
+    return await handle_encrypt_aes(request)
 
 @router.post("/decrypt/AES", response_model=str)
 async def decrypt(request: DecryptRequest):
+    """Route pour déchiffrer un message AES."""
+    return await handle_decrypt_aes(request)
 
-    try:
-        decrypted_message = decrypt_messageaes(request.encrypted_message, request.key)
-        return decrypted_message
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
+
+#********************************3DES*************************************************
+
+
+@router.get("/generate-key/3DES", response_model=str)
+async def generate_key():
+    """Route pour générer une clé 3DES."""
+    return generate_key_3des()
+
+@router.post("/encrypt/3DES", response_model=str)
+async def encrypt(request: EncryptRequest):
+    """Route pour chiffrer un message 3DES."""
+    return handle_encrypt_3des(request)
+
+@router.post("/decrypt/3DES", response_model=str)
+async def decrypt(request: DecryptRequest):
+    """Route pour déchiffrer un message 3DES."""
+    return handle_decrypt_3des(request)
+
+#***********************************RC4****************************************************
+
+@router.get("/generate-key/RC4", response_model=str)
+async def generate_key():
+    """Route pour générer une clé RC4."""
+    return generate_key_RC4()
+
+@router.post("/encrypt/RC4", response_model=str)
+async def encrypt(request: EncryptRequest):
+    """Route pour chiffrer un message RC4."""
+    return handle_encrypt_RC4(request)
+
+@router.post("/decrypt/RC4", response_model=str)
+async def decrypt(request: DecryptRequest):
+    """Route pour déchiffrer un message RC4."""
+    return handle_decrypt_RC4(request)
+
+
+#***********************************CHACHA20****************************************************
+
+@router.get("/generate-key/Chacha20", response_model=str)
+async def generate_key():
+    """Route pour générer une clé chacha20."""
+    return generate_key_Chacha20()
+
+@router.post("/encrypt/Chacha20", response_model=str)
+async def encrypt(request: EncryptRequest):
+    """Route pour chiffrer un message chacha20"""
+    return handle_encrypt_Chacha20(request)
+
+@router.post("/decrypt/Chacha20", response_model=str)
+async def decrypt(request: DecryptRequest):
+    """Route pour déchiffrer un message Chacha20."""
+    return handle_decrypt_Chacha20(request)
+
+
+#***********************************RSA****************************************************
+
+@router.get("/generate-keys/RSA")
+def generate_keys():
+    """Endpoint pour générer des clés RSA."""
+    return handle_generate_keys_rsa()
+
+@router.post("/encrypt/RSA")
+def encrypt_message(request:EncryptRequest):
+    """Endpoint pour chiffrer un message."""
+    return handle_encrypt_message_rsa(request)
+
+@router.post("/decrypt/RSA")
+def decrypt_message(request:DecryptRequest):
+    """Endpoint pour déchiffrer un message."""
+    return handle_decrypt_message_rsa(request)
+

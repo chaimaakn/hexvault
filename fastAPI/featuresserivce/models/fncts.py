@@ -1,46 +1,54 @@
-from typing import List, Optional
 from beanie import Document
-from pydantic import Field, validator
+from pydantic import Field, root_validator,model_validator
 
 class PasswordFeature(Document):
     """
-    Modèle représentant une fonctionnalité de gestion des mots de passe
+    Modèle représentant une fonctionnalité de gestion des mots de passe avec des champs spécifiques.
     """
-    nom: str = Field(..., description="Nom de la fonctionnalité")
+    id_utilisateur: str = Field(..., description="Identifiant de l'utilisateur associé")
+    nom: str = Field(
+        ..., 
+        description="Nom de la fonctionnalité",
+        pattern="^(Attaque par brut force|Attaque par dictionnaire|Attaque dictionnaire amélioré|Attaque hybrid|HachageMot|Generate_key|encrypt|decrypt)$"
+    )
+    entree: str = Field(..., description="Entrée de l'opération (string)")
+    sortie: str = Field(..., description="Sortie de l'opération (string)")
+    key: str =  Field(..., description="Key public en cas d'encryption")
     type: str = Field(
-        ...,
-        description="Type de fonctionnalité (attaque, cryptage, décryptage, test password)",
-        pattern="^(attaque|cryptage|décryptage|test password)$"  # Utilisez `pattern` ici
+        ..., 
+        description="Type de l'opération",
+        pattern="^(HtoM|MtoH|encrypt)$"   # HtoM les methodes ke type d'entree est un hachage et le type de sortie est un mot et MtoH sont les mots avec le type d'entrée est un mot et la sortie est une hachage
     )
-    dictionnaire: bool = Field(..., description="Utilise un dictionnaire ? (oui/non)")
-    threads: bool = Field(..., description="Supporte les threads ? (oui/non)")
-    fonctions_hachage: Optional[List[str]] = Field(
-        default=None,
-        description="Liste des fonctions de hachage utilisées (si applicable)"
-    )
+    methode: str = None
+
+    @model_validator(mode="after")
+    def validate_methode_field(cls, values):
+        """
+        Valide que le champ 'methode' est requis pour les types 'HtoM' et 'encrypt'.
+        """
+        type_op = values.type
+        methode = values.methode
+        key=values.key
+
+        if type_op in ['HtoM', 'encrypt'] and not methode:
+            raise ValueError(
+                "Le champ 'methode' est obligatoire pour les types 'HtoM' et 'encrypt'."
+            )
+        if type_op in['encrypt'] and not key:
+            raise ValueError(
+                "Le champ 'key' est obligatoire pour les types 'encrypt'."
+            )   
+        return values
 
     class Config:
         schema_extra = {
             "example": {
-                "nom": "Brute Force Attack",
-                "type": "attaque",
-                "dictionnaire": True,# si on la fait par les requete on fait pas la premiére lettre en majiscule
-                "threads": True,
-                "fonctions_hachage": ["md5", "sha1", "bcrypt"]
+                "id_utilisateur": "user12345",
+                "nom": "Attaque par brut force",
+                "entree": "mot_de_passe_a_tester",
+                "sortie": "mot_de_passe_trouve",
+                "key":"cle",
+                "type": "HtoM",
+                "methode": "SHA256"
             }
         }
-
-    @validator("fonctions_hachage", always=True)
-    def validate_hash_functions(cls, v, values):
-        """
-        Valide les fonctions de hachage uniquement si le type est 'attaque'
-        """
-        if values.get("type") == "attaque" and not v:
-            raise ValueError(
-                "Les fonctions de hachage doivent être spécifiées pour une attaque."
-            )
-        if values.get("type") != "attaque" and v:
-            raise ValueError(
-                "Les fonctions de hachage ne sont pertinentes que pour les attaques."
-            )
-        return v
