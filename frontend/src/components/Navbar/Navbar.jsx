@@ -34,7 +34,9 @@ const Navbar = () => {
       <div className='buttons'>
       <Languageselect/>
       
-      <Button  className="enlarge" variant="light">Start now <TbSquareArrowRightFilled style={{ marginLeft: '8px',color:'#0CB074' }} /></Button>
+        <Button  className="enlarge" variant="light" >Start now <TbSquareArrowRightFilled style={{ marginLeft: '8px',color:'#0CB074' }} /></Button>
+   
+      
       </div>
       
     </div>

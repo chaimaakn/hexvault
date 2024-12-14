@@ -101,3 +101,25 @@
 		transform: translate3d(100%, 0, 0)
 	}
 }
+
+.section-3 {
+  display: flex; 
+  align-items: center; 
+  overflow: hidden;
+ 
+  
+}
+
+.globe{ 
+  width: 50vw; 
+  height: 100vh; 
+}
+
+.intro-text {
+  flex: 1; 
+  max-width: 50%;
+  overflow: hidden; 
+  text-align: left; 
+  color: #fff;
+}
+
