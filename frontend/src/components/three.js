@@ -43,6 +43,9 @@ const ShaderSphere = () => {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 1.2;
     controls.enableDamping = true;
+   // minimum zoom distance
+    controls.maxDistance = 100; 
+    controls.minDistance = 50; 
 
     // Ambient light
     const ambientlight = new THREE.AmbientLight(0xbbbbbb, 0.3);
