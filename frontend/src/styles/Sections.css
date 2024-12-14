@@ -198,3 +198,10 @@
   z-index: -1;
  
 }
+
+#sec2-title,#sec4-title,#sec5-title,#sec6-title{
+  color: white;
+  text-align: center;
+  padding: 50px;
+}
+
