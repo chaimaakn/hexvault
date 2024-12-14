@@ -13,7 +13,7 @@ const ShaderSphere = () => {
     // Camera setup
     const sizes = { width: window.innerWidth / 2, height: window.innerHeight };
     const camera = new THREE.PerspectiveCamera(30, sizes.width / sizes.height, 1, 1000);
-    camera.position.z = 50; // Adjusted to bring the camera closer
+    camera.position.z = 100; // Adjusted to bring the camera closer
     camera.updateProjectionMatrix();
 
     // Lighting setup
@@ -30,7 +30,7 @@ const ShaderSphere = () => {
     camera.add(dlight2);
 
     scene.add(camera);
-    scene.fog = new THREE.Fog(0xffffff, 400, 2000);
+    
 
     // Renderer setup
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -43,6 +43,9 @@ const ShaderSphere = () => {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 1.2;
     controls.enableDamping = true;
+   // minimum zoom distance
+    controls.maxDistance = 100; 
+    controls.minDistance = 50; 
 
     // Ambient light
     const ambientlight = new THREE.AmbientLight(0xbbbbbb, 0.3);
@@ -59,8 +62,12 @@ const ShaderSphere = () => {
     // Sphere geometry and material
     const sphereGeometry = new THREE.SphereGeometry(19.5, 35, 35);
     const sphereMaterial = new THREE.MeshBasicMaterial({
-      map: texture, // Apply texture to sphere
-      color: 0x00ff00, // Green color fallback for debugging
+      map: texture, 
+      color: 0x00ff00, 
+      
+     
+      
+   
     });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     scene.add(sphere);

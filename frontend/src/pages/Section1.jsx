@@ -8,13 +8,14 @@ function Section1() {
     <div className='section-1'>
        <div className='bg'>
         <Background />
-       
-
       </div>
        <div className='main-text'>
         <Hero/>
-        <div class="hscroll-line"></div>
+        
        </div>
+       <div class="hscroll-line"></div>
+       <div class="hscroll-line1"></div>
+       <div class="hscroll-line2"></div>
     </div>
   )
 }
