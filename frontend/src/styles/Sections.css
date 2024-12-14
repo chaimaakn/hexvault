@@ -166,7 +166,7 @@
   display: flex;
   flex-direction: column;
   align-items: center; 
-  gap: 20px;
+  gap: 50px;
   color: #fff;
  
 
@@ -174,34 +174,135 @@
 
 /*here the css for glowy border starts its not working*/
 .parag-text {
-  background: #1c1f2b;
   padding:20px;
- position: relative;
   border-radius: 10px;
   margin:auto 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  transform: translateY(-5px); 
+  box-shadow: 0 6px 12px rgba(23, 138, 88, 1); 
  
 
 }
 
 
-.parag-text::after{
-  content: '';
-  position: absolute;
-  height: 100% ;
-  width: 100%;
-  background: red;
-  top: 50%;
-  left:50%;
-  padding: 30px;
-  translate: -50% -50%;
-  border-radius: 10px;
-  z-index: -1;
+
+
+.intro-text h1{
+  background-color: #2E3E32;
+  font-size: 2rem;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin-left: 0;
  
+
+  
 }
 
 #sec2-title,#sec4-title,#sec5-title,#sec6-title{
   color: white;
   text-align: center;
-  padding: 50px;
+  padding: 20px;
+}
+
+.section-4{
+  padding: 20px;
+}
+#sec4-title {
+  font-size: 2rem; 
+  margin-bottom: 30px; 
+
+}
+
+.services {
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 20px; 
+  padding: 0 10px;
+}
+
+.service {
+  background-color: #2E3E32;  
+  border-radius: 10px;
+  padding: 20px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.service h1 {
+  font-size: 1.5rem; 
+  margin-bottom: 10px; 
+  color: white;
+}
+
+.service p {
+  font-size: 1rem; 
+  color: #666; 
+  line-height: 1.5; 
+}
+
+.service:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0 6px 12px rgba(23, 138, 88, 1); 
+}
+
+#sec5-title {
+  margin-bottom: 30px; 
+
+}
+.accordion {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px 30px;
+}
+
+.accordion-item {
+  margin-bottom: 10px;
+  border-radius: 30px !important;
+  border: none !important;
+  overflow: hidden;
+  
+}
+
+.accordion-header {
+  background-color: #28392C;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  
+}
+
+.accordion-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  
+
+}
+
+.accordion-header span {
+  font-size: 1.5rem;
+  
+}
+
+.accordion-item h3 {
+  font-size: 1.2rem; 
+  color: white;
+  text-align: left;
+}
+.accordion-content {
+  padding: 10px;
+  background-color: #28392C;
+ 
+}
+.accordion-content p{
+  color: white;
+ 
+}
+
+.accordion-icon svg {
+  fill: #0B8854; 
 }
 
