@@ -11,7 +11,7 @@ function Section3() {
 
        <div className='intro-text'>
         <h1>what is hexvault?</h1>
-        <div>
+        <div className='parag-text'>
           <p>
           HexVault is a web platform dedicated to password security.
            It tests password strength through realistic attack simulations and
