@@ -1,4 +1,8 @@
 import hashlib
+from hashlib import sha256
+from passlib.hash import md5_crypt
+from passlib.hash import sha1_crypt
+from passlib.hash import sha256_crypt
 
 def generate_hash(password):
     """Génère un hash SHA-256 pour un mot de passe donné."""
