@@ -13,7 +13,7 @@ const ShaderSphere = () => {
     // Camera setup
     const sizes = { width: window.innerWidth / 2, height: window.innerHeight };
     const camera = new THREE.PerspectiveCamera(30, sizes.width / sizes.height, 1, 1000);
-    camera.position.z = 100; // Adjusted to bring the camera closer
+    camera.position.z = 100;
     camera.updateProjectionMatrix();
 
     // Lighting setup
@@ -25,12 +25,10 @@ const ShaderSphere = () => {
     dlight1.position.set(-200, 500, 200);
     camera.add(dlight1);
 
-    const dlight2 = new THREE.PointLight(0x8566cc, 0.8);
-    dlight2.position.set(-200, 500, 200);
-    camera.add(dlight2);
+    const ambientlight = new THREE.AmbientLight(0xbbbbbb, 0.3);
+    scene.add(ambientlight);
 
     scene.add(camera);
-    
 
     // Renderer setup
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -47,9 +45,6 @@ const ShaderSphere = () => {
     controls.maxDistance = 100; 
     controls.minDistance = 50; 
 
-    // Ambient light
-    const ambientlight = new THREE.AmbientLight(0xbbbbbb, 0.3);
-    scene.add(ambientlight);
 
     // Texture loader
     const textureLoader = new THREE.TextureLoader();
@@ -59,7 +54,8 @@ const ShaderSphere = () => {
       console.error("Error loading texture", err);
     });
 
-    // Sphere geometry and material
+
+    // Sphere geometry and material (Earth)
     const sphereGeometry = new THREE.SphereGeometry(19.5, 35, 35);
     const sphereMaterial = new THREE.MeshBasicMaterial({
       map: texture, 
@@ -71,6 +67,22 @@ const ShaderSphere = () => {
     });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     scene.add(sphere);
+
+    // Glow effect (Shadow-like halo)
+    const haloGeometry = new THREE.SphereGeometry(20.5, 64, 64); // Slightly larger sphere for halo
+    const haloMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00ff00, // Glow color
+      transparent: true,
+      opacity: 0.1, // Very subtle for shadow effect
+      side: THREE.BackSide, // Render inside-out for halo effect
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide
+    });
+    const haloMesh = new THREE.Mesh(haloGeometry, haloMaterial);
+    haloMesh.scale.set(1.05, 1.05, 1.05); // Subtle enlargement for shadow glow
+    scene.add(haloMesh);
+
+   
 
     // Animation loop
     const clock = new THREE.Clock();
