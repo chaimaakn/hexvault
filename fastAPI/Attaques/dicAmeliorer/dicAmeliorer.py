@@ -48,8 +48,8 @@ def launch_dic_aml_attack():
 
     hashed_password = entry_dic_aml.get().strip()
     salt_hash=entry_aml_salt.get().strip()
-    if var3.get()==0:
-        if dernier_bouton_clique==1:
+    if var3.get()==0: #verification hachage valide
+        if dernier_bouton_clique==1:# dernier_bouton_clique c'est quelle hachage 
             if message_box_md5(hashed_password)==True:
              return
         elif dernier_bouton_clique==2:
@@ -58,8 +58,8 @@ def launch_dic_aml_attack():
         else:
             if message_box_sha256(hashed_password)==True:
                return
-    else:
-        if dernier_bouton_clique==1:
+    else: 
+        if dernier_bouton_clique==1: #concatiner le salt avec hachage car la bib passlib marche comme ca
 
            chaine_inter = "$1$" + salt_hash + "$"
            hashed_password=chaine_inter+hashed_password
