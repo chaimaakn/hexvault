@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
 import os
+from fastapi.openapi.utils import get_openapi
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 from pymongo.mongo_client import MongoClient
@@ -45,6 +46,14 @@ app.include_router(encrypt_router, prefix="/encrypt", tags=["encryption"])
 async def root():
     return {"message": "Bienvenue dans le Features Service!"}
 
+@app.get("/debug-openapi", include_in_schema=False)
+def debug_openapi():
+    return get_openapi(
+        title="Debug API",
+        version="1.0.0",
+        routes=app.routes,
+    )
+    
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host=SERVER_HOST, port=int(SERVER_PORT))

@@ -1,6 +1,6 @@
 from beanie import Document
 from pydantic import Field, root_validator,model_validator
-
+from datetime import datetime
 class PasswordFeature(Document):
     """
     Modèle représentant une fonctionnalité de gestion des mots de passe avec des champs spécifiques.
@@ -20,6 +20,14 @@ class PasswordFeature(Document):
         pattern="^(HtoM|MtoH|encrypt)$"   # HtoM les methodes ke type d'entree est un hachage et le type de sortie est un mot et MtoH sont les mots avec le type d'entrée est un mot et la sortie est une hachage
     )
     methode: str = None
+    date_creation: datetime = Field(
+        default_factory=datetime.utcnow, 
+        description="Date et heure de création de l'enregistrement"
+    )
+    date_modification: datetime = Field(
+        default_factory=datetime.utcnow, 
+        description="Date et heure de dernière modification de l'enregistrement"
+    )
 
     @model_validator(mode="after")
     def validate_methode_field(cls, values):
@@ -49,6 +57,8 @@ class PasswordFeature(Document):
                 "sortie": "mot_de_passe_trouve",
                 "key":"cle",
                 "type": "HtoM",
-                "methode": "SHA256"
+                "methode": "SHA256",
+                "date_creation": "2024-12-14T12:34:56Z",
+                "date_modification": "2024-12-14T12:34:56Z"
             }
         }
