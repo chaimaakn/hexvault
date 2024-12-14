@@ -12,6 +12,7 @@ def generate_key_aes() -> str:
     """Génère une clé AES encodée en base64."""
     key = os.urandom(32)
     
+    
     return base64.b64encode(key).decode('utf-8')
 
 
@@ -67,17 +68,41 @@ def generate_key_3des() -> str:
     return base64.b64encode(key).decode('utf-8')
 
 
-def handle_encrypt_3des(request: EncryptRequest) -> str:
+async def handle_encrypt_3des(request: EncryptRequest) -> str:
     """Traite la requête de chiffrement 3DES."""
     try:
-        return encrypt_message_3ds(request.message, request.key)
+        encrypted_message =encrypt_message_3ds(request.message, request.key)
+        if request.enregistrement:
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="encrypt",
+              entree=request.message,
+              sortie=encrypted_message,
+              key=request.key,
+              type="encrypt",
+              methode="3DES"
+            )
+            await create_feature( feature) 
+        return(encrypted_message)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
     
-def handle_decrypt_3des(request: DecryptRequest) -> str:
+async def handle_decrypt_3des(request: DecryptRequest) -> str:
     """Traite la requête de déchiffrement 3DES."""
     try:
-        return decrypt_message_3ds(request.encrypted_message, request.key)
+        message=decrypt_message_3ds(request.encrypted_message, request.key)
+        if request.enregistrement:
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="decrypt",
+              entree=request.encrypted_message,
+              sortie=message,
+              key=request.key,
+              type="encrypt",
+              methode="3DES"
+            )
+            await create_feature( feature)
+        return(message)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
 

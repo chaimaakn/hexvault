@@ -15,16 +15,15 @@ async def delete_feature(feature_id: str):
 
 
 async def update_feature(feature_id: str, updated_data: PasswordFeature):
-
     feature = await PasswordFeature.get(feature_id)
     if not feature:
         raise HTTPException(status_code=404, detail="Fonctionnalité non trouvée")
-
-    for field, value in updated_data.dict().items():
-        setattr(feature, field, value)
-
-    await feature.save()
+    
+    # Préparer les données de mise à jour
+    update_data = updated_data.dict(exclude_unset=True)  # Exclure les champs non fournis
+    await feature.update({"$set": update_data})
     return feature
+
 
 async def get_feature(feature_id: str):
   

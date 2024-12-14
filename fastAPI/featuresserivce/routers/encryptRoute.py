@@ -36,12 +36,12 @@ async def generate_key():
 @router.post("/encrypt/3DES", response_model=str)
 async def encrypt(request: EncryptRequest):
     """Route pour chiffrer un message 3DES."""
-    return handle_encrypt_3des(request)
+    return await handle_encrypt_3des(request)
 
 @router.post("/decrypt/3DES", response_model=str)
 async def decrypt(request: DecryptRequest):
     """Route pour déchiffrer un message 3DES."""
-    return handle_decrypt_3des(request)
+    return await handle_decrypt_3des(request)
 
 #***********************************RC4****************************************************
 
