@@ -107,6 +107,11 @@
     
 
 
+    @media (max-width: 900px) {
+      .custom-navbar {
+        display: none; 
+      }
+    }
 
  
     
