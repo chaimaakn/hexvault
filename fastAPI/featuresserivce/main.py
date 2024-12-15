@@ -8,6 +8,7 @@ from pymongo.mongo_client import MongoClient
 # Importer le routeur depuis le chemin relatif
 from routers.fnctsRoute import router as feature_router
 from routers.encryptRoute import router as encrypt_router
+from routers.attaqueRoute import router as attaque_router
 from models.fncts import PasswordFeature
 load_dotenv()
 
@@ -42,6 +43,7 @@ async def shutdown_event():
 # Monter le router des fonctionnalités
 app.include_router(feature_router, prefix="/features", tags=["Features"])
 app.include_router(encrypt_router, prefix="/encrypt", tags=["encryption"])
+app.include_router(attaque_router, prefix="/attaque", tags=["encryption"])
 @app.get("/")
 async def root():
     return {"message": "Bienvenue dans le Features Service!"}
