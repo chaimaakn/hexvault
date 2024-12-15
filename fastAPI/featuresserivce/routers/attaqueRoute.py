@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Query
 from controleur.hashControleur import handle_hash_request,handle_hash_request_find
-
+from models.dic import AttackRequest,DictionaryWord
+from services.servicesAttaques import perform_dictionary_attack_logic
+from fastapi import HTTPException
 router = APIRouter()
 
 @router.get("/hash")
@@ -29,3 +31,12 @@ async def get_hashed_password_find(
         dict: Résultat de la recherche ou erreur si non trouvé.
     """
     return await handle_hash_request_find(attaque, algorithme)
+dictionary_router = APIRouter()
+
+
+@dictionary_router.post("/attackDic")
+async def dictionary_attack(request: AttackRequest):
+    try:
+        return await perform_dictionary_attack_logic(request.hashed_password, request.salt, request.hash_algorithm)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
