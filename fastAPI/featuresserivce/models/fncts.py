@@ -4,7 +4,9 @@ from datetime import datetime
 from beanie import  PydanticObjectId
 from pydantic import Field
 from typing import Optional
+
 class PasswordFeature(Document):
+    
     id: Optional[PydanticObjectId] = Field(
         default=None, alias="_id", exclude=True, description="Identifiant unique généré automatiquement par MongoDB"
     )
