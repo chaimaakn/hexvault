@@ -4,7 +4,9 @@ from datetime import datetime
 from beanie import  PydanticObjectId
 from pydantic import Field
 from typing import Optional
+
 class PasswordFeature(Document):
+    
     id: Optional[PydanticObjectId] = Field(
         default=None, alias="_id", exclude=True, description="Identifiant unique généré automatiquement par MongoDB"
     )
@@ -12,7 +14,7 @@ class PasswordFeature(Document):
     nom: str = Field(
         ..., 
         description="Nom de la fonctionnalité",
-        pattern="^(Attaque par brut force|Attaque par dictionnaire|Attaque dictionnaire amélioré|Attaque hybrid|HachageMot|Generate_key|encrypt|decrypt)$"
+        pattern="^(Attaque par brut force|Attaque par dictionnaire|Attaque dictionnaire amélioré|Attaque hybrid|HachageMot|Generate_key|encrypt|decrypt|Hachage SHA256)$"
     )
     entree: str = Field(..., description="Entrée de l'opération (string)")
     sortie: str = Field(..., description="Sortie de l'opération (string)")

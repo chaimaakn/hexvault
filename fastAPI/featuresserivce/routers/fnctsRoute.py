@@ -23,3 +23,7 @@ async def update_feature_db(feature_id: str, updated_data: PasswordFeature):
 @router.delete("/delete/{feature_id}")
 async def delete_feature_db(feature_id: str):
     return await delete_feature(feature_id)
+
+
+
+

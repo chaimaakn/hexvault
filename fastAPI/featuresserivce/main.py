@@ -8,7 +8,9 @@ from pymongo.mongo_client import MongoClient
 # Importer le routeur depuis le chemin relatif
 from routers.fnctsRoute import router as feature_router
 from routers.encryptRoute import router as encrypt_router
+from routers.attaqueRoute import router as attaque_router
 from models.fncts import PasswordFeature
+from models.DicModel import Dictionary
 load_dotenv()
 
 app = FastAPI(title="Features Service")
@@ -19,7 +21,7 @@ router = feature_router
 SERVER_HOST = os.getenv("SERVER_HOST")
 SERVER_PORT = os.getenv("SERVER_PORT")
 MONGO_URI = os.getenv("MONGO_URI")
-DATABASE_NAME = os.getenv("DATABASE_NAME")
+DATABASE_NAME = os.getenv("DATABASE_NAME")#ici tu met password_testing
 
 @app.on_event("startup")
 async def startup_event():
@@ -28,7 +30,8 @@ async def startup_event():
         database=client[DATABASE_NAME], 
         document_models=[
             
-            PasswordFeature
+            PasswordFeature,
+            Dictionary #j'ai créer un model prq pour communiquer avec je suis obligé 
             
             
               
@@ -42,6 +45,7 @@ async def shutdown_event():
 # Monter le router des fonctionnalités
 app.include_router(feature_router, prefix="/features", tags=["Features"])
 app.include_router(encrypt_router, prefix="/encrypt", tags=["encryption"])
+app.include_router(attaque_router, prefix="/attaque", tags=["encryption"])
 @app.get("/")
 async def root():
     return {"message": "Bienvenue dans le Features Service!"}
