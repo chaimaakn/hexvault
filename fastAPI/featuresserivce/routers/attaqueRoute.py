@@ -11,21 +11,13 @@ async def get_hashed_password(password: str, algorithm: str):
     return handle_hash_request(password, algorithm)
 
 
-
-
 @router.get("/hash/verif")
 async def get_hashed_password_find(
-    attaque: str = Query(..., description="Le mot de passe ou le hachage d'entrée"),
-    algorithme: str = Query(..., description="L'algorithme utilisé pour traiter l'entrée"),
+    attaque: str = Query(..., description="Valeur à vérifier (attaque)"),
+    algorithme: str = Query(..., description="Algorithme utilisé"),
+    id_utilisateur: str = Query(..., description="ID de l'utilisateur")
 ):
     """
-    Point de terminaison pour vérifier un mot de passe ou un hachage basé sur une attaque donnée.
-
-    Args:
-        attaque (str): L'entrée à analyser (soit un mot de passe, soit un hachage).
-        algorithme (str): L'algorithme utilisé pour le traitement (e.g., SHA256, RSA, etc.).
-
-    Returns:
-        dict: Résultat de la recherche ou erreur si non trouvé.
+    Route pour gérer les requêtes de hachage avec vérification utilisateur.
     """
-    return await handle_hash_request_find(attaque, algorithme)
+    return await handle_hash_request_find(attaque, algorithme, id_utilisateur)

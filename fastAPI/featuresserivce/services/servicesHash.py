@@ -20,18 +20,9 @@ def hash_password(password: str, algorithm: str) -> str:
 
 
 
-
+"""""
 async def find_matching_feature(password: str, algorithm: str) -> dict:
-    """
-    Recherche une fonctionnalité correspondante dans la base de données pour MtH et HtM.
 
-    Args:
-        password (str): Texte ou hachage à vérifier.
-        algorithm (str): Algorithme utilisé pour hacher ou comparer.
-
-    Returns:
-        dict: Résultat de la correspondance.
-    """
     # Recherche pour MtH (Mapping Texte → Hash)
     mth_match = await PasswordFeature.find_one(
         {"type": "MtoH", "sortie": password, "methode": algorithm}
@@ -56,3 +47,36 @@ async def find_matching_feature(password: str, algorithm: str) -> dict:
 
     # Si aucune correspondance trouvée
     raise ValueError("No match found for the provided input and algorithm.")
+
+"""
+async def find_matching_feature(attaque: str, algorithme: str, id_utilisateur: str) -> dict:
+    """
+    Recherche une fonctionnalité correspondant à l'attaque, l'algorithme et l'utilisateur donné.
+    """
+    # Attendre la résolution de la requête
+    fonctionnalite = await PasswordFeature.find_one(
+        {
+            "id_utilisateur": id_utilisateur,
+            "$or": [
+                {"type": "MtoH", "sortie": attaque, "methode": algorithme},
+                {"type": "HtoM", "entree": attaque, "methode": algorithme}
+            ]
+        }
+    )
+
+    if fonctionnalite:
+        # Accès direct aux attributs car Beanie retourne un objet
+        if fonctionnalite.type == "MtoH":
+            return {
+                "type": "MtoH",
+                "matched_functionality": fonctionnalite.nom,
+                "original_input": fonctionnalite.entree
+            }
+        elif fonctionnalite.type == "HtoM":
+            return {
+                "type": "HtoM",
+                "matched_functionality": fonctionnalite.nom,
+                "output": fonctionnalite.sortie
+            }
+
+    return None
