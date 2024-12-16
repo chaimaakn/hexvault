@@ -5,7 +5,7 @@ from models.DicModel import Dictionary
 from services.servicesAttaques import perform_dictionary_attack_logic,dic_amelioer,hybrid_attack_logic,brute_force_attack
 from fastapi import HTTPException
 from beanie import  PydanticObjectId
-
+from controleur.dicControleur import handle_dicAttaque,handle_dicAmeliorer,handle_bruteForce,handle_hybrid
 router = APIRouter()
 
 @router.get("/hash")
@@ -33,38 +33,11 @@ async def get_hashed_password_find(
 
 @router.post("/Dictionnaire")
 async def dictionary_attack(request: AttackRequest):
-    try:
-        # Appel de la fonction qui effectue l'attaque par dictionnaire
-        result = await perform_dictionary_attack_logic(request.hashed_password, request.salt, request.hash_algorithm)
-        
-        # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
-        if not result["success"]:
-            raise HTTPException(status_code=404, detail=result["message"])
-        
-        return result  # Retourne le résultat de l'attaque par dictionnaire
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
-    except Exception as e:
-        # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+    return await handle_dicAttaque(request)
     
 @router.post("/bruteForce")
 async def bruteForce_attack(request: AttackRequest):
-    try:
-        # Appel de la fonction qui effectue l'attaque par dictionnaire
-        result = await brute_force_attack(request.hashed_password, request.salt, request.hash_algorithm)
-        
-        # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
-        if not result["success"]:
-            raise HTTPException(status_code=404, detail=result["message"])
-        
-        return result  # Retourne le résultat de l'attaque par dictionnaire
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
-    except Exception as e:
-        # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-    
+    return await handle_bruteForce(request)
 
 @router.get("/word/{word_id}")
 async def get_word(word_id: str):
@@ -82,36 +55,7 @@ async def get_word(word_id: str):
     
 @router.post("/DictionnaireAmeliorer")
 async def dicAmeliorer_attack(request: AttackRequest):
-    try:
-        # Appel de la fonction qui effectue l'attaque par dictionnaire
-        result = await dic_amelioer(request.hashed_password, request.salt, request.hash_algorithm)
-        
-        # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
-        if not result["success"]:
-            raise HTTPException(status_code=404, detail=result["message"])
-        
-        return result  # Retourne le résultat de l'attaque par dictionnaire
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
-    except Exception as e:
-        # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-    
-    
+    return await handle_dicAmeliorer(request)
 @router.post("/hybrid")
 async def hybrid_attack(request: AttackRequest):
-    try:
-        # Appel de la fonction qui effectue l'attaque par dictionnaire
-        result = await hybrid_attack_logic(request.hashed_password, request.salt, request.hash_algorithm)
-        
-        # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
-        if not result["success"]:
-            raise HTTPException(status_code=404, detail=result["message"])
-        
-        return result  # Retourne le résultat de l'attaque par dictionnaire
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
-    except Exception as e:
-        # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-    
+    return await handle_hybrid(request)
