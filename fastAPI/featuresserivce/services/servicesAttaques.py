@@ -50,3 +50,48 @@ async def perform_dictionary_attack_logic(hashed_password: str, salt: Optional[s
             continue  # En cas d'erreur (par exemple, un hash non valide), on continue avec le mot suivant
 
     return {"success": False, "message": "Password not found in the dictionary"}
+
+def apply_transformations(base_password):
+    """Applique différentes transformations sur un mot de passe de base.pour l'attaque de dictionnaire ameliorer"""
+    # Vous pouvez ajouter autant de transformations que vous le souhaitez
+    transformations = [
+        base_password.upper(),
+        base_password.lower(),
+        base_password.capitalize(),
+        base_password + "123",
+        base_password + "!",
+        "123" + base_password,
+        "!"+ base_password,
+    ]
+    return transformations
+async def dic_amelioer(hashed_password: str, salt: Optional[str], hash_algorithm: str):
+    """ Effectue une attaque par dictionnaire pour tester si le mot de passe haché est présent dans la base de données.
+    Utilise l'algorithme de hachage spécifié, en tenant compte du salt s'il est fourni.
+    """
+    if hash_algorithm == "md5" and salt:
+                hashed_password="$1$" + salt + "$"+hashed_password
+    elif  hash_algorithm == "sha1" and salt:
+        hashed_password="$sha1$1$"+salt+"$"+hashed_password
+    elif  hash_algorithm == "sha256" and salt:
+        hashed_password="$5$rounds=1000$"+salt+"$"+hashed_password
+    async for entry in Dictionary.find({}):  # Itération sur les documents sans les charger en mémoire
+        
+        word = entry.password  # Assurez-vous que 'password' est bien un champ valide dans la base
+        try:
+            # Calcule le hash du mot actuel en fonction de l'algorithme et du salt
+            computed_hash = compute_hash(word, salt, hash_algorithm)
+            # Si le hash calculé correspond au mot de passe haché, retourner le mot trouvé
+            if computed_hash == hashed_password:
+                return {"success": True, "password_found": word}
+        except ValueError:
+            continue  # En cas d'erreur (par exemple, un hash non valide), on continue avec le mot suivant
+    async for entry in Dictionary.find({}):  # Itération sur les documents sans les charger en mémoire
+        word = entry.password 
+        transformations = apply_transformations(word)
+        for password in transformations:
+            try:
+                if compute_hash(password, salt, hash_algorithm) == hashed_password:
+                    return {"success": True, "password_found": password}
+            except ValueError:
+                continue  # En cas d'erreur (par exemple, un hash non valide), on continue avec le mot suivant
+    return {"success": False, "message": "Password not found in the dictionary"}

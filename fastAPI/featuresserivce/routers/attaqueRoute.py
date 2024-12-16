@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 from controleur.hashControleur import handle_hash_request,handle_hash_request_find
 from models.dic import AttackRequest,DictionaryWord
 from models.DicModel import Dictionary
-from services.servicesAttaques import perform_dictionary_attack_logic
+from services.servicesAttaques import perform_dictionary_attack_logic,dic_amelioer
 from fastapi import HTTPException
 from beanie import  PydanticObjectId
 
@@ -62,3 +62,20 @@ async def get_word(word_id: str):
             raise HTTPException(status_code=404, detail="Word not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+@router.post("/DictionnaireAmeliorer")
+async def dicAmeliorer_attack(request: AttackRequest):
+    try:
+        # Appel de la fonction qui effectue l'attaque par dictionnaire
+        result = await dic_amelioer(request.hashed_password, request.salt, request.hash_algorithm)
+        
+        # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
+        if not result["success"]:
+            raise HTTPException(status_code=404, detail=result["message"])
+        
+        return result  # Retourne le résultat de l'attaque par dictionnaire
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
+    except Exception as e:
+        # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+    
