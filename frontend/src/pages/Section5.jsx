@@ -21,7 +21,7 @@ function Section5() {
 
   return (
     <div className="section-5">
-      <h1 id='sec5-title'>faq</h1>
+      <h1 id='sec5-title'>Frequently Asked Questions</h1>
       <div className="accordion">
         {questions.map((item, index) => (
           <div key={index} className="accordion-item">

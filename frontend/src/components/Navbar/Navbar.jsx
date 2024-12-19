@@ -6,19 +6,20 @@ import { Dropdown, DropdownButton } from 'react-bootstrap';
 import Languageselect from '../LanguageSelector';
 import { TbSquareArrowRightFilled } from 'react-icons/tb'; 
 import { FaAngleDown } from 'react-icons/fa';
+import { Link } from 'react-scroll';
 
 const Navbar = () => {
   return (
     <div className="header">
-      <a href="/" className="Logo"><img src={Logo} alt="" /></a>
+      <Link  className="Logo" to='home' smooth={true} duration={500}><img src={Logo} alt="" /></Link>
 
       <nav className="custom-navbar">
-        <a href="/">Home</a>
+        <Link className="links" to='home'>Home</Link>
 
         <div className="services-dropdown">
-            <a href="/" className="services-link">
+            <Link to='services' smooth={true} duration={500} className="services-link">
                  Services <FaAngleDown className="dropdown-arrow" />
-            </a>
+            </Link>
             <div className="dropdown-menu">
             <a href="/">Encryption/Decryption</a>
             <a href="/">Attack simulation</a>
@@ -26,9 +27,9 @@ const Navbar = () => {
             <a href="/">Time prediction</a>
             </div>
         </div>
-        <a href="/">About us</a>
-        <a href="/">Contact us</a>
-        <a href="/">FAQ</a>
+        <Link className="links" to='about' smooth={true} duration={500}>About us</Link>
+        <Link className="links" to='contact' smooth={true} duration={500}>Contact us</Link>
+        <Link className="links" to='faq' smooth={true} duration={500}>FAQ</Link>
       </nav>
 
       <div className='buttons'>

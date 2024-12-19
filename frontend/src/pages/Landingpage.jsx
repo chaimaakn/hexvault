@@ -18,22 +18,22 @@ function LandingPage() {
         <Navbar />
       </div>
       
-     <div>
+     <div id='home'>
       <Section1/>
      </div>
-     <div>
+     <div >
       <Section2/>
      </div>
-     <div>
+     <div id='about'>
       <Section3/>
      </div>
-     <div>
+     <div id='services'>
       <Section4/>
      </div>
-     <div>
+     <div id='faq'>
       <Section5/>
      </div>
-     <div>
+     <div id='contact'>
       <Section6/>
      </div>
      <div>
