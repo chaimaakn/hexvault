@@ -1,4 +1,5 @@
 import React from 'react';
+import {motion} from 'framer-motion';
 import Navbar from '../components/Navbar/Navbar';
 import '../styles/Landingpage.css';
 import Section1 from './Section1';
@@ -7,6 +8,7 @@ import Section3 from './Section3';
 import Section4 from './Section4';
 import Section5 from './Section5';
 import Section6 from './Section6';
+import Footer from '../components/Footer';
 
 
 function LandingPage() {
@@ -33,6 +35,9 @@ function LandingPage() {
      </div>
      <div>
       <Section6/>
+     </div>
+     <div>
+      <Footer/>
      </div>
       
       

@@ -2,3 +2,4 @@ react
 react-bootstrap
 react-icons
 three 
+motion-framer
