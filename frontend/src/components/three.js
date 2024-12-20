@@ -107,7 +107,7 @@ const ShaderSphere = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      mountRef.current.removeChild(renderer.domElement);
+      /*mountRef.current.removeChild(renderer.domElement);*/
     };
   }, []);
 
