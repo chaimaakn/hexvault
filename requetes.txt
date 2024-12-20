@@ -1,0 +1,68 @@
+pour les serives en utilise le serveur 8001 et voila les requetes type pour chaque fonctionnalitées avec leur body:
+pour les encryptions:
+**********************************************************************************
+Generation de clé:
+Méthode : get request
+le chemin du fetch qu'on  met : "http://127.0.0.1:8001/encrypt/generate-key/AES"
+Body :pas de body ici
+**********************************************************************************
+encryption:
+Méthode : Post request
+le chemin du fetch qu'on  met : "http://127.0.0.1:8001/encrypt/encrypt/AES"
+Body :{
+    "encrypted_message": str,
+    "key": str,
+    "enregistrement":bool,
+    "iduser":str
+}#ici tu remplace str et bool ..ect par les champs que le user vas mettre
+
+***************************************************************************************
+
+decryption:
+Méthode : Post request
+le chemin du fetch qu'on  met : "http://127.0.0.1:8001/encrypt/decrypt/AES"
+Body :{
+    "message": str,
+   "key": str,
+    "enregistrement":bool,
+    "iduser":str
+}#ici tu remplace str et bool ..ect par les champs que le user vas mettre
+
+
+Meme chose pour les autres méthodes de décryption juste il faut changer la fin du path par le nom de la méthode par exemple changer AES par RC4 ..ect
+
+********************************************************************************************
+Attaque Routers :
+
+dictionnaire:
+Methode : post request
+chemin du fetch: "http://127.0.0.1:8001/attaque/Dictionnaire"
+Body:
+    {
+  "hashed_password": str,
+  "salt": str,
+  "hash_algorithm": str
+}#ici tu remplace str et bool ..ect par les champs que le user vas mettre
+
+bruteForce:
+Methode : post request
+chemin du fetch: "http://127.0.0.1:8001/attaque/bruteForce"
+Body:
+    {
+  "hashed_password": str,
+  "salt": str,
+  "hash_algorithm": str
+}#ici tu remplace str et bool ..ect par les champs que le user vas mettre
+
+
+DictionnaireAmeliorer:
+Methode : post request
+chemin du fetch: "http://127.0.0.1:8001/attaque/DictionnaireAmeliorer"
+Body:
+    {
+  "hashed_password": str,
+  "salt": str,
+  "hash_algorithm": str
+}#ici tu remplace str et bool ..ect par les champs que le user vas mettre
+
+
