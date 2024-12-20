@@ -114,17 +114,41 @@ def generate_key_RC4() -> str:
     key = os.urandom(16)
     return base64.b64encode(key).decode('utf-8')
 
-def handle_encrypt_RC4(request: EncryptRequest) -> str:
-    """Traite la requête de chiffrement 3DES."""
+async def handle_encrypt_RC4(request: EncryptRequest) -> str:
+    """Traite la requête de chiffrement RC4."""
     try:
-        return encrypt_message_RC4(request.message, request.key)
+        encrypted_message=encrypt_message_RC4(request.message, request.key)
+        if request.enregistrement:
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="encrypt",
+              entree=request.message,
+              sortie=encrypted_message,
+              key=request.key,
+              type="encrypt",
+              methode="RC4"
+            )
+            await create_feature( feature) 
+        return(encrypted_message)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
     
-def handle_decrypt_RC4(request: DecryptRequest) -> str:
-    """Traite la requête de déchiffrement 3DES."""
+async def handle_decrypt_RC4(request: DecryptRequest) -> str:
+    """Traite la requête de déchiffrement RC4."""
     try:
-        return decrypt_message_RC4(request.encrypted_message, request.key)
+        message=decrypt_message_RC4(request.encrypted_message, request.key)
+        if request.enregistrement:
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="decrypt",
+              entree=request.encrypted_message,
+              sortie=message,
+              key=request.key,
+              type="encrypt",
+              methode="RC4"
+            )
+            await create_feature( feature)
+        return(message)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
     
@@ -137,17 +161,41 @@ def generate_key_Chacha20() -> str:
     key = os.urandom(32)
     return base64.b64encode(key).decode('utf-8')
 
-def handle_encrypt_Chacha20(request: EncryptRequest) -> str:
+async def handle_encrypt_Chacha20(request: EncryptRequest) -> str:
     """Traite la requête de chiffrement chacha20."""
     try:
-        return encrypt_message_Chacha20(request.message, request.key)
+        encrypted_message=encrypt_message_Chacha20(request.message, request.key)
+        if request.enregistrement:
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="encrypt",
+              entree=request.message,
+              sortie=encrypted_message,
+              key=request.key,
+              type="encrypt",
+              methode="Chacha20"
+            )
+            await create_feature( feature) 
+        return(encrypted_message)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
     
-def handle_decrypt_Chacha20(request: DecryptRequest) -> str:
+async def handle_decrypt_Chacha20(request: DecryptRequest) -> str:
     """Traite la requête de déchiffrement chacha20."""
     try:
-        return decrypt_message_Chacha20(request.encrypted_message, request.key)
+        message=decrypt_message_Chacha20(request.encrypted_message, request.key)
+        if request.enregistrement:
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="decrypt",
+              entree=request.encrypted_message,
+              sortie=message,
+              key=request.key,
+              type="encrypt",
+              methode="Chacha20"
+            )
+            await create_feature( feature)
+        return(message)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
     
