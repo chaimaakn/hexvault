@@ -21,7 +21,7 @@ const Navbar = () => {
                  Services <FaAngleDown className="dropdown-arrow" />
             </Link>
             <div className="dropdown-menu">
-            <a href="/">Encryption/Decryption</a>
+            <a href="/Page1">Encryption/Decryption</a>
             <a href="/">Attack simulation</a>
             <a href="/">Password testing</a>
             <a href="/">Time prediction</a>
