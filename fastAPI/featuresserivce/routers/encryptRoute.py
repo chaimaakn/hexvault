@@ -53,12 +53,12 @@ async def generate_key():
 @router.post("/encrypt/RC4", response_model=str)
 async def encrypt(request: EncryptRequest):
     """Route pour chiffrer un message RC4."""
-    return handle_encrypt_RC4(request)
+    return await handle_encrypt_RC4(request)
 
 @router.post("/decrypt/RC4", response_model=str)
 async def decrypt(request: DecryptRequest):
     """Route pour déchiffrer un message RC4."""
-    return handle_decrypt_RC4(request)
+    return await handle_decrypt_RC4(request)
 
 
 #***********************************CHACHA20****************************************************
@@ -66,17 +66,17 @@ async def decrypt(request: DecryptRequest):
 @router.get("/generate-key/Chacha20", response_model=str)
 async def generate_key():
     """Route pour générer une clé chacha20."""
-    return generate_key_Chacha20()
+    return  generate_key_Chacha20()
 
 @router.post("/encrypt/Chacha20", response_model=str)
 async def encrypt(request: EncryptRequest):
     """Route pour chiffrer un message chacha20"""
-    return handle_encrypt_Chacha20(request)
+    return await handle_encrypt_Chacha20(request)
 
 @router.post("/decrypt/Chacha20", response_model=str)
 async def decrypt(request: DecryptRequest):
     """Route pour déchiffrer un message Chacha20."""
-    return handle_decrypt_Chacha20(request)
+    return await  handle_decrypt_Chacha20(request)
 
 
 #***********************************RSA****************************************************
