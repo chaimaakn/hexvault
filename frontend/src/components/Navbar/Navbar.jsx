@@ -6,30 +6,39 @@ import { Dropdown, DropdownButton } from 'react-bootstrap';
 import Languageselect from '../LanguageSelector';
 import { TbSquareArrowRightFilled } from 'react-icons/tb'; 
 import { FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-scroll';
+import { Link} from 'react-router';
 
 const Navbar = () => {
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop,
+        behavior: 'smooth',
+      });
+    }
+  };
   return (
     <div className="header">
-      <Link  className="Logo" to='home' smooth={true} duration={500}><img src={Logo} alt="" /></Link>
+      <Link  className="Logo" to='/#home'  onClick={() => scrollToSection('home')}><img src={Logo} alt="" /></Link>
 
       <nav className="custom-navbar">
-        <Link className="links" to='home'>Home</Link>
+        <Link className="links" to='/#home' onClick={() => scrollToSection('home')}>Home</Link>
 
         <div className="services-dropdown">
-            <Link to='services' smooth={true} duration={500} className="services-link">
+            <Link to='/#services'  onClick={() => scrollToSection('services')} className="services-link">
                  Services <FaAngleDown className="dropdown-arrow" />
             </Link>
             <div className="dropdown-menu">
-            <a href="/Page1">Encryption/Decryption</a>
+            <Link to="/Page1">Encryption/Decryption</Link>
             <a href="/">Attack simulation</a>
             <a href="/">Password testing</a>
             <a href="/">Time prediction</a>
             </div>
         </div>
-        <Link className="links" to='about' smooth={true} duration={500}>About us</Link>
-        <Link className="links" to='contact' smooth={true} duration={500}>Contact us</Link>
-        <Link className="links" to='faq' smooth={true} duration={500}>FAQ</Link>
+        <Link className="links" to='/#about' onClick={() => scrollToSection('about')} >About us</Link>
+        <Link className="links" to='/#contact'onClick={() => scrollToSection('contact')} >Contact us</Link>
+        <Link className="links" to='/#faq' onClick={() => scrollToSection('faq')} >FAQ</Link>
       </nav>
 
       <div className='buttons'>
