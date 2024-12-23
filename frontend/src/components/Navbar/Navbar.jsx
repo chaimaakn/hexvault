@@ -7,8 +7,15 @@ import Languageselect from '../LanguageSelector';
 import { TbSquareArrowRightFilled } from 'react-icons/tb'; 
 import { FaAngleDown } from 'react-icons/fa';
 import { Link} from 'react-router';
+import { useKeycloak } from '@react-keycloak/web';
 
 const Navbar = () => {
+  const { keycloak, initialized } = useKeycloak();
+  
+//these two lines for debugging to check if its initialized or no in the console
+  console.log("Keycloak initialized:", initialized);
+  console.log("Keycloak instance:", keycloak);
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -43,9 +50,23 @@ const Navbar = () => {
 
       <div className='buttons'>
       <Languageselect/>
-      
-        <Button  className="enlarge" variant="light" >Start now <TbSquareArrowRightFilled style={{ marginLeft: '8px',color:'#0CB074' }} /></Button>
-   
+      {keycloak.authenticated ? ( //here conditional rendering of component,if hes logged in we show logout button else login button
+          <Button 
+            className="enlarge" 
+            variant="light" 
+            onClick={() => keycloak.logout()}
+          >
+            Logout
+          </Button>
+        ) : (
+          <Button 
+            className="enlarge" 
+            variant="light" 
+            onClick={() => keycloak.login()}
+          >
+            Start now <TbSquareArrowRightFilled style={{ marginLeft: '8px', color: '#0CB074' }} />
+          </Button>
+        )}
       
       </div>
       
