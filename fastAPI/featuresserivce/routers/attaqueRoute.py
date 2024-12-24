@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Query
 from controleur.hashControleur import handle_hash_request,handle_hash_request_find
-from models.dic import AttackRequest,DictionaryWord
+from models.dic import AttackRequest,DictionaryWord,PasswordCheckRequest
 from models.DicModel import Dictionary
 from services.servicesAttaques import perform_dictionary_attack_logic,dic_amelioer,hybrid_attack_logic,brute_force_attack
 from fastapi import HTTPException
 from beanie import  PydanticObjectId
-from controleur.dicControleur import handle_dicAttaque,handle_dicAmeliorer,handle_bruteForce,handle_hybrid
+from controleur.dicControleur import handle_dicAttaque,handle_dicAmeliorer,handle_bruteForce,handle_hybrid,handle_test_password
 router = APIRouter()
 
 @router.get("/hash")
@@ -59,3 +59,7 @@ async def dicAmeliorer_attack(request: AttackRequest):
 @router.post("/hybrid")
 async def hybrid_attack(request: AttackRequest):
     return await handle_hybrid(request)
+
+@router.post("/check-password")
+async def check_password_endpoint(request: PasswordCheckRequest):
+    return await handle_test_password(request)
