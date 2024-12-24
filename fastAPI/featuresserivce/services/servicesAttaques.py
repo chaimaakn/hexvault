@@ -9,6 +9,7 @@ import string
 import os
 import concurrent.futures
 import threading
+import math
 
 def compute_hash(plain_password: str, salt: Optional[str], algorithm: str) -> str:
     """
@@ -219,3 +220,96 @@ async def hybrid_attack_logic(hashed_password: str, salt: Optional[str], hash_al
                 if compute_hash(extended_password, salt, hash_algorithm) == hashed_password:
                     return {"success": True, "password_found": extended_password}
     return {"success": False, "message": "Password not found in the dictionary"}
+
+
+
+# Calcul du nombre de combinaisons en fonction des types de caractères
+def calculate_combinations(length: int, charset_type: int) -> float:
+    CHARSETS = {
+        1: string.ascii_letters + string.digits + string.punctuation,  # Tous les caractères
+        2: string.ascii_letters + string.digits,  # Lettres et chiffres
+        4: string.ascii_letters + string.punctuation,  # Lettres et ponctuation
+        5: string.digits + string.punctuation,  # Chiffres et ponctuation
+        6: string.ascii_letters,  # Lettres seulement
+        7: string.digits,  # Chiffres seulement
+        8: string.punctuation,  # Ponctuation seulement
+    }
+    CHARACTERS = CHARSETS.get(charset_type, string.ascii_letters)
+    return math.pow(len(CHARACTERS), length)
+
+# Estimation du temps par thread
+def estimate_time_per_thread(combinations: float) -> float:
+    PASSWORDS_PER_SECOND = 1_000_000  # Hypothèse : 1 million de mots/s par thread
+    return combinations / PASSWORDS_PER_SECOND
+
+# Estimation du temps total
+def estimate_total_time(password_length: int, charset_type: int) -> float:
+    total_time_seconds = 0
+    for length in range(1, password_length + 1):
+        combinations = calculate_combinations(length, charset_type)
+        time_per_thread = estimate_time_per_thread(combinations)
+        total_time_seconds += time_per_thread
+    return total_time_seconds
+
+# Formatage du temps
+def format_time(seconds: float) -> str:
+    days, remainder = divmod(seconds, 60 * 60 * 24)
+    hours, remainder = divmod(remainder, 60 * 60)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{int(days)} jours, {int(hours)} heures, {int(minutes)} minutes, {int(seconds)} secondes"
+
+
+# Validation du mot de passe avec vérification dans le dictionnaire
+async def test_password(password: str) -> dict:
+    if not password:
+        return {"success": False, "message": "Veuillez entrer un mot de passe."}
+
+    # Vérification dans le dictionnaire de mots de passe
+    async for entry in Dictionary.find({}):  # Itération sur les documents sans tout charger en mémoire
+        if entry.password == password:
+            return {
+                "success": True,
+                "message": "Votre mot de passe est considéré comme faible (trop commun).",
+            }
+
+    # Vérifications des critères de sécurité
+    if len(password) < 12:
+        return {
+            "success": True,
+            "message": f"Votre mot de passe est trop court. Il doit contenir au moins 12 caractères."
+                       f"Estimation du temps nécessaire pour le casser au pire cas:",
+            "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
+        }
+
+    if not any(char.isupper() for char in password):
+        return {
+            "success": True,
+            "message": f"Votre mot de passe doit contenir au moins une majuscule."
+                       f"Estimation du temps nécessaire pour le casser au pire cas:",
+            "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
+                       
+        }
+
+    if not any(char in string.punctuation for char in password):
+        return {
+            "success": True,
+            "message": f"Votre mot de passe doit contenir au moins un caractère spécial."
+                       f"Estimation du temps nécessaire pour le casser au pire cas:",
+            "timeestimation": f"{format_time(estimate_total_time(len(password), 2))}",
+        }
+
+    if not any(char.isdigit() for char in password):
+        return {
+            "success": True,
+            "message": f"Votre mot de passe doit contenir au moins un chiffre."
+                       f"Estimation du temps nécessaire pour le casser au pire cas:",
+            "timeestimation":f"{format_time(estimate_total_time(len(password), 4))}",
+        }
+
+    return {
+        "success": True,
+        "message": f"Votre mot de passe est considéré comme sûr."
+                   f"Estimation du temps nécessaire pour le casser au pire cas:",
+        "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
+    }
+
