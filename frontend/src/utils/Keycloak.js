@@ -5,7 +5,7 @@ import Keycloak from 'keycloak-js';
 const keycloak = new Keycloak({
   url: 'http://localhost:8080/', // URL to your Keycloak server
   realm: 'HEXVAULT', // Name of your Keycloak realm
-  clientId: 'myClient', // Your client ID in Keycloak
+  clientId: 'Client', // Your client ID in Keycloak
 });
 
 

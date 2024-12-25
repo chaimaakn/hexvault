@@ -15,13 +15,13 @@ function LandingPage() {
     
     const hash = window.location.hash;
     if (hash) {
-      const element = document.querySelector(hash);
-      if (element) {
-        window.scrollTo({
-          top: element.offsetTop,
-          behavior: 'smooth',
-        });
-      }
+      // const element = document.querySelector(hash);
+      // if (element) {
+      //   window.scrollTo({
+      //     top: element.offsetTop,
+      //     behavior: 'smooth',
+      //   });
+      // }
     }
   }, []);
   return (
