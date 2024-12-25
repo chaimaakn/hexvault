@@ -26,6 +26,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Landingpage />} />
           <Route path="/page1" element={<Page />} />
+          <Route path="/attacks" element={<Attacks />} />
         </Routes>
       </BrowserRouter>
     </ReactKeycloakProvider>
