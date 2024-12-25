@@ -48,15 +48,15 @@ const Navbar = () => {
         <Link className="links" to='/#home' onClick={() => scrollToSection('home')}>Home</Link>
 
         <div className="services-dropdown">
-            <Link to='/#services'  onClick={() => scrollToSection('services')} className="services-link">
-                 Services <FaAngleDown className="dropdown-arrow" />
-            </Link>
-            <div className="dropdown-menu">
-            <Link to="/EncryptDecrypt">Encryption/Decryption</Link>
+          <Link to='/#services' onClick={() => scrollToSection('services')} className="services-link">
+            Services <FaAngleDown className="dropdown-arrow" />
+          </Link>
+          <div className="dropdown-menu">
+            <Link to="/Page1">Encryption/Decryption</Link>
             <Link to="/Attacks">Attack simulation</Link>
-            <a href="/Passwordtesting">Password testing</a>
-            <a href="/Timeprediction">Time prediction</a>
-            </div>
+            <a href="/">Password testing</a>
+            <a href="/">Time prediction</a>
+          </div>
         </div>
         <Link className="links" to='/#about' onClick={() => scrollToSection('about')} >About us</Link>
         <Link className="links" to='/#contact' onClick={() => scrollToSection('contact')} >Contact us</Link>
