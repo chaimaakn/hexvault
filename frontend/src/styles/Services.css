@@ -1,0 +1,162 @@
+#Attacks {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #1B2D1F;
+    display: flex;
+    flex-direction: column;
+  }
+  .navbar-container{
+    z-index: 2;
+  }
+
+
+  .swiper-container {
+    flex-grow: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    
+   
+  }
+  
+  .swiper {
+    
+    width: 80%; 
+    height: 80%; 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+.swiper-slide{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border-radius: 15px; 
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+    perspective: 1000px;
+}
+  
+  .slide-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d; 
+    transition: transform 0.6s; 
+  }
+  
+  .swiper-slide.flipped .slide-content {
+    transform: rotateY(180deg);
+  }
+  
+
+  .front,
+  .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; 
+    border-radius: 1rem;
+  }
+  
+  .front {
+    background-color:#2D372F;
+    color: white;
+    background-image:url("../assets/Group 202.svg"),url("../assets/Group 166.svg");
+    background-size:110%,70%; /* Adjust as needed */
+    background-position: center,top;
+    background-repeat: no-repeat, no-repeat; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+  }
+   
+   
+  
+  .front h1{
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    
+  }
+  
+  .back {
+    background-color: #2D372F;
+    color: white;
+    transform: rotateY(180deg); 
+    background-image:url("../assets/Group 202.svg");
+    background-size:110%;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+  }
+  
+  .blurry .front,
+.blurry .back {
+  filter: blur(5px); /* Apply blur effect */
+  pointer-events: none; /* Disable interactions with blurry cards */
+}
+
+.swiper-slide .front,
+.swiper-slide .back {
+    transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transition for blur and scaling */ /* Smooth transition for blur */
+}
+
+.selected {
+    z-index: 10; /* Bring the selected card to the front */
+    transform: scale(1.1); /* Slightly scale up the selected card */
+  }
+  
+  /* Non-selected cards */
+  .swiper-slide:not(.selected) {
+    z-index: 1; /* Push non-selected cards to the back */
+    transform: scale(0.9); /* Scale down the non-selected cards */
+  }
+.swiper-button-prev,.swiper-button-next{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+.input-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1rem;
+    gap: 20px;
+}
+.back h1{
+    font-size: 1.3rem;
+    
+}
+.input-content h1{
+    font-size: 1rem;
+   align-self: flex-start;
+}
+
