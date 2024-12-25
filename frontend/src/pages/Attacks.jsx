@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Swiper from 'swiper';
 import 'swiper/css';
-import Navbar from '../components/Navbar/Navbar';
+import Navbar2 from '../components/Navbar/Navbar2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import '../styles/Services.css';
 
@@ -52,6 +52,8 @@ function Page1() {
 
   useEffect(() => {
     const swiper = new Swiper('.swiper', {
+        effect: 'coverflow',
+        loop:true,
       slidesPerView: 3,
       spaceBetween: 10,
       navigation: {
@@ -103,7 +105,7 @@ function Page1() {
   return (
     <div id="Attacks">
       <div className="navbar-container">
-        <Navbar />
+        <Navbar2 />
       </div>
 
       <div className="swiper-container">
@@ -119,22 +121,17 @@ function Page1() {
               <div className="slide-content">
                 <div className="front">
                   <h1>Brute force</h1>
-                  {/* Added tabs section */}
-                  <div
-                    className="tabs"
-                    onClick={(e) => e.stopPropagation()} // Prevent flipping on tabs click
-                  >
-                    
-                  </div>
+                 
                 </div>
                 <div className="back">
-                  <h1>Brute force</h1>
-                  <div className="input-content">
-                    <input type="text" />
-                    <h1>Salt</h1>
-                    <input type="text" />
-                    {/* Button to enable flip-back */}
-                    <button onClick={enableFlip}>Click to start</button>
+                 
+                  <div className="input-content"> 
+                    <h1 id='attack-title'>Brute force</h1>
+                    <input type="text"  id='hash-1' placeholder='enter your hashed password...'/>
+                    <h1 id='salt-title'>Salt</h1>
+                    <input type="text" id='salt-1' placeholder='enter your salt...(optional)'/>
+
+                    <button /*onClick={enableFlip}*/>Click to start</button>
                   </div>
                 </div>
               </div>
@@ -151,7 +148,14 @@ function Page1() {
                 <div className="front">
                   <h1>Dictionary</h1>
                 </div>
-                <div className="back">Back Content 2</div>
+                <div className="back"><div className="input-content"> 
+                    <h1 id='attack-title'>Dictionnary</h1>
+                    <input type="text"  id='hash-2' placeholder='enter your hashed password...'/>
+                    <h1 id='salt-title'>Salt</h1>
+                    <input type="text" id='salt-2' placeholder='enter your salt...(optional)'/>
+
+                    <button /*onClick={enableFlip}*/>Click to start</button>
+                  </div></div>
               </div>
             </div>
 
@@ -166,7 +170,14 @@ function Page1() {
                 <div className="front">
                   <h1>Improved Dict</h1>
                 </div>
-                <div className="back">Back Content 3</div>
+                <div className="back"><div className="input-content"> 
+                    <h1 id='attack-title'>Improved Dict</h1>
+                    <input type="text"  id='hash-3' placeholder='enter your hashed password...'/>
+                    <h1 id='salt-title'>Salt</h1>
+                    <input type="text" id='salt-3' placeholder='enter your salt...(optional)'/>
+
+                    <button /*onClick={enableFlip}*/>Click to start</button>
+                  </div></div>
               </div>
             </div>
 
@@ -181,7 +192,16 @@ function Page1() {
                 <div className="front">
                   <h1>Hybrid</h1>
                 </div>
-                <div className="back">Back Content 4</div>
+                <div className="back">
+                <div className="input-content"> 
+                    <h1 id='attack-title'>Hybrid</h1>
+                    <input type="text"  id='hash-4' placeholder='enter your hashed password...'/>
+                    <h1 id='salt-title'>Salt</h1>
+                    <input type="text" id='salt-4' placeholder='enter your salt...(optional)'/>
+
+                    <button /*onClick={enableFlip}*/>Click to start</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

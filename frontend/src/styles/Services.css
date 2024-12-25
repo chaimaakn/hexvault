@@ -100,9 +100,7 @@
     background-position: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
+    gap: 20px;
   }
   
   .blurry .front,
@@ -148,8 +146,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: center;
     font-size: 1rem;
-    gap: 20px;
+    gap: 10px;
+   margin-top: 40px;
 }
 .back h1{
     font-size: 1.3rem;
@@ -159,4 +159,66 @@
     font-size: 1rem;
    align-self: flex-start;
 }
+#attack-title{
+    align-self: center;
+    font-size: 1.5rem;
+}
+#salt-title{
+    border-bottom: solid #1EA86E;
+    color:#1EA86E ;
+}
 
+#hash-1,#hash-2,#hash-3,#hash-4,#salt-1,#salt-2,#salt-3,#salt-4{
+    outline: none;
+    border-radius: 10px;
+    background-color: #465349;
+    border: none; 
+    color: white;
+    padding: 0px 5px;
+}
+#hash-1::placeholder{
+    font-size: 0.7rem;
+   
+}
+#salt-1::placeholder{
+    font-size: 0.7rem;
+   
+}
+#hash-2::placeholder{
+    font-size: 0.7rem;
+   
+}
+#salt-2::placeholder{
+    font-size: 0.7rem;
+   
+}
+#hash-3::placeholder{
+    font-size: 0.7rem;
+   
+}
+#salt-3::placeholder{
+    font-size: 0.7rem;
+   
+}
+#hash-4::placeholder{
+    font-size: 0.7rem;
+   
+}
+#salt-4::placeholder{
+    font-size: 0.7rem;
+   
+}
+
+.input-content button{
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 10px;
+    background-color: #1EA86E;
+    color: white;
+    margin-top: 10px;
+}
+.input-content button:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Horizontal, Vertical, Blur radius, Color */
+    
+  }

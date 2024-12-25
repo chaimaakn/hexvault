@@ -1,5 +1,7 @@
 import Landingpage from './pages/Landingpage';
-import Page from './pages/Page1';
+import EncryptDecrypt from './pages/EncryptDecrypt';
+import Passwordtesting from './pages/Passwordtesting';
+import Timeprediction from './pages/Timeprediction';
 import Attacks from './pages/Attacks';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -17,8 +19,10 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route exact path="/" element={<Landingpage />} />
-      <Route path="/page1" element={<Page />} />
-      <Route path="/attacks" element={<Attacks />} />
+      <Route path="/EncryptDecrypt" element={<EncryptDecrypt />} />
+      <Route path="/Attacks" element={<Attacks />} />
+      <Route path="/Timeprediction" element={<Timeprediction />} />
+      <Route path="/Passwordtesting" element={<Passwordtesting />} />
     </Routes>
   </BrowserRouter>
   </ReactKeycloakProvider>

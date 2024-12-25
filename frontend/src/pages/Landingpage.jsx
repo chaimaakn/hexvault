@@ -3,7 +3,6 @@ import {motion} from 'framer-motion';
 import Navbar from '../components/Navbar/Navbar';
 import '../styles/Landingpage.css';
 import Section1 from './Section1';
-import Section2 from './Section2';
 import Section3 from './Section3';
 import Section4 from './Section4';
 import Section5 from './Section5';
@@ -33,9 +32,6 @@ function LandingPage() {
       
      <div id='home'>
       <Section1/>
-     </div>
-     <div >
-      <Section2/>
      </div>
      <div id='about'>
       <Section3/>
