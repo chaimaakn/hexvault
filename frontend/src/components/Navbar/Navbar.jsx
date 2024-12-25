@@ -52,10 +52,10 @@ const Navbar = () => {
             Services <FaAngleDown className="dropdown-arrow" />
           </Link>
           <div className="dropdown-menu">
-            <Link to="/Page1">Encryption/Decryption</Link>
+            <Link to="/EncryptDecrypt">Encryption/Decryption</Link>
             <Link to="/Attacks">Attack simulation</Link>
-            <a href="/">Password testing</a>
-            <a href="/">Time prediction</a>
+            <a href="/Passwordtesting">Password testing</a>
+            <a href="/Timeprediction">Time prediction</a>
           </div>
         </div>
         <Link className="links" to='/#about' onClick={() => scrollToSection('about')} >About us</Link>
