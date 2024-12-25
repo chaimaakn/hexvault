@@ -1,6 +1,5 @@
 import Landingpage from './pages/Landingpage';
 import Page from './pages/Page1';
-import Attacks from './pages/Attacks';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { keycloak, initKeycloak } from './utils/Keycloak';
@@ -27,7 +26,6 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Landingpage />} />
           <Route path="/page1" element={<Page />} />
-          <Route path="/attacks" element={<Attacks />} />
         </Routes>
       </BrowserRouter>
     </ReactKeycloakProvider>
