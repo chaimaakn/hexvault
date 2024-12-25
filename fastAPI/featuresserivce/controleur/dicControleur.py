@@ -1,7 +1,7 @@
 from fastapi import HTTPException
-from models.dic import AttackRequest
+from models.dic import AttackRequest,PasswordCheckRequest
 from services.servicesAttaques import perform_dictionary_attack_logic,dic_amelioer,hybrid_attack_logic,brute_force_attack
-
+from services.servicesAttaques import test_password
 
 async def handle_dicAttaque(request: AttackRequest) -> str:
     try:
@@ -67,3 +67,20 @@ async def handle_hybrid(request: AttackRequest) -> str:
         # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
     
+
+async def handle_test_password(request: PasswordCheckRequest) -> dict:
+    try:
+        # Appel de la fonction qui effectue les vérifications sur le mot de passe
+        result = await test_password(request.password)
+        
+        # Si le mot de passe est jugé non sécurisé, lever une exception HTTP avec un message clair
+        if not result["success"]:
+            raise HTTPException(status_code=400, detail=result["message"])
+        
+        # Retourne le résultat si le mot de passe est sécurisé
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Error during password validation: {str(e)}")
+    except Exception as e:
+        # Capture toute autre exception et renvoyer une erreur 500 pour une erreur interne
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
