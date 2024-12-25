@@ -28,8 +28,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Landingpage />} />
-          <Route path="/page1" element={<Page />} />
-          <Route path="/attacks" element={<Attacks />} />
+          <Route path="/EncryptDecrypt" element={<EncryptDecrypt />} />
+          <Route path="/Attacks" element={<Attacks />} />
+          <Route path="/Timeprediction" element={<Timeprediction />} />
+          <Route path="/Passwordtesting" element={<Passwordtesting />} />
         </Routes>
       </BrowserRouter>
     </ReactKeycloakProvider>
