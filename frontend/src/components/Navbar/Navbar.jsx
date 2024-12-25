@@ -53,7 +53,7 @@ const Navbar = () => {
           </Link>
           <div className="dropdown-menu">
             <Link to="/Page1">Encryption/Decryption</Link>
-            <a href="/">Attack simulation</a>
+            <Link to="/Attacks">Attack simulation</Link>
             <a href="/">Password testing</a>
             <a href="/">Time prediction</a>
           </div>
