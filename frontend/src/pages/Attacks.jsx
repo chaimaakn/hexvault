@@ -88,11 +88,11 @@ function Page1() {
   }, []);
 
   // Handle enabling flip behavior when "click to start" button in Card 1 is clicked
-  const enableFlip = (id) => {
+ /* const enableFlip = (id) => {
     setCanFlip(true); // Re-enable flipping when the button is clicked
     setFlippedCardId(id);
     setClickedCardId(null);
-  };
+  };*/
 
   useEffect(() => {
     if (flippedCardId) {
@@ -120,7 +120,15 @@ function Page1() {
             >
               <div className="slide-content">
                 <div className="front">
-                  <h1>Brute force</h1>
+                 
+                  <div className='about'>
+                    <h1 className='front-title'>Brute force</h1>
+                    <h1  id='ab'>about</h1>
+                    <p>
+                    A brute force attack involves testing numerous
+                     combinations of passwords or keys until the correct one is found.
+                    </p>
+                  </div>
                  
                 </div>
                 <div className="back">
@@ -131,7 +139,7 @@ function Page1() {
                     <h1 id='salt-title'>Salt</h1>
                     <input type="text" id='salt-1' placeholder='enter your salt...(optional)'/>
 
-                    <button /*onClick={enableFlip}*/>Click to start</button>
+                    <button >Click to start</button>
                   </div>
                 </div>
               </div>
@@ -146,7 +154,14 @@ function Page1() {
             >
               <div className="slide-content">
                 <div className="front">
-                  <h1>Dictionary</h1>
+                <div className='about'>
+                    <h1 className='front-title'>Dictionnary</h1>
+                    <h1  id='ab'>about</h1>
+                    <p>
+                    A brute force attack involves testing numerous
+                     combinations of passwords or keys until the correct one is found.
+                    </p>
+                  </div>
                 </div>
                 <div className="back"><div className="input-content"> 
                     <h1 id='attack-title'>Dictionnary</h1>
@@ -154,7 +169,7 @@ function Page1() {
                     <h1 id='salt-title'>Salt</h1>
                     <input type="text" id='salt-2' placeholder='enter your salt...(optional)'/>
 
-                    <button /*onClick={enableFlip}*/>Click to start</button>
+                    <button >Click to start</button>
                   </div></div>
               </div>
             </div>
@@ -168,7 +183,14 @@ function Page1() {
             >
               <div className="slide-content">
                 <div className="front">
-                  <h1>Improved Dict</h1>
+                <div className='about'>
+                    <h1 className='front-title'>Improved dict</h1>
+                    <h1  id='ab'>about</h1>
+                    <p>
+                    A brute force attack involves testing numerous
+                     combinations of passwords or keys until the correct one is found.
+                    </p>
+                  </div>
                 </div>
                 <div className="back"><div className="input-content"> 
                     <h1 id='attack-title'>Improved Dict</h1>
@@ -176,7 +198,7 @@ function Page1() {
                     <h1 id='salt-title'>Salt</h1>
                     <input type="text" id='salt-3' placeholder='enter your salt...(optional)'/>
 
-                    <button /*onClick={enableFlip}*/>Click to start</button>
+                    <button >Click to start</button>
                   </div></div>
               </div>
             </div>
@@ -190,7 +212,14 @@ function Page1() {
             >
               <div className="slide-content">
                 <div className="front">
-                  <h1>Hybrid</h1>
+                <div className='about'>
+                    <h1 className='front-title'>Hybrid</h1>
+                    <h1 id='ab'>about</h1>
+                    <p>
+                    A brute force attack involves testing numerous
+                     combinations of passwords or keys until the correct one is found.
+                    </p>
+                  </div>
                 </div>
                 <div className="back">
                 <div className="input-content"> 
@@ -199,7 +228,7 @@ function Page1() {
                     <h1 id='salt-title'>Salt</h1>
                     <input type="text" id='salt-4' placeholder='enter your salt...(optional)'/>
 
-                    <button /*onClick={enableFlip}*/>Click to start</button>
+                    <button >Click to start</button>
                   </div>
                 </div>
               </div>
