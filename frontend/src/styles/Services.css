@@ -1,5 +1,7 @@
-#Attacks {
-    height: 100vh;
+/*attacks css*/
+
+#Attacks,#passwordtesting,#encryptdecrypt,#timeprediction{
+    min-height: 100vh;
     width: 100%;
     margin: 0;
     padding: 0;
@@ -238,6 +240,77 @@
 }
 #ab{
     font-size: 1rem;
+    background: linear-gradient(90deg, #00DF82, white);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+/*encrypt decrypt css*/
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    padding: 40px;
+    height: 100%;
+    width: 100%;
+   
+}
+.encrypt,.decrypt{
+    border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    background-color: #2D372F;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 20px;
+ 
+    
+}
+.container button{
+    outline: none;
+    border: none;
+    width: 50%;
+    border-radius: 15px;
+    padding: 5px 10px;
+    background-color: #1EA86E;
+    color: white;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; 
+    align-self: center;
+}
+.container button:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Horizontal, Vertical, Blur radius, Color */
+    transform: translateY(-0.25em);
+    
+  }
+
+.select{
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: #465349;
+    color: white;
+    padding: 1px 5px;
+    width: 50%;
+}
+.entry,.output,.key{
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: #465349;
+    padding: 5px;
+    color: white;
+}
+.key{
+    width: 50%;
+  
+}
+.encrypt h1,.decrypt h1{
     background: linear-gradient(90deg, #00DF82, white);
     background-clip: text;
     -webkit-background-clip: text;
