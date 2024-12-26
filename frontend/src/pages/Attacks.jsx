@@ -4,6 +4,8 @@ import 'swiper/css';
 import Navbar2 from '../components/Navbar/Navbar2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import '../styles/Services.css';
+import { PiSpinnerGapBold } from "react-icons/pi";
+import { VscDebugRestart } from "react-icons/vsc";
 
 function Page1() {
   const swiperRef = useRef(null);
@@ -15,6 +17,10 @@ function Page1() {
   const [canFlip, setCanFlip] = useState(true);
   const [showHashMethod, setShowHashMethod] = useState(false); // État pour afficher le champ de sélection
   const [selectedHashMethod, setSelectedHashMethod] = useState('md5'); // Par défaut, md5 est sélectionné
+  const [loading, setLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [inputValue, setInputValue] = useState(""); // To manage the input value
+  const [saltValue, setSaltValue] = useState("");
 
   const handleCardClick = (id, event) => {
     // Prevent flipping if canFlip is false (disabling flip on back)
@@ -104,7 +110,14 @@ function Page1() {
     }
   }, [flippedCardId]);
 
-
+  const handleIconClick = () => {
+    // Reset the input and button after clicking the icon
+    setInputValue(""); // Reset hashed password input
+    setSaltValue(""); // Reset salt input
+    setResponseMessage(""); // Clear response message
+    setIsSubmitted(false); // Reset submission state
+    setLoading(false); // Reset loading state
+  };
 
   const handleHashMethodChange = (e) => {
     setSelectedHashMethod(e.target.value); // Mettre à jour la méthode sélectionnée
@@ -113,8 +126,11 @@ function Page1() {
   const [responseMessage, setResponseMessage] = useState(""); // Initialise le message de réponse
 
   const handleSubmitbrutforce = () => {
+    setIsSubmitted(true);
+    setLoading(true);
     const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
     const salt = document.getElementById(`salt-${flippedCardId}`).value;
+
   
     const requestBody = {
       hashed_password: hashedPassword,
@@ -124,7 +140,7 @@ function Page1() {
     if (salt) {
       requestBody.salt = salt; // Ajouter le champ "salt" uniquement s'il est rempli
     }
-  
+    
     fetch('http://127.0.0.1:8001/attaque/bruteForce', {
       method: 'POST',
       headers: {
@@ -141,14 +157,18 @@ function Page1() {
         } else {
           setResponseMessage("Password not found !");
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
         setResponseMessage("Une erreur est survenue lors de la requête !");
+        setLoading(false); 
       });
   };
   const [responseMessage2, setResponseMessage2] = useState(""); // Initialise le message de réponse
   const handleSubmitDictionnary = () => {
+    setIsSubmitted(true);
+    setLoading(true);
     const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
     const salt = document.getElementById(`salt-${flippedCardId}`).value;
   
@@ -175,16 +195,20 @@ function Page1() {
         } else {
           setResponseMessage2("Password not found !");
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
         setResponseMessage2("Une erreur est survenue lors de la requête !");
+        setLoading(false);
       });
   };
 
 
   const [responseMessage3, setResponseMessage3] = useState(""); // Initialise le message de réponse
   const handleSubmitImprovedDictionnary = () => {
+    setIsSubmitted(true);
+    setLoading(true);
     const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
     const salt = document.getElementById(`salt-${flippedCardId}`).value;
   
@@ -212,15 +236,19 @@ function Page1() {
         } else {
           setResponseMessage3("Password not found !");
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
         setResponseMessage3("Une erreur est survenue lors de la requête !");
+        setLoading(false);
       });
   };
 
   const [responseMessage4, setResponseMessage4] = useState(""); // Initialise le message de réponse
   const handleSubmitHybrid = () => {
+    setIsSubmitted(true);
+    setLoading(true);
     const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
     const salt = document.getElementById(`salt-${flippedCardId}`).value;
   
@@ -248,10 +276,12 @@ function Page1() {
         } else {
           setResponseMessage4("Password not found !");
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
         setResponseMessage4("Une erreur est survenue lors de la requête !");
+        setLoading(false);
       });
   };
   return (
@@ -291,12 +321,16 @@ function Page1() {
                       type="text"
                       id="hash-1"
                       placeholder="enter your hashed password..."
+                      value={inputValue} 
+                      onChange={(e) => setInputValue(e.target.value)} 
                     />
                     <h1 id="salt-title">Salt</h1>
                     <input
                       type="text"
                       id="salt-1"
                       placeholder="enter your salt...(optional)"
+                      value={saltValue} // Bind to salt input state
+                      onChange={(e) => setSaltValue(e.target.value)} 
                     />
                         <select 
                           value={selectedHashMethod}
@@ -307,13 +341,25 @@ function Page1() {
                           <option value="sha256">SHA-256</option>
                           <option value="sha1">SHA-1</option>
                         </select>
-                    <button onClick={handleSubmitbrutforce}>Click to start</button>
+                        {!isSubmitted && !loading && (
+                        <button  onClick={(e) => {e.stopPropagation(); handleSubmitbrutforce()}}>
+                            Click to start</button>
+                        )}  
                         {/* Message de réponse */}
-                        {responseMessage && (
-                      <div className="response-message">
-                        <p>{responseMessage}</p>
-                      </div>
-                    )}
+                        {loading ? (
+                        <div className="response-message">
+                            <PiSpinnerGapBold style={ {fontSize: "20px" }} /> {/* Show loading message while request is being processed */}
+                        </div>
+                        ) : (
+                        <div className="response-message">
+
+                            <p>{responseMessage}</p>
+                            {responseMessage && !loading && (
+                            <VscDebugRestart style={{ fontSize: "20px", cursor: "pointer" }} onClick={(e) => {e.stopPropagation();handleIconClick()} }/>
+                            )}
+                            
+                        </div>
+                        )}
                   </div>
                 </div>
               </div>
@@ -341,9 +387,11 @@ function Page1() {
                 </div>
                 <div className="back"><div className="input-content"> 
                     <h1 id='attack-title'>Dictionnary</h1>
-                    <input type="text"  id='hash-2' placeholder='enter your hashed password...'/>
+                    <input type="text"  id='hash-2' placeholder='enter your hashed password...' value={inputValue} 
+                      onChange={(e) => setInputValue(e.target.value)} />
                     <h1 id='salt-title'>Salt</h1>
-                    <input type="text" id='salt-2' placeholder='enter your salt...(optional)'/>
+                    <input type="text" id='salt-2' placeholder='enter your salt...(optional)' value={saltValue} 
+                      onChange={(e) => setSaltValue(e.target.value)} />
                     <select 
                           value={selectedHashMethod}
                           onChange={handleHashMethodChange}
@@ -353,13 +401,25 @@ function Page1() {
                           <option value="sha256">SHA-256</option>
                           <option value="sha1">SHA-1</option>
                         </select>
-                    <button onClick={handleSubmitDictionnary}>Click to start</button>
+                        {!isSubmitted && !loading && (
+                        <button  onClick={(e) => {e.stopPropagation(); handleSubmitDictionnary()}}>
+                            Click to start</button>
+                        )}  
                         {/* Message de réponse */}
-                        {responseMessage && (
-                      <div className="response-message2">
-                        <p>{responseMessage2}</p>
-                      </div>
-                    )}
+                        {loading ? (
+                        <div className="response-message2">
+                            <PiSpinnerGapBold style={ {fontSize: "20px" }} /> {/* Show loading message while request is being processed */}
+                        </div>
+                        ) : (
+                        <div className="response-message2">
+
+                            <p>{responseMessage2}</p>
+                            {responseMessage2 && !loading && (
+                            <VscDebugRestart style={{ fontSize: "20px", cursor: "pointer" }} onClick={(e) => {e.stopPropagation();handleIconClick()} }/>
+                            )}
+                            
+                        </div>
+                        )}
                   </div></div>
               </div>
             </div>
@@ -384,9 +444,11 @@ function Page1() {
                 </div>
                 <div className="back"><div className="input-content"> 
                     <h1 id='attack-title'>Improved Dict</h1>
-                    <input type="text"  id='hash-3' placeholder='enter your hashed password...'/>
+                    <input type="text"  id='hash-3' placeholder='enter your hashed password...' value={inputValue} 
+                      onChange={(e) => setInputValue(e.target.value)} />
                     <h1 id='salt-title'>Salt</h1>
-                    <input type="text" id='salt-3' placeholder='enter your salt...(optional)'/>
+                    <input type="text" id='salt-3' placeholder='enter your salt...(optional)' value={saltValue} // Bind to salt input state
+                      onChange={(e) => setSaltValue(e.target.value)} />
                     <select 
                           value={selectedHashMethod}
                           onChange={handleHashMethodChange}
@@ -396,13 +458,25 @@ function Page1() {
                           <option value="sha256">SHA-256</option>
                           <option value="sha1">SHA-1</option>
                         </select>
-                    <button onClick={handleSubmitImprovedDictionnary}>Click to start</button>
+                        {!isSubmitted && !loading && (
+                        <button  onClick={(e) => {e.stopPropagation(); handleSubmitImprovedDictionnary()}}>
+                            Click to start</button>
+                        )}  
                         {/* Message de réponse */}
-                        {responseMessage3 && (
-                      <div className="response-message3">
-                        <p>{responseMessage3}</p>
-                      </div>
-                    )}
+                        {loading ? (
+                        <div className="response-message3">
+                            <PiSpinnerGapBold style={ {fontSize: "20px" }} /> {/* Show loading message while request is being processed */}
+                        </div>
+                        ) : (
+                        <div className="response-message3">
+
+                            <p>{responseMessage3}</p>
+                            {responseMessage3 && !loading && (
+                            <VscDebugRestart style={{ fontSize: "20px", cursor: "pointer" }} onClick={(e) => {e.stopPropagation();handleIconClick()} }/>
+                            )}
+                            
+                        </div>
+                        )}
                   </div></div>
               </div>
             </div>
@@ -428,9 +502,11 @@ function Page1() {
                 <div className="back">
                 <div className="input-content"> 
                     <h1 id='attack-title'>Hybrid</h1>
-                    <input type="text"  id='hash-4' placeholder='enter your hashed password...'/>
+                    <input type="text"  id='hash-4' placeholder='enter your hashed password...' value={inputValue} 
+                      onChange={(e) => setInputValue(e.target.value)} />
                     <h1 id='salt-title'>Salt</h1>
-                    <input type="text" id='salt-4' placeholder='enter your salt...(optional)'/>
+                    <input type="text" id='salt-4' placeholder='enter your salt...(optional)' value={saltValue} // Bind to salt input state
+                      onChange={(e) => setSaltValue(e.target.value)} />
                     <select 
                           value={selectedHashMethod}
                           onChange={handleHashMethodChange}
@@ -440,13 +516,25 @@ function Page1() {
                           <option value="sha256">SHA-256</option>
                           <option value="sha1">SHA-1</option>
                         </select>
-                    <button onClick={handleSubmitHybrid}>Click to start</button>
+                        {!isSubmitted && !loading && (
+                        <button  onClick={(e) => {e.stopPropagation(); handleSubmitHybrid()}}>
+                            Click to start</button>
+                        )}  
                         {/* Message de réponse */}
-                        {responseMessage4 && (
-                      <div className="response-message4">
-                        <p>{responseMessage4}</p>
-                      </div>
-                    )}
+                        {loading ? (
+                        <div className="response-message4">
+                            <PiSpinnerGapBold style={ {fontSize: "20px" }} /> {/* Show loading message while request is being processed */}
+                        </div>
+                        ) : (
+                        <div className="response-message4">
+
+                            <p>{responseMessage4}</p>
+                            {responseMessage4 && !loading && (
+                            <VscDebugRestart style={{ fontSize: "20px", cursor: "pointer" }} onClick={(e) => {e.stopPropagation();handleIconClick()} }/>
+                            )}
+                            
+                        </div>
+                        )}
                     
                   </div>
                 </div>
