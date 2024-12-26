@@ -71,7 +71,7 @@ def get_hash_function(hash_algorithm,salt):
         elif hash_algorithm == "sha1":
             return lambda password_bytes: hashlib.sha1(password_bytes).hexdigest()
         else:
-            return lambda password_bytes: hashlib.sha256(password_bytes,round=1000).hexdigest()
+            return lambda password_bytes: hashlib.sha256(password_bytes).hexdigest()
 
 
 # Main brute force function
