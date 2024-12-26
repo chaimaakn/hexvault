@@ -1,13 +1,19 @@
 /*attacks css*/
 
 #Attacks,#passwordtesting,#encryptdecrypt,#timeprediction{
-    min-height: 100vh;
+   
     width: 100%;
     margin: 0;
     padding: 0;
     background-color: #1B2D1F;
     display: flex;
     flex-direction: column;
+  }
+  #passwordtesting,#encryptdecrypt,#timeprediction{
+    min-height: 100vh;
+  }
+  #Attacks{
+    height: 100vh;
   }
   .navbar-container{
     z-index: 2;
