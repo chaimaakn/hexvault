@@ -226,7 +226,7 @@
     padding: 5px 10px;
     background-color: #1EA86E;
     color: white;
-    margin-top: 30px;
+    margin-top: 20px;
     transition: box-shadow 0.3s ease, transform 0.3s ease; 
 }
 .input-content button:hover {
@@ -255,44 +255,14 @@
 
 
 
-select {
-  appearance: none; /* Supprime le style natif du navigateur */
-  background-color: #465349; /* Fond noir */
-  color: #fff; /* Texte blanc */
-  border: 2px solid #444; /* Bordure grise foncée */
-  border-radius: 5px; /* Coins arrondis */
-  padding: 5px 60px; /* Espacement interne */
-  font-size: 5px; /* Taille de la police */
-  cursor: pointer; /* Curseur en mode pointer */
-  outline: none; /* Supprime le contour par défaut */
-  transition: all 0.3s ease; /* Animation pour les interactions */
-}
-
-/* Style pour l'état survolé */
-select:hover {
-  border-color: #0CBB7B; /* Bordure grise plus claire */
-}
-
-/* Style pour l'état actif/focus */
-select:focus {
-  border-color: #0CBB7B; /* Bordure bleu clair */
-  box-shadow: 0 0 5px #0CBB7B; /* Lueur autour */
-}
-
-/* Ajouter un style pour la flèche */
-select::-ms-expand {
-  display: none; /* Supprime la flèche pour IE */
-}
-
-select::after {
-  content: '▼'; /* Ajoute une flèche descendante */
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  font-size: 14px;
-  color: #fff;
+.select-attacks{
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: #465349;
+    color: white;
+    padding: 1px 5px;
+    width: 50%;
 }
 
 .response-message {

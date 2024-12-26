@@ -301,6 +301,7 @@ function Page1() {
                         <select 
                           value={selectedHashMethod}
                           onChange={handleHashMethodChange}
+                          className='select-attacks'
                         >
                           <option value="md5">MD5</option>
                           <option value="sha256">SHA-256</option>
@@ -346,6 +347,7 @@ function Page1() {
                     <select 
                           value={selectedHashMethod}
                           onChange={handleHashMethodChange}
+                          className='select-attacks'
                         >
                           <option value="md5">MD5</option>
                           <option value="sha256">SHA-256</option>
@@ -388,6 +390,7 @@ function Page1() {
                     <select 
                           value={selectedHashMethod}
                           onChange={handleHashMethodChange}
+                          className='select-attacks'
                         >
                           <option value="md5">MD5</option>
                           <option value="sha256">SHA-256</option>
@@ -431,6 +434,7 @@ function Page1() {
                     <select 
                           value={selectedHashMethod}
                           onChange={handleHashMethodChange}
+                          className='select-attacks'
                         >
                           <option value="md5">MD5</option>
                           <option value="sha256">SHA-256</option>
