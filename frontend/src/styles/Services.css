@@ -278,7 +278,7 @@
  
     
 }
-.container button{
+.sub-btn{
     outline: none;
     border: none;
     width: 50%;
@@ -289,7 +289,16 @@
     transition: box-shadow 0.3s ease, transform 0.3s ease; 
     align-self: center;
 }
-.container button:hover {
+.gen-key-btn{
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    padding: 5px 10px;
+    background-color: #1EA86E;
+    color: white;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; 
+}
+.sub-btn:hover ,.gen-key-btn:hover{
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Horizontal, Vertical, Blur radius, Color */
     transform: translateY(-0.25em);
     
@@ -313,7 +322,7 @@
     color: white;
 }
 .key{
-    width: 50%;
+    width: 60%;
   
 }
 .encrypt h1,.decrypt h1{
@@ -322,4 +331,10 @@
     -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
+}
+.key-container{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    
 }

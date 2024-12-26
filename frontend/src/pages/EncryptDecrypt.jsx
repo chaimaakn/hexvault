@@ -20,9 +20,12 @@ function EncryptDecrypt() {
                 <option value="">RSA</option>
                 <option value="">CHACHA20</option>
             </select>
-            <input type="text" className='key' placeholder='enter your key...' />
+            <div className='key-container'>
+            <input type="text" className='key' placeholder='enter your key or generate one...' />
+            <button className='gen-key-btn'>generate key</button>
+            </div>
                 <textarea name="" className="output" rows={5} placeholder='encrypted value will appear here...' disabled></textarea>
-                <button>Encrypt</button>
+                <button className='sub-btn'>Encrypt</button>
             </div>
 
             <div className='decrypt'>
@@ -37,7 +40,7 @@ function EncryptDecrypt() {
             </select>
             <input type="text" className='key'  placeholder='enter your key...'/>
             <textarea name="" className="output" rows={5} placeholder='decrypted value will appear here...' disabled></textarea>
-            <button>Decrypt</button>
+            <button className='sub-btn'>Decrypt</button>
             </div>
         </div>
    
