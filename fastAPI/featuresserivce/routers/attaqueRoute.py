@@ -56,6 +56,8 @@ async def get_word(word_id: str):
 @router.post("/DictionnaireAmeliorer")
 async def dicAmeliorer_attack(request: AttackRequest):
     return await handle_dicAmeliorer(request)
+
+
 @router.post("/hybrid")
 async def hybrid_attack(request: AttackRequest):
     return await handle_hybrid(request)
