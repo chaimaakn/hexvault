@@ -2,7 +2,7 @@
 
 #Attacks,#passwordtesting,#encryptdecrypt,#timeprediction{
    
-    width: 100%;
+    min-width: 10vw;
     margin: 0;
     padding: 0;
     background-color: #1B2D1F;
