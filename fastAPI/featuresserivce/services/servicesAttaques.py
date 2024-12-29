@@ -276,16 +276,16 @@ async def test_password(password: str) -> dict:
     if len(password) < 12:
         return {
             "success": True,
-            "message": f"Votre mot de passe est trop court. Il doit contenir au moins 12 caractères."
-                       f"Estimation du temps nécessaire pour le casser au pire cas:",
+            "message": f"Votre mot de passe est trop court. Il doit contenir au moins 12 caractères.",
+                       #f"Estimation du temps nécessaire pour le casser au pire cas:",
             "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
         }
 
     if not any(char.isupper() for char in password):
         return {
             "success": True,
-            "message": f"Votre mot de passe doit contenir au moins une majuscule."
-                       f"Estimation du temps nécessaire pour le casser au pire cas:",
+            "message": f"Votre mot de passe doit contenir au moins une majuscule.",
+                       #f"Estimation du temps nécessaire pour le casser au pire cas:",
             "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
                        
         }
@@ -293,23 +293,23 @@ async def test_password(password: str) -> dict:
     if not any(char in string.punctuation for char in password):
         return {
             "success": True,
-            "message": f"Votre mot de passe doit contenir au moins un caractère spécial."
-                       f"Estimation du temps nécessaire pour le casser au pire cas:",
+            "message": f"Votre mot de passe doit contenir au moins un caractère spécial.",
+                       #f"Estimation du temps nécessaire pour le casser au pire cas:",
             "timeestimation": f"{format_time(estimate_total_time(len(password), 2))}",
         }
 
     if not any(char.isdigit() for char in password):
         return {
             "success": True,
-            "message": f"Votre mot de passe doit contenir au moins un chiffre."
-                       f"Estimation du temps nécessaire pour le casser au pire cas:",
+            "message": f"Votre mot de passe doit contenir au moins un chiffre.",
+                       #f"Estimation du temps nécessaire pour le casser au pire cas:",
             "timeestimation":f"{format_time(estimate_total_time(len(password), 4))}",
         }
 
     return {
         "success": True,
-        "message": f"Votre mot de passe est considéré comme sûr."
-                   f"Estimation du temps nécessaire pour le casser au pire cas:",
+        "message": f"Votre mot de passe est considéré comme sûr.",
+                   #f"Estimation du temps nécessaire pour le casser au pire cas:",
         "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
     }
 
