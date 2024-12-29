@@ -17,7 +17,9 @@ function EncryptDecrypt() {
       const response = await fetch(`http://127.0.0.1:8001/encrypt/generate-key/${algorithm}`);
       if (response.ok) {
         const data = await response.text();
-        setEncryptionKey(data); // Remplir le champ clé avec la clé générée
+        // Retirer uniquement les guillemets au début et à la fin
+        const sanitizedKey = data.replace(/^"|"$/g, '');
+        setEncryptionKey(sanitizedKey); // Remplir le champ clé avec la clé générée
       } else {
         console.error('Erreur lors de la génération de la clé');
       }
@@ -25,6 +27,7 @@ function EncryptDecrypt() {
       console.error('Erreur réseau:', error);
     }
   };
+  
 
   // Fonction pour chiffrer un message
   const encryptMessage = async () => {
@@ -44,7 +47,8 @@ function EncryptDecrypt() {
 
       if (response.ok) {
         const data = await response.text();
-        setEncryptionResult(data); // Afficher le résultat chiffré
+        const sanitizedResult = data.replace(/^"|"$/g, '');
+        setEncryptionResult(sanitizedResult); // Afficher le résultat chiffré
       } else {
         console.error('Erreur lors du chiffrement');
       }
@@ -71,7 +75,8 @@ function EncryptDecrypt() {
 
       if (response.ok) {
         const data = await response.text();
-        setDecryptionResult(data); // Afficher le résultat déchiffré
+        const sanitizedResult = data.replace(/^"|"$/g, '');
+        setDecryptionResult(sanitizedResult); // Afficher le résultat déchiffré
       } else {
         console.error('Erreur lors du déchiffrement');
       }
