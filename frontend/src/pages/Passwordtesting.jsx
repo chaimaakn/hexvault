@@ -22,14 +22,14 @@ function Passwordtesting() {
       });
 
       if (!response.ok) {
-        throw new Error('Erreur lors de la requête au backend');
+        throw new Error('Error during the request to the backend');
       }
 
       const data = await response.json();
       setPopupContent(`${data.message} `); // Met à jour le contenu de la popup
     } catch (error) {
       console.error('Erreur:', error);
-      setPopupContent('Une erreur est survenue lors du test du mot de passe.');
+      setPopupContent('An error occurred while testing the password'); // Met à jour le contenu de la popup
     } finally {
       setIsLoading(false); // Arrête le chargement
       setShowPopup(true); // Affiche la popup
@@ -70,7 +70,7 @@ function Passwordtesting() {
       {/* Message de traitement */}
       {isLoading && (
         <div className="loading-message">
-          <p>Votre requête est en cours de traitement...</p>
+          <p>Your request is being processed...</p>
         </div>
       )}
 
