@@ -6,7 +6,8 @@ function Timeprediction() {
   const [password, setPassword] = useState(""); // Pour stocker le mot de passe saisi
   const [timeEstimation, setTimeEstimation] = useState(null); // Pour stocker la réponse du backend
   const [error, setError] = useState(null); // Pour gérer les erreurs
-  
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // Pour gérer l'ouverture du pop-up
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -28,7 +29,8 @@ function Timeprediction() {
       const data = await response.json();
       if (data.success) {
         setTimeEstimation(data.timeestimation);
-        setError(null); // Effacer les erreurs précédentes
+        setError(null);
+        setIsPopupOpen(true); // Ouvrir le pop-up
       } else {
         setError('Mot de passe non valide');
       }
@@ -36,6 +38,10 @@ function Timeprediction() {
       setError(err.message);
       setTimeEstimation(null);
     }
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false); // Fermer le pop-up
   };
 
   return (
@@ -56,28 +62,58 @@ function Timeprediction() {
           />
           <button onClick={handleSubmit}>Start</button>
 
-          {timeEstimation && (
-            <div className="time-display">
-              <h2>Time Estimation:</h2>
-              <Chronometer timeString={timeEstimation} />
-            </div>
-          )}
-
           {error && <p className="error-message">{error}</p>}
         </div>
       </div>
+
+      {isPopupOpen && timeEstimation && (
+        <Popup timeEstimation={timeEstimation} onClose={handleClosePopup} />
+      )}
     </div>
   );
 }
 
-// Composant pour afficher le chronomètre
-const Chronometer = ({ timeString }) => {
-  // Le temps est envoyé sous forme de texte, par exemple : "2 jours, 5 heures, 30 minutes, 15 secondes"
+// Composant Pop-up
+const Popup = ({ timeEstimation, onClose }) => {
+  // Séparer les valeurs de jours, heures, minutes et secondes
+  const [days, hours, minutes, seconds] = parseTimeEstimation(timeEstimation);
+
   return (
-    <div className="chronometer">
-      <p>{timeString}</p>
+    <div className="popup2">
+      <div className="popup-content2">
+        <h2>Time Estimation</h2>
+        <div className="chronometer">
+          <div className="time-box">
+            <h3>{days}</h3>
+            <p>Days</p>
+          </div>
+          <div className="time-box">
+            <h3>{hours}</h3>
+            <p>Hours</p>
+          </div>
+          <div className="time-box">
+            <h3>{minutes}</h3>
+            <p>Minutes</p>
+          </div>
+          <div className="time-box">
+            <h3>{seconds}</h3>
+            <p>Seconds</p>
+          </div>
+        </div>
+        <button className="close-button" onClick={onClose}>
+          Close
+        </button>
+      </div>
     </div>
   );
 };
 
+// Fonction pour analyser le temps estimé (séparer en jours, heures, minutes et secondes)
+const parseTimeEstimation = (timeString) => {
+  const timeParts = timeString.match(/\d+/g); // Extraire les chiffres
+  const [days, hours, minutes, seconds] = timeParts.map((t) => parseInt(t, 10));
+  return [days || 0, hours || 0, minutes || 0, seconds || 0];
+};
+
 export default Timeprediction;
+

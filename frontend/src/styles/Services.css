@@ -513,3 +513,89 @@
   text-align: center;
   font-size: 16px;
 }
+
+
+
+/* Styles pour le pop-up */
+.popup2 {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content2 {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  width: 50%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.close-button {
+  background-color:#00b36b ;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.close-button:hover {
+  background-color: #039a5d;
+}
+
+/* Styles pour le chronomètre */
+.chronometer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes pour les 4 unités */
+  gap: 15px; /* Espacement entre les carrés */
+  margin-top: 30px;
+}
+
+.time-box {
+  background-color: #00df82;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.time-box:hover {
+  transform: scale(1.1); /* Agrandir légèrement au survol */
+}
+
+.time-box h3 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.time-box p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+/* Animation pour le pop-up */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
