@@ -6,6 +6,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import '../styles/Services.css';
 import { PiSpinnerGapBold } from "react-icons/pi";
 import { VscDebugRestart } from "react-icons/vsc";
+import Spinner from 'react-bootstrap/Spinner';
 
 function Page1() {
   const swiperRef = useRef(null);
@@ -95,13 +96,6 @@ function Page1() {
     };
   }, []);
 
-  // Handle enabling flip behavior when "click to start" button in Card 1 is clicked
- /* const enableFlip = (id) => {
-    setCanFlip(true); // Re-enable flipping when the button is clicked
-    setFlippedCardId(id);
-    setClickedCardId(null);
-  };*/
-
   useEffect(() => {
     if (flippedCardId) {
       setCanFlip(false); // Disable flip-back when the card is flipped
@@ -115,6 +109,9 @@ function Page1() {
     setInputValue(""); // Reset hashed password input
     setSaltValue(""); // Reset salt input
     setResponseMessage(""); // Clear response message
+    setResponseMessage2(""); // Clear response message
+    setResponseMessage3(""); // Clear response message
+    setResponseMessage4(""); // Clear response message
     setIsSubmitted(false); // Reset submission state
     setLoading(false); // Reset loading state
   };
@@ -161,7 +158,7 @@ function Page1() {
       })
       .catch((error) => {
         console.error(error);
-        setResponseMessage("Une erreur est survenue lors de la requête !");
+        setResponseMessage("An error occurred during the request!");
         setLoading(false); 
       });
   };
@@ -199,7 +196,7 @@ function Page1() {
       })
       .catch((error) => {
         console.error(error);
-        setResponseMessage2("Une erreur est survenue lors de la requête !");
+        setResponseMessage2("An error occurred during the request!");
         setLoading(false);
       });
   };
@@ -240,7 +237,7 @@ function Page1() {
       })
       .catch((error) => {
         console.error(error);
-        setResponseMessage3("Une erreur est survenue lors de la requête !");
+        setResponseMessage3("An error occurred during the request!");
         setLoading(false);
       });
   };
@@ -280,10 +277,13 @@ function Page1() {
       })
       .catch((error) => {
         console.error(error);
-        setResponseMessage4("Une erreur est survenue lors de la requête !");
+        setResponseMessage4("An error occurred during the request!");
         setLoading(false);
       });
   };
+
+
+  
   return (
     <div id="Attacks">
       <div className="navbar-container">
@@ -348,7 +348,7 @@ function Page1() {
                         {/* Message de réponse */}
                         {loading ? (
                         <div className="response-message">
-                            <PiSpinnerGapBold style={ {fontSize: "20px" }} /> {/* Show loading message while request is being processed */}
+                            <Spinner animation="border" variant="success" size='sm' /> {/* Show loading message while request is being processed */}
                         </div>
                         ) : (
                         <div className="response-message">
@@ -408,7 +408,7 @@ function Page1() {
                         {/* Message de réponse */}
                         {loading ? (
                         <div className="response-message2">
-                            <PiSpinnerGapBold style={ {fontSize: "20px" }} /> {/* Show loading message while request is being processed */}
+                            <Spinner animation="border" variant="success" size='sm' />  {/* Show loading message while request is being processed */}
                         </div>
                         ) : (
                         <div className="response-message2">
@@ -465,7 +465,7 @@ function Page1() {
                         {/* Message de réponse */}
                         {loading ? (
                         <div className="response-message3">
-                            <PiSpinnerGapBold style={ {fontSize: "20px" }} /> {/* Show loading message while request is being processed */}
+                           <Spinner animation="border" variant="success" size='sm' />  {/* Show loading message while request is being processed */}
                         </div>
                         ) : (
                         <div className="response-message3">
@@ -477,7 +477,8 @@ function Page1() {
                             
                         </div>
                         )}
-                  </div></div>
+                  </div>
+               </div> 
               </div>
             </div>
 
@@ -523,7 +524,7 @@ function Page1() {
                         {/* Message de réponse */}
                         {loading ? (
                         <div className="response-message4">
-                            <PiSpinnerGapBold style={ {fontSize: "20px" }} /> {/* Show loading message while request is being processed */}
+                            <Spinner animation="border" variant="success" size='sm' />  {/* Show loading message while request is being processed */}
                         </div>
                         ) : (
                         <div className="response-message4">
