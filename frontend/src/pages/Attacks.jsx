@@ -4,13 +4,9 @@ import 'swiper/css';
 import Navbar2 from '../components/Navbar/Navbar2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import '../styles/Services.css';
-import { PiSpinnerGapBold } from "react-icons/pi";
 import { VscDebugRestart } from "react-icons/vsc";
-<<<<<<< HEAD
 import Spinner from 'react-bootstrap/Spinner';
-=======
 import { useKeycloak } from '@react-keycloak/web';
->>>>>>> 67851f56895c8c50c376fd00cee33c6f136d541e
 
 function Page1() {
   const { keycloak } = useKeycloak();
@@ -134,31 +130,6 @@ function Page1() {
       keycloak.login(); // Rediriger vers la page de login si non authentifié
       return;
     }
-<<<<<<< HEAD
-    
-    fetch('http://127.0.0.1:8001/attaque/bruteForce', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    })
-    
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Request body:', data);
-        if (data.success) {
-          setResponseMessage(`Your password is : ${data.password_found}`); // Stocker le mot de passe trouvé
-        } else {
-          setResponseMessage("Password not found !");
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setResponseMessage("An error occurred during the request!");
-        setLoading(false); 
-=======
   
     try {
       setIsSubmitted(true);
@@ -183,7 +154,6 @@ function Page1() {
           'Authorization': `Bearer ${keycloak.token}` // Ajouter le token ici aussi si nécessaire
         },
         body: JSON.stringify(requestBody)
->>>>>>> 67851f56895c8c50c376fd00cee33c6f136d541e
       });
   
       if (!bruteforceResponse.ok) {
@@ -203,7 +173,7 @@ function Page1() {
   
     } catch (error) {
       console.error('Error:', error);
-      setResponseMessage("Une erreur est survenue lors de la requête !");
+      setResponseMessage("An error occurred during the request!");
     } finally {
       setLoading(false);
     }
@@ -240,11 +210,6 @@ function Page1() {
         },
         body: JSON.stringify(requestBody),
       })
-<<<<<<< HEAD
-      .catch((error) => {
-        console.error(error);
-        setResponseMessage2("An error occurred during the request!");
-=======
       if (!dic.ok) {
         const errorText = await dic.text();
         console.error('Response error:', errorText);
@@ -261,9 +226,8 @@ function Page1() {
       }
       } catch (error) {
         console.error('Error:', error);
-        setResponseMessage2("Une erreur est survenue lors de la requête !");
+        setResponseMessage2("An error occurred during the request!");
       } finally {
->>>>>>> 67851f56895c8c50c376fd00cee33c6f136d541e
         setLoading(false);
       }
   };
@@ -300,11 +264,6 @@ function Page1() {
         },
         body: JSON.stringify(requestBody),
       })
-<<<<<<< HEAD
-      .catch((error) => {
-        console.error(error);
-        setResponseMessage3("An error occurred during the request!");
-=======
       if (!dicAm.ok) {
         const errorText = await dicAm.text();
         console.error('Response error:', errorText);
@@ -321,9 +280,8 @@ function Page1() {
       }
       } catch (error) {
         console.error('Error:', error);
-        setResponseMessage3("Une erreur est survenue lors de la requête !");
+        setResponseMessage3("An error occurred during the request!");
       } finally {
->>>>>>> 67851f56895c8c50c376fd00cee33c6f136d541e
         setLoading(false);
       }
   };
@@ -373,7 +331,7 @@ function Page1() {
       }
       } catch (error) {
         console.error('Error:', error);
-        setResponseMessage4("Une erreur est survenue lors de la requête !");
+        setResponseMessage4("An error occurred during the request!");
       } finally {
         setLoading(false);
       }
