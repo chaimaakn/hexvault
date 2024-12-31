@@ -6,8 +6,10 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import '../styles/Services.css';
 import { PiSpinnerGapBold } from "react-icons/pi";
 import { VscDebugRestart } from "react-icons/vsc";
+import { useKeycloak } from '@react-keycloak/web';
 
 function Page1() {
+  const { keycloak } = useKeycloak();
   const swiperRef = useRef(null);
   const prevButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
@@ -124,165 +126,219 @@ function Page1() {
   };
 
   const [responseMessage, setResponseMessage] = useState(""); // Initialise le message de réponse
-
-  const handleSubmitbrutforce = () => {
-    setIsSubmitted(true);
-    setLoading(true);
-    const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
-    const salt = document.getElementById(`salt-${flippedCardId}`).value;
-
-  
-    const requestBody = {
-      hashed_password: hashedPassword,
-      hash_algorithm: selectedHashMethod,
-    };
-  
-    if (salt) {
-      requestBody.salt = salt; // Ajouter le champ "salt" uniquement s'il est rempli
+ 
+  const handleSubmitbrutforce = async () => {
+    // Vérifier d'abord l'authentification
+    if (!keycloak.authenticated) {
+      console.log("User not authenticated");
+      keycloak.login(); // Rediriger vers la page de login si non authentifié
+      return;
     }
-    
-    fetch('http://127.0.0.1:8001/attaque/bruteForce', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    })
-    
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Request body:', data);
-        if (data.success) {
-          setResponseMessage(`Your password is : ${data.password_found}`); // Stocker le mot de passe trouvé
-        } else {
-          setResponseMessage("Password not found !");
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setResponseMessage("Une erreur est survenue lors de la requête !");
-        setLoading(false); 
+  
+    try {
+      setIsSubmitted(true);
+      setLoading(true);
+  
+      // Récupérer les valeurs des inputs
+      const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
+      const salt = document.getElementById(`salt-${flippedCardId}`).value;
+  
+      // Préparer le corps de la requête
+      const requestBody = {
+        hashed_password: hashedPassword,
+        hash_algorithm: selectedHashMethod,
+        ...(salt && { salt }) // Ajouter le salt uniquement s'il existe
+      };
+  
+      // Faire l'appel à l'API de bruteforce
+      const bruteforceResponse = await fetch('http://127.0.0.1:8001/attaque/bruteForce', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${keycloak.token}` // Ajouter le token ici aussi si nécessaire
+        },
+        body: JSON.stringify(requestBody)
       });
+  
+      if (!bruteforceResponse.ok) {
+        const errorText = await bruteforceResponse.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${bruteforceResponse.status}, message: ${errorText}`);
+      }
+  
+      const data = await bruteforceResponse.json();
+      
+      // Traiter la réponse
+      if (data.success) {
+        setResponseMessage(`Your password is : ${data.password_found}`);
+      } else {
+        setResponseMessage("Password not found !");
+      }
+  
+    } catch (error) {
+      console.error('Error:', error);
+      setResponseMessage("Une erreur est survenue lors de la requête !");
+    } finally {
+      setLoading(false);
+    }
   };
   const [responseMessage2, setResponseMessage2] = useState(""); // Initialise le message de réponse
-  const handleSubmitDictionnary = () => {
-    setIsSubmitted(true);
-    setLoading(true);
-    const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
-    const salt = document.getElementById(`salt-${flippedCardId}`).value;
-  
-    const requestBody = {
-      hashed_password: hashedPassword,
-      hash_algorithm: selectedHashMethod,
-    };
-  
-    if (salt) {
-      requestBody.salt = salt; // Ajouter le champ "salt" uniquement s'il est rempli
+  const handleSubmitDictionnary = async () => {
+    // Vérifier d'abord l'authentification
+    if (!keycloak.authenticated) {
+      console.log("User not authenticated");
+      keycloak.login(); // Rediriger vers la page de login si non authentifié
+      return;
     }
-  
-    fetch('http://127.0.0.1:8001/attaque/Dictionnaire', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          setResponseMessage2(`Your password is : ${data.password_found}`); // Stocker le mot de passe trouvé
-        } else {
-          setResponseMessage2("Password not found !");
-        }
-        setLoading(false);
+    try {
+      setIsSubmitted(true);
+      setLoading(true);
+      const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
+      const salt = document.getElementById(`salt-${flippedCardId}`).value;
+    
+      const requestBody = {
+        hashed_password: hashedPassword,
+        hash_algorithm: selectedHashMethod,
+      };
+    
+      if (salt) {
+        requestBody.salt = salt; // Ajouter le champ "salt" uniquement s'il est rempli
+      }
+    
+      const dic = await fetch('http://127.0.0.1:8001/attaque/Dictionnaire', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${keycloak.token}` // Ajouter le token ici aussi si nécessaire
+
+        },
+        body: JSON.stringify(requestBody),
       })
-      .catch((error) => {
-        console.error(error);
+      if (!dic.ok) {
+        const errorText = await dic.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${dic.status}, message: ${errorText}`);
+      }
+  
+      const data = await dic.json();
+      
+      // Traiter la réponse
+      if (data.success) {
+        setResponseMessage2(`Your password is : ${data.password_found}`);
+      } else {
+        setResponseMessage2("Password not found !");
+      }
+      } catch (error) {
+        console.error('Error:', error);
         setResponseMessage2("Une erreur est survenue lors de la requête !");
+      } finally {
         setLoading(false);
-      });
+      }
   };
 
 
   const [responseMessage3, setResponseMessage3] = useState(""); // Initialise le message de réponse
-  const handleSubmitImprovedDictionnary = () => {
-    setIsSubmitted(true);
-    setLoading(true);
-    const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
-    const salt = document.getElementById(`salt-${flippedCardId}`).value;
-  
-    const requestBody = {
-      hashed_password: hashedPassword,
-      hash_algorithm: selectedHashMethod,
-    };
-  
-    if (salt) {
-      requestBody.salt = salt; // Ajouter le champ "salt" uniquement s'il est rempli
+  const handleSubmitImprovedDictionnary = async() => {
+    // Vérifier d'abord l'authentification
+    if (!keycloak.authenticated) {
+      console.log("User not authenticated");
+      keycloak.login(); // Rediriger vers la page de login si non authentifié
+      return;
     }
   
-    fetch('http://127.0.0.1:8001/attaque/DictionnaireAmeliorer', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          console.log(data.password_found)
-          setResponseMessage3(`Your password is : ${data.password_found}`); // Stocker le mot de passe trouvé
-        } else {
-          setResponseMessage3("Password not found !");
-        }
-        setLoading(false);
+    try {
+      setIsSubmitted(true);
+      setLoading(true);
+      const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
+      const salt = document.getElementById(`salt-${flippedCardId}`).value;
+    
+      const requestBody = {
+        hashed_password: hashedPassword,
+        hash_algorithm: selectedHashMethod,
+        ...(salt && { salt }) // Ajouter le salt uniquement s'il existe
+      };
+
+    
+      const dicAm = fetch('http://127.0.0.1:8001/attaque/DictionnaireAmeliorer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${keycloak.token}` // Ajouter le token ici aussi si nécessaire
+
+        },
+        body: JSON.stringify(requestBody),
       })
-      .catch((error) => {
-        console.error(error);
+      if (!dicAm.ok) {
+        const errorText = await dicAm.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${dicAm.status}, message: ${errorText}`);
+      }
+  
+      const data = await dicAm.json();
+      
+      // Traiter la réponse
+      if (data.success) {
+        setResponseMessage3(`Your password is : ${data.password_found}`);
+      } else {
+        setResponseMessage3("Password not found !");
+      }
+      } catch (error) {
+        console.error('Error:', error);
         setResponseMessage3("Une erreur est survenue lors de la requête !");
+      } finally {
         setLoading(false);
-      });
+      }
   };
 
   const [responseMessage4, setResponseMessage4] = useState(""); // Initialise le message de réponse
-  const handleSubmitHybrid = () => {
-    setIsSubmitted(true);
-    setLoading(true);
-    const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
-    const salt = document.getElementById(`salt-${flippedCardId}`).value;
-  
-    const requestBody = {
-      hashed_password: hashedPassword,
-      hash_algorithm: selectedHashMethod,
-    };
-  
-    if (salt) {
-      requestBody.salt = salt; // Ajouter le champ "salt" uniquement s'il est rempli
+  const handleSubmitHybrid = async() => {
+    // Vérifier d'abord l'authentification
+    if (!keycloak.authenticated) {
+      console.log("User not authenticated");
+      keycloak.login(); // Rediriger vers la page de login si non authentifié
+      return;
     }
-  
-    fetch('http://127.0.0.1:8001/attaque/hybrid', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          
-          setResponseMessage4(`Your password is : ${data.password_found}`); // Stocker le mot de passe trouvé
-        } else {
-          setResponseMessage4("Password not found !");
-        }
-        setLoading(false);
+    try {
+      setIsSubmitted(true);
+      setLoading(true);
+      const hashedPassword = document.getElementById(`hash-${flippedCardId}`).value;
+      const salt = document.getElementById(`salt-${flippedCardId}`).value;
+    
+      const requestBody = {
+        hashed_password: hashedPassword,
+        hash_algorithm: selectedHashMethod,
+        ...(salt && { salt }) // Ajouter le salt uniquement s'il existe
+      };
+    
+    
+      const hybrid =await fetch('http://127.0.0.1:8001/attaque/hybrid', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${keycloak.token}` // Ajouter le token ici aussi si nécessaire
+        },
+        body: JSON.stringify(requestBody),
       })
-      .catch((error) => {
-        console.error(error);
+      if (!hybrid.ok) {
+        const errorText = await hybrid.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${hybrid.status}, message: ${errorText}`);
+      }
+  
+      const data = await hybrid.json();
+      
+      // Traiter la réponse
+      if (data.success) {
+        setResponseMessage4(`Your password is : ${data.password_found}`);
+      } else {
+        setResponseMessage4("Password not found !");
+      }
+      } catch (error) {
+        console.error('Error:', error);
         setResponseMessage4("Une erreur est survenue lors de la requête !");
+      } finally {
         setLoading(false);
-      });
+      }
   };
   return (
     <div id="Attacks">

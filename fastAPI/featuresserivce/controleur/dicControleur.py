@@ -1,9 +1,58 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, Request,Security
+from fastapi import HTTPException,Depends
 from models.dic import AttackRequest,PasswordCheckRequest
 from services.servicesAttaques import perform_dictionary_attack_logic,dic_amelioer,hybrid_attack_logic,brute_force_attack
 from services.servicesAttaques import test_password
+import logging
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from middlewares.auth_middlewares import JWTBearer
+from config import config
+import requests
+from jose import jwt
+from jose.exceptions import JWTError
+from auth.keycloak import verify_token
+'''
+# Fonction de vérification du token
+security = HTTPBearer()
 
-async def handle_dicAttaque(request: AttackRequest) -> str:
+
+def get_keycloak_public_key():
+    url = f"{config.KEYCLOAK_SERVER_URL}/realms/{config.KEYCLOAK_REALM}"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        public_key = response.json()['public_key']
+        return f"-----BEGIN PUBLIC KEY-----\n{public_key}\n-----END PUBLIC KEY-----"
+    except Exception as e:
+        print(f"Error fetching public key: {e}")
+        raise HTTPException(status_code=500, detail="Could not fetch public key")
+
+async def verify_token(credentials: HTTPAuthorizationCredentials = Security(security)):
+    try:
+        token = credentials.credentials
+        public_key = get_keycloak_public_key()
+        
+        # Décoder et vérifier le token
+        payload = jwt.decode(
+            token,
+            public_key,
+            algorithms=["RS256"],
+            audience="account",
+            issuer=f"{config.KEYCLOAK_SERVER_URL}/realms/{config.KEYCLOAK_REALM}"
+        )
+        return payload
+    except JWTError as e:
+        raise HTTPException(
+            status_code=401,
+            detail=f"Invalid authentication token: {str(e)}"
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=401,
+            detail=f"Error validating token: {str(e)}"
+        )
+'''
+async def handle_dicAttaque(request: AttackRequest, token: dict = Depends(verify_token)) -> dict:
     try:
         # Appel de la fonction qui effectue l'attaque par dictionnaire
         result = await perform_dictionary_attack_logic(request.hashed_password, request.salt, request.hash_algorithm)
@@ -12,28 +61,52 @@ async def handle_dicAttaque(request: AttackRequest) -> str:
         if not result["success"]:
             raise HTTPException(status_code=404, detail=result["message"])
         
-        return result  # Retourne le résultat de l'attaque par dictionnaire
+         # Retourne le résultat combiné avec les informations d'authentification
+        return {
+            **result,  
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
     except ValueError as e:
         raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
     except Exception as e:
         # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-async def handle_bruteForce(request: AttackRequest) -> str:
+async def handle_bruteForce(request: AttackRequest, token: dict = Depends(verify_token)) -> dict:
     try:
         # Appel de la fonction qui effectue l'attaque par dictionnaire
-        result = await brute_force_attack(request.hashed_password, request.salt, request.hash_algorithm)
+        result = await brute_force_attack(
+            request.hashed_password, 
+            request.salt, 
+            request.hash_algorithm
+        )
         
-        # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
+        # Vérifiez si le résultat indique une erreur
         if not result["success"]:
             raise HTTPException(status_code=404, detail=result["message"])
         
-        return result  # Retourne le résultat de l'attaque par dictionnaire
+        # Retourne le résultat combiné avec les informations d'authentification
+        return {
+            **result,  
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
+
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Error in hash computation: {str(e)}"
+        )
+    
     except Exception as e:
-        # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-async def handle_dicAmeliorer(request: AttackRequest) -> str:
+        # Log l'erreur pour le debugging
+        logging.error(f"Internal server error in bruteforce: {str(e)}")
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Internal server error: {str(e)}"
+        )
+
+async def handle_dicAmeliorer(request: AttackRequest, token: dict = Depends(verify_token)) -> dict:
     try:
         # Appel de la fonction qui effectue l'attaque par dictionnaire
         result = await dic_amelioer(request.hashed_password, request.salt, request.hash_algorithm)
@@ -42,7 +115,13 @@ async def handle_dicAmeliorer(request: AttackRequest) -> str:
         if not result["success"]:
             raise HTTPException(status_code=404, detail=result["message"])
         
-        return result  # Retourne le résultat de l'attaque par dictionnaire
+        # Retourne le résultat combiné avec les informations d'authentification
+        return {
+            **result,  
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
+         # Retourne le résultat de l'attaque par dictionnaire
     except ValueError as e:
         raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
     except Exception as e:
@@ -50,7 +129,7 @@ async def handle_dicAmeliorer(request: AttackRequest) -> str:
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
     
     
-async def handle_hybrid(request: AttackRequest) -> str:
+async def handle_hybrid(request: AttackRequest, token: dict = Depends(verify_token)) -> dict:
     
     try:
         # Appel de la fonction qui effectue l'attaque par dictionnaire
@@ -60,7 +139,13 @@ async def handle_hybrid(request: AttackRequest) -> str:
         if not result["success"]:
             raise HTTPException(status_code=404, detail=result["message"])
         
-        return result  # Retourne le résultat de l'attaque par dictionnaire
+        # Retourne le résultat combiné avec les informations d'authentification
+        return {
+            **result,  
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
+         # Retourne le résultat de l'attaque par dictionnaire
     except ValueError as e:
         raise HTTPException(status_code=400, detail=f"Error in hash computation: {str(e)}")
     except Exception as e:
@@ -68,7 +153,7 @@ async def handle_hybrid(request: AttackRequest) -> str:
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
     
 
-async def handle_test_password(request: PasswordCheckRequest) -> dict:
+async def handle_test_password(request: PasswordCheckRequest, token: dict = Depends(verify_token)) -> dict:
     try:
         # Appel de la fonction qui effectue les vérifications sur le mot de passe
         result = await test_password(request.password)
@@ -78,7 +163,13 @@ async def handle_test_password(request: PasswordCheckRequest) -> dict:
             raise HTTPException(status_code=400, detail=result["message"])
         
         # Retourne le résultat si le mot de passe est sécurisé
-        return result
+        # Retourne le résultat combiné avec les informations d'authentification
+        return {
+            **result,  
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
+
     except ValueError as e:
         raise HTTPException(status_code=400, detail=f"Error during password validation: {str(e)}")
     except Exception as e:
