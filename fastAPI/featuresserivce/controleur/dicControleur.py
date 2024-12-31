@@ -153,7 +153,7 @@ async def handle_hybrid(request: AttackRequest, token: dict = Depends(verify_tok
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
     
 
-async def handle_test_password(request: PasswordCheckRequest, token: dict = Depends(verify_token)) -> dict:
+async def handle_test_password(request: PasswordCheckRequest):
     try:
         # Appel de la fonction qui effectue les vérifications sur le mot de passe
         result = await test_password(request.password)
@@ -166,8 +166,8 @@ async def handle_test_password(request: PasswordCheckRequest, token: dict = Depe
         # Retourne le résultat combiné avec les informations d'authentification
         return {
             **result,  
-            "message": "You have access to this protected service",
-            "user": token.get("preferred_username")
+            #"message": "You have access to this protected service",
+            #"user": token.get("preferred_username")
         }
 
     except ValueError as e:

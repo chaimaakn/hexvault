@@ -111,5 +111,5 @@ async def hybrid_attack(request: AttackRequest,token: dict = Depends(verify_toke
     return await handle_hybrid(request,token)
 
 @router.post("/check-password")
-async def check_password_endpoint(request: PasswordCheckRequest,token: dict = Depends(verify_token))-> dict:
-    return await handle_test_password(request,token)
+async def check_password_endpoint(request: PasswordCheckRequest):
+    return await handle_test_password(request)
