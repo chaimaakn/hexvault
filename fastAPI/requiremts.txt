@@ -11,3 +11,4 @@ cryptography==41.0.3
 python-dotenv
 typing
 cors
+python-jose
