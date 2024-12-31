@@ -12,9 +12,12 @@ from routers.encryptRoute import router as encrypt_router
 from routers.attaqueRoute import router as attaque_router
 from models.fncts import PasswordFeature
 from models.DicModel import Dictionary
+import logging
 
 load_dotenv()
-
+# Configuration du logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 app = FastAPI(title="Features Service")
 
 # Configurer les CORS
