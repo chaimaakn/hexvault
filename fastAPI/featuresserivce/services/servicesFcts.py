@@ -44,3 +44,22 @@ async def create_feature(feature: PasswordFeature):
         return feature
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+    
+async def get_features_by_user_id(id_utilisateur: str):
+    try:
+        # Filtrer les fonctionnalités par `id_utilisateur`
+        
+        features = await PasswordFeature.find({"id_utilisateur": id_utilisateur}).to_list()
+        
+        
+        if not features:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Aucune fonctionnalité trouvée pour l'utilisateur avec ID {id_utilisateur}"
+            )
+        return features
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Erreur lors de la recherche des fonctionnalités : {str(e)}"
+        )
