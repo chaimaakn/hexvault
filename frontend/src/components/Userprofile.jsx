@@ -9,8 +9,15 @@ const Userprofile = () => {
   const { keycloak } = useKeycloak();
   const userInfo = keycloak.tokenParsed;
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    document.body.classList.remove('no-scroll');
+  };
+
+  const handleShow = () => {
+    setShow(true);
+    document.body.classList.add('no-scroll');
+  };
 
   return (
     <div className="user-menu">
