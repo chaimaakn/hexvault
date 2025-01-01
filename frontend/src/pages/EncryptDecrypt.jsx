@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Navbar2 from '../components/Navbar/Navbar2';
 import '../styles/Services.css';
+import { useKeycloak } from '@react-keycloak/web';
 
 function EncryptDecrypt() {
+  const { keycloak } = useKeycloak();
   const [encryptionMessage, setEncryptionMessage] = useState('');
   const [decryptionMessage, setDecryptionMessage] = useState('');
   const [encryptionKey, setEncryptionKey] = useState('');
@@ -31,58 +33,88 @@ function EncryptDecrypt() {
 
   // Fonction pour chiffrer un message
   const encryptMessage = async () => {
-    const body = {
-      message: encryptionMessage,
-      key: encryptionKey,
-      enregistrement: false, // Par défaut, remplacez si nécessaire
-      iduser: '123', // Remplacez par un ID utilisateur réel
-    };
-    console.log('Données envoyées pour le chiffrement:', body);
+    // Vérifier d'abord l'authentification
+    if (!keycloak.authenticated) {
+      console.log("User not authenticated");
+      keycloak.login(); // Rediriger vers la page de login si non authentifié
+      return;
+    }
     try {
+
+      const body = {
+        message: encryptionMessage,
+        key: encryptionKey,
+        enregistrement: false, // Par défaut, remplacez si nécessaire
+        iduser: '123', // Remplacez par un ID utilisateur réel
+      };
+      
+      console.log('Données envoyées pour le chiffrement:', body);
       const response = await fetch(`http://127.0.0.1:8001/encrypt/encrypt/${algorithm}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json' ,
+          'Authorization': `Bearer ${keycloak.token}` // Ajouter le token ici aussi si nécessaire
+
+        },
         body: JSON.stringify(body),
       });
 
       if (response.ok) {
-        const data = await response.text();
-        const sanitizedResult = data.replace(/^"|"$/g, '');
+        const data = await response.json();
+        const sanitizedResult = data.encrypted_message.replace(/^"|"$/g, '');
         setEncryptionResult(sanitizedResult); // Afficher le résultat chiffré
       } else {
-        console.error('Erreur lors du chiffrement');
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
+
     } catch (error) {
-      console.error('Erreur réseau:', error);
-    }
+      console.error('Error:', error);
+    } 
   };
 
   // Fonction pour déchiffrer un message
   const decryptMessage = async () => {
-    const body = {
-      encrypted_message: decryptionMessage,
-      key: decryptionKey,
-      enregistrement: false, // Par défaut, remplacez si nécessaire
-      iduser: '123', // Remplacez par un ID utilisateur réel
-    };
-
+    // Vérifier d'abord l'authentification
+    if (!keycloak.authenticated) {
+      console.log("User not authenticated");
+      keycloak.login(); // Rediriger vers la page de login si non authentifié
+      return;
+    }
+  
     try {
+
+      const body = {
+        encrypted_message: decryptionMessage,
+        key: decryptionKey,
+        enregistrement: false, // Par défaut, remplacez si nécessaire
+        iduser: '123', // Remplacez par un ID utilisateur réel
+      };
+
       const response = await fetch(`http://127.0.0.1:8001/encrypt/decrypt/${algorithm}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${keycloak.token}` // Ajouter le token ici aussi si nécessaire
+
+         },
         body: JSON.stringify(body),
       });
 
       if (response.ok) {
-        const data = await response.text();
-        const sanitizedResult = data.replace(/^"|"$/g, '');
+        const data = await response.json(); 
+        const sanitizedResult = data.encrypted_message.replace(/^"|"$/g, '');
         setDecryptionResult(sanitizedResult); // Afficher le résultat déchiffré
       } else {
-        console.error('Erreur lors du déchiffrement');
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
+      
     } catch (error) {
-      console.error('Erreur réseau:', error);
-    }
+      console.error('Error:', error);
+    } 
   };
 
   return (
