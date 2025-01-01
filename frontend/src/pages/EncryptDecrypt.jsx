@@ -13,6 +13,9 @@ function EncryptDecrypt() {
   const [decryptionResult, setDecryptionResult] = useState('');
   const [algorithm, setAlgorithm] = useState('AES');
 
+  const getUserId = () => {
+    return keycloak.tokenParsed?.sub || '';
+  };
   // Fonction pour générer une clé
   const generateKey = async () => {
     try {
@@ -44,8 +47,8 @@ function EncryptDecrypt() {
       const body = {
         message: encryptionMessage,
         key: encryptionKey,
-        enregistrement: false, // Par défaut, remplacez si nécessaire
-        iduser: '123', // Remplacez par un ID utilisateur réel
+        enregistrement: true, // Par défaut, remplacez si nécessaire
+        iduser: getUserId(), // Remplacez par un ID utilisateur réel
       };
       
       console.log('Données envoyées pour le chiffrement:', body);
@@ -88,8 +91,8 @@ function EncryptDecrypt() {
       const body = {
         encrypted_message: decryptionMessage,
         key: decryptionKey,
-        enregistrement: false, // Par défaut, remplacez si nécessaire
-        iduser: '123', // Remplacez par un ID utilisateur réel
+        enregistrement: true, // Par défaut, remplacez si nécessaire
+        iduser:getUserId(), // Remplacez par un ID utilisateur réel
       };
 
       const response = await fetch(`http://127.0.0.1:8001/encrypt/decrypt/${algorithm}`, {

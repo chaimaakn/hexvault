@@ -24,6 +24,9 @@ function Page1() {
   const [inputValue, setInputValue] = useState(""); // To manage the input value
   const [saltValue, setSaltValue] = useState("");
 
+  const getUserId = () => {
+    return keycloak.tokenParsed?.sub || '';
+  };
   const handleCardClick = (id, event) => {
     // Prevent flipping if canFlip is false (disabling flip on back)
     if (!canFlip) return;
@@ -143,6 +146,8 @@ function Page1() {
       const requestBody = {
         hashed_password: hashedPassword,
         hash_algorithm: selectedHashMethod,
+        enregistrement: true, // Par défaut, remplacez si nécessaire
+        iduser:getUserId(), // Remplacez par un ID utilisateur réel
         ...(salt && { salt }) // Ajouter le salt uniquement s'il existe
       };
   
@@ -195,6 +200,8 @@ function Page1() {
       const requestBody = {
         hashed_password: hashedPassword,
         hash_algorithm: selectedHashMethod,
+        enregistrement: true, // Par défaut, remplacez si nécessaire
+        iduser:getUserId(), // Remplacez par un ID utilisateur réel
       };
     
       if (salt) {
@@ -251,11 +258,13 @@ function Page1() {
       const requestBody = {
         hashed_password: hashedPassword,
         hash_algorithm: selectedHashMethod,
+        enregistrement: true, // Par défaut, remplacez si nécessaire
+        iduser:getUserId(), // Remplacez par un ID utilisateur réel
         ...(salt && { salt }) // Ajouter le salt uniquement s'il existe
       };
 
     
-      const dicAm = fetch('http://127.0.0.1:8001/attaque/DictionnaireAmeliorer', {
+      const dicAm = await fetch('http://127.0.0.1:8001/attaque/DictionnaireAmeliorer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -303,6 +312,8 @@ function Page1() {
       const requestBody = {
         hashed_password: hashedPassword,
         hash_algorithm: selectedHashMethod,
+        enregistrement: true, // Par défaut, remplacez si nécessaire
+        iduser:getUserId(), // Remplacez par un ID utilisateur réel
         ...(salt && { salt }) // Ajouter le salt uniquement s'il existe
       };
     
