@@ -124,17 +124,7 @@ async def perform_dictionary_attack_logic(hashed_password: str, salt: Optional[s
     Effectue une attaque par dictionnaire pour tester si le mot de passe haché est présent dans la base de données.
     Utilise l'algorithme de hachage spécifié, en tenant compte du salt s'il est fourni.
     """
-    if not hashed_password:
-        return {"success": False, "message": "Hashed password cannot be empty"}
-        
-    hash_patterns = {
-        "md5": r"^[a-fA-F0-9]{32}$",
-        "sha1": r"^[a-fA-F0-9]{40}$",
-        "sha256": r"^[a-fA-F0-9]{64}$"
-    }
-    
-    if not re.match(hash_patterns.get(hash_algorithm, ""), hashed_password):
-        return {"success": False, "message": f"Invalid {hash_algorithm} hash format"}
+
     if hash_algorithm == "md5" and salt:
                 hashed_password="$1$" + salt + "$"+hashed_password
     elif  hash_algorithm == "sha1" and salt:
@@ -178,17 +168,7 @@ async def dic_amelioer(hashed_password: str, salt: Optional[str], hash_algorithm
     """ Effectue une attaque par dictionnaire pour tester si le mot de passe haché est présent dans la base de données.
     Utilise l'algorithme de hachage spécifié, en tenant compte du salt s'il est fourni.
     """
-    if not hashed_password:
-        return {"success": False, "message": "Hashed password cannot be empty"}
-        
-    hash_patterns = {
-        "md5": r"^[a-fA-F0-9]{32}$",
-        "sha1": r"^[a-fA-F0-9]{40}$",
-        "sha256": r"^[a-fA-F0-9]{64}$"
-    }
-    
-    if not re.match(hash_patterns.get(hash_algorithm, ""), hashed_password):
-        return {"success": False, "message": f"Invalid {hash_algorithm} hash format"}
+
     if hash_algorithm == "md5" and salt:
                 hashed_password="$1$" + salt + "$"+hashed_password
     elif  hash_algorithm == "sha1" and salt:
@@ -220,17 +200,7 @@ async def hybrid_attack_logic(hashed_password: str, salt: Optional[str], hash_al
     """ Effectue une attaque par dictionnaire pour tester si le mot de passe haché est présent dans la base de données.
     Utilise l'algorithme de hachage spécifié, en tenant compte du salt s'il est fourni.
     """
-    if not hashed_password:
-        return {"success": False, "message": "Hashed password cannot be empty"}
-        
-    hash_patterns = {
-        "md5": r"^[a-fA-F0-9]{32}$",
-        "sha1": r"^[a-fA-F0-9]{40}$",
-        "sha256": r"^[a-fA-F0-9]{64}$"
-    }
-    
-    if not re.match(hash_patterns.get(hash_algorithm, ""), hashed_password):
-        return {"success": False, "message": f"Invalid {hash_algorithm} hash format"}
+
     charset="0123456789!@#"
     if hash_algorithm == "md5" and salt:
                 hashed_password="$1$" + salt + "$"+hashed_password
