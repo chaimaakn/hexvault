@@ -9,6 +9,7 @@ import { FaAngleDown } from 'react-icons/fa';
 import { Link } from 'react-router';
 import { useKeycloak } from '@react-keycloak/web';
 import { useCallback } from 'react';
+import Userprofile from '../Userprofile';
 
 const Navbar = () => {
   const { keycloak, initialized } = useKeycloak();
@@ -82,6 +83,7 @@ const Navbar = () => {
             Start now <TbSquareArrowRightFilled style={{ marginLeft: '8px', color: '#0CB074' }} />
           </Button>
         )}
+        {keycloak.authenticated && <Userprofile />}
 
       </div>
 
