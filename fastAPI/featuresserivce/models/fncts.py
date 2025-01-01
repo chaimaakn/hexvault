@@ -18,7 +18,10 @@ class PasswordFeature(Document):
     )
     entree: str = Field(..., description="Entrée de l'opération (string)")
     sortie: str = Field(..., description="Sortie de l'opération (string)")
-    key: str =  Field(..., description="Key public en cas d'encryption")
+    key: Optional[str] = Field(
+    default=None, 
+    description="Clé publique en cas d'encryption"
+    )
     type: str = Field(
         ..., 
         description="Type de l'opération",
@@ -36,21 +39,20 @@ class PasswordFeature(Document):
 
     @model_validator(mode="after")
     def validate_methode_field(cls, values):
+      type_op = values.type
+      methode = values.methode
+      key = values.key
 
-    
-        type_op = values.type
-        methode = values.methode
-        key=values.key
+      if type_op in ['HtoM', 'encrypt'] and not methode:
+        raise ValueError(
+            "Le champ 'methode' est obligatoire pour les types 'HtoM' et 'encrypt'."
+        )
+      if type_op == 'encrypt' and not key:
+        raise ValueError(
+            "Le champ 'key' est obligatoire pour le type 'encrypt'."
+        )   
+      return values
 
-        if type_op in ['HtoM', 'encrypt'] and not methode:
-            raise ValueError(
-                "Le champ 'methode' est obligatoire pour les types 'HtoM' et 'encrypt'."
-            )
-        if type_op in['encrypt'] and not key:
-            raise ValueError(
-                "Le champ 'key' est obligatoire pour les types 'encrypt'."
-            )   
-        return values
 
 
     class Config:

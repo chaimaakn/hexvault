@@ -81,12 +81,14 @@ async def get_hashed_password_find(
 
 @router.post("/Dictionnaire")
 async def dictionary_attack(request: AttackRequest,token: dict = Depends(verify_token))-> dict:
+#async def dictionary_attack(request: AttackRequest)-> dict:
     return await handle_dicAttaque(request,token)
-    
+    #return await handle_dicAttaque(request)
 @router.post("/bruteForce")
 async def bruteForce_attack(request: AttackRequest,token: dict = Depends(verify_token))-> dict:
+#async def bruteForce_attack(request: AttackRequest)-> dict:
     return await handle_bruteForce(request,token)
-
+    #return await handle_bruteForce(request)
 @router.get("/word/{word_id}")
 async def get_word(word_id: str):
     try:
@@ -103,12 +105,15 @@ async def get_word(word_id: str):
     
 @router.post("/DictionnaireAmeliorer")
 async def dicAmeliorer_attack(request: AttackRequest,token: dict = Depends(verify_token))-> dict:
+#async def dicAmeliorer_attack(request: AttackRequest)-> dict:   
     return await handle_dicAmeliorer(request,token)
-
+    #return await handle_dicAmeliorer(request)
 
 @router.post("/hybrid")
 async def hybrid_attack(request: AttackRequest,token: dict = Depends(verify_token))-> dict:
+#async def hybrid_attack(request: AttackRequest)-> dict:
     return await handle_hybrid(request,token)
+    #return await handle_hybrid(request)
 
 @router.post("/check-password")
 async def check_password_endpoint(request: PasswordCheckRequest):

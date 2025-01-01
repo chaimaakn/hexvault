@@ -11,6 +11,8 @@ import requests
 from jose import jwt
 from jose.exceptions import JWTError
 from auth.keycloak import verify_token
+from services.servicesFcts import create_feature
+from models.fncts import PasswordFeature
 '''
 # Fonction de vérification du token
 security = HTTPBearer()
@@ -53,9 +55,24 @@ async def verify_token(credentials: HTTPAuthorizationCredentials = Security(secu
         )
 '''
 async def handle_dicAttaque(request: AttackRequest, token: dict = Depends(verify_token)) -> dict:
+#async def handle_dicAttaque(request: AttackRequest) -> dict:
     try:
         # Appel de la fonction qui effectue l'attaque par dictionnaire
         result = await perform_dictionary_attack_logic(request.hashed_password, request.salt, request.hash_algorithm)
+        if request.enregistrement:
+            password_found = result.get("password_found", "unknown")
+            # Préparer le champ `key` si `salt` est fourni
+            key = request.salt if request.salt else None
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="Attaque par dictionnaire",
+              entree=request.hashed_password,
+              sortie=password_found,
+              key=key,
+              type="HtoM",
+              methode=request.hash_algorithm
+            )
+            await create_feature( feature)
         
         # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
         if not result["success"]:
@@ -73,13 +90,30 @@ async def handle_dicAttaque(request: AttackRequest, token: dict = Depends(verify
         # Capture toute autre exception et renvoyer une erreur 500 pour l'erreur interne
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 async def handle_bruteForce(request: AttackRequest, token: dict = Depends(verify_token)) -> dict:
+#async def handle_bruteForce(request: AttackRequest) -> dict:
     try:
-        # Appel de la fonction qui effectue l'attaque par dictionnaire
+  # Appel de la fonction qui effectue l'attaque par dictionnaire
         result = await brute_force_attack(
             request.hashed_password, 
             request.salt, 
             request.hash_algorithm
         )
+        if request.enregistrement:
+            password_found = result.get("password_found", "unknown")
+            # Préparer le champ `key` si `salt` est fourni
+            key = request.salt if request.salt else None
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="Attaque par brut force",
+              entree=request.hashed_password,
+              sortie=password_found,
+              key=key,
+              type="HtoM",
+              methode=request.hash_algorithm
+            )
+            await create_feature( feature)
+        
+
         
         # Vérifiez si le résultat indique une erreur
         if not result["success"]:
@@ -107,9 +141,24 @@ async def handle_bruteForce(request: AttackRequest, token: dict = Depends(verify
         )
 
 async def handle_dicAmeliorer(request: AttackRequest, token: dict = Depends(verify_token)) -> dict:
+#async def handle_dicAmeliorer(request: AttackRequest) -> dict:
     try:
         # Appel de la fonction qui effectue l'attaque par dictionnaire
         result = await dic_amelioer(request.hashed_password, request.salt, request.hash_algorithm)
+        if request.enregistrement:
+            password_found = result.get("password_found", "unknown")
+            # Préparer le champ `key` si `salt` est fourni
+            key = request.salt if request.salt else None
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="Attaque dictionnaire amélioré",
+              entree=request.hashed_password,
+              sortie=password_found,
+              key=key,
+              type="HtoM",
+              methode=request.hash_algorithm
+            )
+            await create_feature( feature)
         
         # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
         if not result["success"]:
@@ -130,10 +179,24 @@ async def handle_dicAmeliorer(request: AttackRequest, token: dict = Depends(veri
     
     
 async def handle_hybrid(request: AttackRequest, token: dict = Depends(verify_token)) -> dict:
-    
+#async def handle_hybrid(request: AttackRequest) -> dict:   
     try:
         # Appel de la fonction qui effectue l'attaque par dictionnaire
         result = await hybrid_attack_logic(request.hashed_password, request.salt, request.hash_algorithm)
+        if request.enregistrement:
+            password_found = result.get("password_found", "unknown")
+            # Préparer le champ `key` si `salt` est fourni
+            key = request.salt if request.salt else None
+            feature = PasswordFeature(
+              id_utilisateur=request.iduser,
+              nom="Attaque hybrid",
+              entree=request.hashed_password,
+              key=key,
+              sortie=password_found,
+              type="HtoM",
+              methode=request.hash_algorithm
+            )
+            await create_feature( feature)
         
         # Vérifiez si le résultat indique une erreur (par exemple, "success": False)
         if not result["success"]:
