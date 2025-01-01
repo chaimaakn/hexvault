@@ -1,4 +1,4 @@
-from fastapi import HTTPException
+from fastapi import HTTPException,Depends
 from services.servicesEncry import encrypt_message_aes, decrypt_message_aes,encrypt_message_3ds,decrypt_message_3ds,encrypt_message_RC4,decrypt_message_RC4
 from services.servicesEncry import encrypt_message_Chacha20,decrypt_message_Chacha20,generate_rsa_keys,rsa_key_to_base64,rsa_base64_to_private_key,rsa_base64_to_public_key,rsa_encrypt_message,rsa_decrypt_message
 from services.servicesFcts import create_feature
@@ -6,6 +6,7 @@ from models.encry import EncryptRequest, DecryptRequest
 from models.fncts import PasswordFeature
 import os
 import base64
+from auth.keycloak import verify_token
 
 #******************************************************AES***************************************************************
 def generate_key_aes() -> str:
@@ -16,7 +17,7 @@ def generate_key_aes() -> str:
     return base64.b64encode(key).decode('utf-8')
 
 
-async def handle_encrypt_aes(request: EncryptRequest) -> str:
+async def handle_encrypt_aes(request: EncryptRequest, token: dict) -> dict:
     """Traite la requête de chiffrement AES."""
     try:
         encrypted_message = encrypt_message_aes(request.message, request.key)
@@ -31,14 +32,18 @@ async def handle_encrypt_aes(request: EncryptRequest) -> str:
               methode="AES"
             )
             await create_feature( feature)
-        return encrypted_message
+        return  {
+            "encrypted_message": encrypted_message, 
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
     
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
 
 
     
-async def handle_decrypt_aes(request: DecryptRequest) -> str:
+async def handle_decrypt_aes(request: DecryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite la requête de déchiffrement AES."""
     try:
         
@@ -55,7 +60,11 @@ async def handle_decrypt_aes(request: DecryptRequest) -> str:
             )
             await create_feature( feature)
         
-        return message
+        return  {
+                "encrypted_message": message,  
+                "message": "You have access to this protected service",
+                "user": token.get("preferred_username")
+            }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
     
@@ -68,7 +77,7 @@ def generate_key_3des() -> str:
     return base64.b64encode(key).decode('utf-8')
 
 
-async def handle_encrypt_3des(request: EncryptRequest) -> str:
+async def handle_encrypt_3des(request: EncryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite la requête de chiffrement 3DES."""
     try:
         encrypted_message =encrypt_message_3ds(request.message, request.key)
@@ -83,11 +92,15 @@ async def handle_encrypt_3des(request: EncryptRequest) -> str:
               methode="3DES"
             )
             await create_feature( feature) 
-        return(encrypted_message)
+        return   {
+            "encrypted_message": encrypted_message, 
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
     
-async def handle_decrypt_3des(request: DecryptRequest) -> str:
+async def handle_decrypt_3des(request: DecryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite la requête de déchiffrement 3DES."""
     try:
         message=decrypt_message_3ds(request.encrypted_message, request.key)
@@ -102,7 +115,11 @@ async def handle_decrypt_3des(request: DecryptRequest) -> str:
               methode="3DES"
             )
             await create_feature( feature)
-        return(message)
+        return  {
+                "encrypted_message": message,  
+                "message": "You have access to this protected service",
+                "user": token.get("preferred_username")
+            }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
 
@@ -114,7 +131,7 @@ def generate_key_RC4() -> str:
     key = os.urandom(16)
     return base64.b64encode(key).decode('utf-8')
 
-async def handle_encrypt_RC4(request: EncryptRequest) -> str:
+async def handle_encrypt_RC4(request: EncryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite la requête de chiffrement RC4."""
     try:
         encrypted_message=encrypt_message_RC4(request.message, request.key)
@@ -129,11 +146,15 @@ async def handle_encrypt_RC4(request: EncryptRequest) -> str:
               methode="RC4"
             )
             await create_feature( feature) 
-        return(encrypted_message)
+        return   {
+            "encrypted_message": encrypted_message, 
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
     
-async def handle_decrypt_RC4(request: DecryptRequest) -> str:
+async def handle_decrypt_RC4(request: DecryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite la requête de déchiffrement RC4."""
     try:
         message=decrypt_message_RC4(request.encrypted_message, request.key)
@@ -148,7 +169,11 @@ async def handle_decrypt_RC4(request: DecryptRequest) -> str:
               methode="RC4"
             )
             await create_feature( feature)
-        return(message)
+        return  {
+                "encrypted_message": message,  
+                "message": "You have access to this protected service",
+                "user": token.get("preferred_username")
+            }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
     
@@ -161,7 +186,7 @@ def generate_key_Chacha20() -> str:
     key = os.urandom(32)
     return base64.b64encode(key).decode('utf-8')
 
-async def handle_encrypt_Chacha20(request: EncryptRequest) -> str:
+async def handle_encrypt_Chacha20(request: EncryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite la requête de chiffrement chacha20."""
     try:
         encrypted_message=encrypt_message_Chacha20(request.message, request.key)
@@ -176,11 +201,15 @@ async def handle_encrypt_Chacha20(request: EncryptRequest) -> str:
               methode="Chacha20"
             )
             await create_feature( feature) 
-        return(encrypted_message)
+        return   {
+            "encrypted_message": encrypted_message, 
+            "message": "You have access to this protected service",
+            "user": token.get("preferred_username")
+        }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
     
-async def handle_decrypt_Chacha20(request: DecryptRequest) -> str:
+async def handle_decrypt_Chacha20(request: DecryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite la requête de déchiffrement chacha20."""
     try:
         message=decrypt_message_Chacha20(request.encrypted_message, request.key)
@@ -195,7 +224,11 @@ async def handle_decrypt_Chacha20(request: DecryptRequest) -> str:
               methode="Chacha20"
             )
             await create_feature( feature)
-        return(message)
+        return  {
+                "encrypted_message": message,  
+                "message": "You have access to this protected service",
+                "user": token.get("preferred_username")
+            }
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
     
@@ -215,22 +248,26 @@ def handle_generate_keys_rsa()->str:
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur lors de la génération des clés : {str(e)}")
 
-def handle_encrypt_message_rsa(request: EncryptRequest)->str:
+def handle_encrypt_message_rsa(request: EncryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite une requête de chiffrement RSA."""
     try:
         public_key = rsa_base64_to_public_key(request.key)#public key
         ciphertext = rsa_encrypt_message(request.message.encode(), public_key)
-        return {"ciphertext": ciphertext.hex()}
+        return {"ciphertext": ciphertext.hex(),
+                "message": "You have access to this protected service",
+                "user": token.get("preferred_username")}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du chiffrement : {str(e)}")
 
-def handle_decrypt_message_rsa(request: DecryptRequest)->str:
+def handle_decrypt_message_rsa(request: DecryptRequest, token: dict = Depends(verify_token)) -> dict:
     """Traite une requête de déchiffrement RSA."""
     try:
         ciphertext = bytes.fromhex(request.encrypted_message)
         private_key = rsa_base64_to_private_key(request.key)#private key
         plaintext = rsa_decrypt_message(ciphertext, private_key)
-        return {"plaintext": plaintext.decode()}
+        return {"plaintext": plaintext.decode(),
+                "message": "You have access to this protected service",
+                "user": token.get("preferred_username")}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Erreur lors du déchiffrement : {str(e)}")
 
