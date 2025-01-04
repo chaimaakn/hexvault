@@ -66,6 +66,7 @@
     border-radius: 10px;
     flex-grow: 1; 
     background-color: #3C4E3F;
+    text-align: center;
   
    
   }
@@ -98,4 +99,8 @@
 
   .no-scroll {
     overflow: hidden;
+  }
+  .icon-image{
+    width: 24px;
+  height: 24px;
   }

@@ -4,6 +4,9 @@ import { Offcanvas } from 'react-bootstrap';
 import { useKeycloak } from '@react-keycloak/web';
 import '../styles/Userprofile.css';
 import { useTranslation } from 'react-i18next';
+import icon_hist1 from '../assets/Group 102.svg';
+import icon_hist2 from '../assets/Group 205.svg';
+
 
 const Userprofile = () => {
   const [show, setShow] = useState(false);
@@ -93,7 +96,10 @@ const Userprofile = () => {
                       <div className="icon-line">
                         <div className="line"></div>
                         <div className="service-icon">
-                          {item.type === 'encrypt' ? '🔒' : '🔍'}
+                        <img 
+                            src={item.type === 'encrypt' || item.type === 'decrypt'  ? icon_hist1 : icon_hist2} 
+                            className="icon-image"
+                          />
                         </div>
                       </div>
                       <div className="history-content">

@@ -57,7 +57,7 @@ function Timeprediction() {
         <Navbar2 />
       </div>
 
-      <div className="test-container">
+      <div  className={`test-container ${isPopupOpen || isLoading ? 'blur' : ''}`}>
         <div className="test-container1">
           <h1>{t('time_prediction')}</h1>
           <p>{t("time-pred-text")}</p>

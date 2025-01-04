@@ -425,6 +425,10 @@
   filter: blur(5px); /* Blurs the background */
   pointer-events: none; /* Disables interaction with the background */
 }
+.blur {
+  filter: blur(5px); /* Blurs the background */
+  pointer-events: none; /* Disables interaction with the background */
+}
 
 /* Full-screen overlay */
 .overlay {
