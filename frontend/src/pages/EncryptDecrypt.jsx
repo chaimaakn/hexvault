@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar2 from '../components/Navbar/Navbar2';
 import '../styles/Services.css';
 import { useKeycloak } from '@react-keycloak/web';
+import { useTranslation } from 'react-i18next';
 
 function EncryptDecrypt() {
   const { keycloak } = useKeycloak();
@@ -12,6 +13,7 @@ function EncryptDecrypt() {
   const [encryptionResult, setEncryptionResult] = useState('');
   const [decryptionResult, setDecryptionResult] = useState('');
   const [algorithm, setAlgorithm] = useState('AES');
+  const { t } = useTranslation();
 
   const getUserId = () => {
     return keycloak.tokenParsed?.sub || '';
@@ -129,11 +131,11 @@ function EncryptDecrypt() {
       <div className='container'>
         {/* Encryption Section */}
         <div className='encrypt'>
-          <h1>Encryption</h1>
+          <h1>{t('encryption')}</h1>
           <textarea
             className="entry"
             rows={5}
-            placeholder='Enter text to encrypt here...'
+            placeholder={t('placeholder-encrypt-input')}
             value={encryptionMessage}
             onChange={(e) => setEncryptionMessage(e.target.value)}
           ></textarea>
@@ -152,29 +154,29 @@ function EncryptDecrypt() {
             <input
               type="text"
               className='key'
-              placeholder='Enter your key or generate one...'
+              placeholder={t('placeholder-key-encrypt')}
               value={encryptionKey}
               onChange={(e) => setEncryptionKey(e.target.value)}
             />
-            <button className='gen-key-btn' onClick={generateKey}>Generate Key</button>
+            <button className='gen-key-btn' onClick={generateKey}>{t('generate-key')}</button>
           </div>
           <textarea
             className="output"
             rows={5}
-            placeholder='Encrypted value will appear here...'
+            placeholder={t('placeholder-encrypt-output')}
             value={encryptionResult}
             disabled
           ></textarea>
-          <button className='sub-btn' onClick={encryptMessage}>Encrypt</button>
+          <button className='sub-btn' onClick={encryptMessage}>{t('encrypt')}</button>
         </div>
 
         {/* Decryption Section */}
         <div className='decrypt'>
-          <h1>Decryption</h1>
+          <h1>{t('decryption')}</h1>
           <textarea
             className="entry"
             rows={5}
-            placeholder='Enter text to decrypt here...'
+            placeholder={t('placeholder-decrypt-input')}
             value={decryptionMessage}
             onChange={(e) => setDecryptionMessage(e.target.value)}
           ></textarea>
@@ -192,18 +194,18 @@ function EncryptDecrypt() {
           <input
             type="text"
             className='key'
-            placeholder='Enter your key...'
+            placeholder={t('placeholder-key-decrypt')}
             value={decryptionKey}
             onChange={(e) => setDecryptionKey(e.target.value)}
           />
           <textarea
             className="output"
             rows={5}
-            placeholder='Decrypted value will appear here...'
+            placeholder={t('placeholder-decrypt-output')}
             value={decryptionResult}
             disabled
           ></textarea>
-          <button className='sub-btn' onClick={decryptMessage}>Decrypt</button>
+          <button className='sub-btn' onClick={decryptMessage}>{t('decrypt')}</button>
         </div>
       </div>
     </div>

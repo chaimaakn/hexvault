@@ -9,13 +9,13 @@ import { FaAngleDown } from 'react-icons/fa';
 import { Link} from 'react-router';
 import { useKeycloak } from '@react-keycloak/web';
 import Userprofile from '../Userprofile';
+import { useTranslation } from 'react-i18next';
+
 
 const Navbar2 = () => {
   const { keycloak, initialized } = useKeycloak();
-  
-//these two lines for debugging to check if its initialized or no in the console
-  console.log("Keycloak initialized:", initialized);
-  console.log("Keycloak instance:", keycloak);
+
+  const { t } = useTranslation();
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -31,12 +31,12 @@ const Navbar2 = () => {
       <Link  className="Logo" to='/#home'  onClick={() => scrollToSection('home')}><img src={Logo} alt="" /></Link>
 
       <nav className="custom-navbar">
-        <Link className="links" to='/#home' onClick={() => scrollToSection('home')}>Home</Link>
+        <Link className="links" to='/#home' onClick={() => scrollToSection('home')}>{t('home')}</Link>
 
-        <Link className="links" to='/EncryptDecrypt' >Encrypt/Decrypt</Link>
-        <Link className="links" to='/Attacks' >Attack simulation</Link>
-        <Link className="links" to='/Passwordtesting' >Password testing</Link>
-        <Link className="links" to='/Timeprediction'  >Time prediction</Link>
+        <Link className="links" to='/EncryptDecrypt' >{t("encryption/decryption")}</Link>
+        <Link className="links" to='/Attacks' >{t("attack_simulation")}</Link>
+        <Link className="links" to='/Passwordtesting' >{t("password_testing")}</Link>
+        <Link className="links" to='/Timeprediction'  >{t("time_prediction")}</Link>
       </nav>
 
       <div className='buttons'>
@@ -47,7 +47,7 @@ const Navbar2 = () => {
             variant="light" 
             onClick={() => keycloak.logout()}
           >
-            Logout
+            {t('logout')} 
           </Button>
         ) : (
           <Button 
@@ -55,7 +55,7 @@ const Navbar2 = () => {
             variant="light" 
             onClick={() => keycloak.login()}
           >
-            Start now <TbSquareArrowRightFilled style={{ marginLeft: '8px', color: '#0CB074' }} />
+             {t('Start now')}<TbSquareArrowRightFilled style={{ marginLeft: '8px', color: '#0CB074' }} />
           </Button>
           
         )}

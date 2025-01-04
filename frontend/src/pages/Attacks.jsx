@@ -7,12 +7,14 @@ import '../styles/Services.css';
 import { VscDebugRestart } from "react-icons/vsc";
 import Spinner from 'react-bootstrap/Spinner';
 import { useKeycloak } from '@react-keycloak/web';
+import { useTranslation } from 'react-i18next';
 
 function Page1() {
   const { keycloak } = useKeycloak();
   const swiperRef = useRef(null);
   const prevButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
+   const { t } = useTranslation();
 
   const [flippedCardId, setFlippedCardId] = useState(null);
   const [clickedCardId, setClickedCardId] = useState(null);
@@ -371,22 +373,20 @@ function Page1() {
               <div className="slide-content">
                 <div className="front">
                   <div className="about">
-                    <h1 className="front-title">Brute force</h1>
-                    <h1 id="ab">about</h1>
+                    <h1 className="front-title">{t('brute-force')}</h1>
+                    <h1 id="ab">{t('about')}</h1>
                     <p>
-                      A brute force attack involves testing numerous
-                      combinations of passwords or keys until the correct one
-                      is found.
+                      {t('brute-force-desc')}
                     </p>
                   </div>
                 </div>
                 <div className="back">
                   <div className="input-content">
-                    <h1 id="attack-title">Brute force</h1>
+                    <h1 id="attack-title">{t('brute-force')}</h1>
                     <input
                       type="text"
                       id="hash-1"
-                      placeholder="enter your hashed password..."
+                      placeholder={t('hash-placeholder')}
                       value={inputValue} 
                       onChange={(e) => setInputValue(e.target.value)} 
                     />
@@ -394,7 +394,7 @@ function Page1() {
                     <input
                       type="text"
                       id="salt-1"
-                      placeholder="enter your salt...(optional)"
+                      placeholder={t('salt-placeholder')}
                       value={saltValue} // Bind to salt input state
                       onChange={(e) => setSaltValue(e.target.value)} 
                     />
@@ -409,7 +409,7 @@ function Page1() {
                         </select>
                         {!isSubmitted && !loading && (
                         <button  onClick={(e) => {e.stopPropagation(); handleSubmitbrutforce()}}>
-                            Click to start</button>
+                             {t('attack-btn')}</button>
                         )}  
                         {/* Message de réponse */}
                         {loading ? (
@@ -442,21 +442,20 @@ function Page1() {
               <div className="slide-content">
                 <div className="front">
                 <div className='about'>
-                    <h1 className='front-title'>Dictionnary</h1>
-                    <h1  id='ab'>about</h1>
+                    <h1 className='front-title'>{t('dictionary')}</h1>
+                    <h1  id='ab'>{t('about')}</h1>
                     <p>
                     
-                   A dictionary attack is a method to crack passwords by testing a list of commonly used
-                     combinations of passwords or keys until the correct one is found.
+                   {t('dictionary-desc')}
                     </p>
                   </div>
                 </div>
                 <div className="back"><div className="input-content"> 
-                    <h1 id='attack-title'>Dictionnary</h1>
-                    <input type="text"  id='hash-2' placeholder='enter your hashed password...' value={inputValue} 
+                    <h1 id='attack-title'>{t('dictionary')}</h1>
+                    <input type="text"  id='hash-2' placeholder={t('hash-placeholder')} value={inputValue} 
                       onChange={(e) => setInputValue(e.target.value)} />
                     <h1 id='salt-title'>Salt</h1>
-                    <input type="text" id='salt-2' placeholder='enter your salt...(optional)' value={saltValue} 
+                    <input type="text" id='salt-2' placeholder={t('salt-placeholder')} value={saltValue} 
                       onChange={(e) => setSaltValue(e.target.value)} />
                     <select 
                           value={selectedHashMethod}
@@ -469,7 +468,7 @@ function Page1() {
                         </select>
                         {!isSubmitted && !loading && (
                         <button  onClick={(e) => {e.stopPropagation(); handleSubmitDictionnary()}}>
-                            Click to start</button>
+                             {t('attack-btn')}</button>
                         )}  
                         {/* Message de réponse */}
                         {loading ? (
@@ -499,21 +498,19 @@ function Page1() {
               <div className="slide-content">
                 <div className="front">
                 <div className='about'>
-                    <h1 className='front-title'>Improved dict</h1>
-                    <h1  id='ab'>about</h1>
+                    <h1 className='front-title'>{t('improved-dict')}</h1>
+                    <h1  id='ab'>{t('about')}</h1>
                     <p>
-                    An improved dictionary attack enhances the basic approach by applying transformations, 
-                    such as adding numbers, symbols, or capitalizing letters, to common passwords, making 
-                    it more effective against slightly stronger passwords.
+                    {t('improved-dict-desc')}
                     </p>
                   </div>
                 </div>
                 <div className="back"><div className="input-content"> 
-                    <h1 id='attack-title'>Improved Dict</h1>
-                    <input type="text"  id='hash-3' placeholder='enter your hashed password...' value={inputValue} 
+                    <h1 id='attack-title'>{t('improved-dict')}</h1>
+                    <input type="text"  id='hash-3' placeholder={t('hash-placeholder')} value={inputValue} 
                       onChange={(e) => setInputValue(e.target.value)} />
                     <h1 id='salt-title'>Salt</h1>
-                    <input type="text" id='salt-3' placeholder='enter your salt...(optional)' value={saltValue} // Bind to salt input state
+                    <input type="text" id='salt-3' placeholder={t('salt-placeholder')} value={saltValue} // Bind to salt input state
                       onChange={(e) => setSaltValue(e.target.value)} />
                     <select 
                           value={selectedHashMethod}
@@ -526,7 +523,7 @@ function Page1() {
                         </select>
                         {!isSubmitted && !loading && (
                         <button  onClick={(e) => {e.stopPropagation(); handleSubmitImprovedDictionnary()}}>
-                            Click to start</button>
+                             {t('attack-btn')}</button>
                         )}  
                         {/* Message de réponse */}
                         {loading ? (
@@ -558,21 +555,20 @@ function Page1() {
               <div className="slide-content">
                 <div className="front">
                 <div className='about'>
-                    <h1 className='front-title'>Hybrid</h1>
-                    <h1 id='ab'>about</h1>
+                    <h1 className='front-title'>{t('hybrid')}</h1>
+                    <h1 id='ab'>{t('about')}</h1>
                     <p>
-                    A hybrid attack combines the strengths of both dictionary and brute force 
-                    techniques by first testing common passwords from a dictionary and then 
-                    extending those passwords with additional characters or variations.</p>
+                   {t('hybrid-desc')}
+                   </p>
                   </div>
                 </div>
                 <div className="back">
                 <div className="input-content"> 
-                    <h1 id='attack-title'>Hybrid</h1>
-                    <input type="text"  id='hash-4' placeholder='enter your hashed password...' value={inputValue} 
+                    <h1 id='attack-title'>{t('hybrid')}</h1>
+                    <input type="text"  id='hash-4' placeholder={t('hash-placeholder')} value={inputValue} 
                       onChange={(e) => setInputValue(e.target.value)} />
                     <h1 id='salt-title'>Salt</h1>
-                    <input type="text" id='salt-4' placeholder='enter your salt...(optional)' value={saltValue} // Bind to salt input state
+                    <input type="text" id='salt-4' placeholder={t('salt-placeholder')}value={saltValue} // Bind to salt input state
                       onChange={(e) => setSaltValue(e.target.value)} />
                     <select 
                           value={selectedHashMethod}
@@ -585,7 +581,7 @@ function Page1() {
                         </select>
                         {!isSubmitted && !loading && (
                         <button  onClick={(e) => {e.stopPropagation(); handleSubmitHybrid()}}>
-                            Click to start</button>
+                            {t('attack-btn')}</button>
                         )}  
                         {/* Message de réponse */}
                         {loading ? (

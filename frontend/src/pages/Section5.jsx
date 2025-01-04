@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { BsFillPlusSquareFill, BsFillDashSquareFill } from "react-icons/bs"; 
 import '../styles/Sections.css';
+import { useTranslation } from 'react-i18next';
 
 function Section5() {
   const [activeIndex, setActiveIndex] = useState(null);
+  const { t } = useTranslation();
 
   const questions = [
-    { question: "What is HexVault?", answer: "HexVault is a web platform dedicated to password security." },
-    { question: "How do I test my passwords?", answer: "You can use HexVault to simulate common attack methods like brute force and dictionary attacks to test the strength of your passwords." },
-    { question: "Is my data secure?", answer: "Yes, all your data is processed securely and is never shared. We use state-of-the-art encryption to protect your information." }
+    { question: t("q1"), answer: t("a1") },
+    { question: t("q2"), answer: t("a2") },
+    { question: t("q3"), answer: t("a3") }
   ];
 
   const handleToggle = (index) => {
@@ -21,7 +23,7 @@ function Section5() {
 
   return (
     <div className="section-5">
-      <h1 id='sec5-title'>Frequently Asked Questions</h1>
+      <h1 id='sec5-title'>{t('sec5-title')}</h1>
       <div className="accordion">
         {questions.map((item, index) => (
           <div key={index} className="accordion-item">
