@@ -21,7 +21,9 @@ Notre mission est de sensibiliser à l'importance de choisir des mots de passe s
 
 ## Nos Objectifs
 -**Promouvoir les Bonnes Pratiques** : Encourager les utilisateurs à adopter des mots de passe forts et uniques pour leurs comptes.
+
 -**Proposer des Simulations Réalistes** : Aider les utilisateurs à comprendre les risques associés aux mots de passe faibles grâce à des scénarios d'attaques réalistes.
+
 -**Permettre la Protection des Données** : Offrir des outils simples et efficaces pour sécuriser les informations sensibles.
 
 ## Technologies Utilisées
