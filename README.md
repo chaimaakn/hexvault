@@ -40,6 +40,7 @@ Pour démarrer les serveurs, suivez ces étapes :
 1-Installer les bibliothèques nécessaires :
 
 Les fichiers requirements pour le backend et le frontend contiennent les dépendances nécessaires. Installez-les en suivant les instructions fournies.
+
 2-Démarrer les serveurs :
 
 **Backend** : Exécutez la commande suivante :
