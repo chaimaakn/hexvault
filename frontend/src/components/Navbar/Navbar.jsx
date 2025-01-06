@@ -10,9 +10,12 @@ import { Link } from 'react-router';
 import { useKeycloak } from '@react-keycloak/web';
 import { useCallback } from 'react';
 import Userprofile from '../Userprofile';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
   const { keycloak, initialized } = useKeycloak();
+  const { t } = useTranslation();
+
 
   const login = useCallback(() => {
     keycloak.login({
@@ -28,9 +31,7 @@ const Navbar = () => {
     });
   }, [keycloak]);
 
-  //these two lines for debugging to check if its initialized or no in the console
-  console.log("Keycloak initialized:", initialized);
-  console.log("Keycloak instance:", keycloak);
+ 
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -46,22 +47,22 @@ const Navbar = () => {
       <Link className="Logo" to='/#home' onClick={() => scrollToSection('home')}><img src={Logo} alt="" /></Link>
 
       <nav className="custom-navbar">
-        <Link className="links" to='/#home' onClick={() => scrollToSection('home')}>Home</Link>
+        <Link className="links" to='/#home' onClick={() => scrollToSection('home')}>{t('home')}</Link>
 
         <div className="services-dropdown">
           <Link to='/#services' onClick={() => scrollToSection('services')} className="services-link">
-            Services <FaAngleDown className="dropdown-arrow" />
+            {t("services")} <FaAngleDown className="dropdown-arrow" />
           </Link>
           <div className="dropdown-menu">
-            <Link to="/EncryptDecrypt">Encryption/Decryption</Link>
-            <Link to="/Attacks">Attack simulation</Link>
-            <a href="/Passwordtesting">Password testing</a>
-            <a href="/Timeprediction">Time prediction</a>
+            <Link to="/EncryptDecrypt">{t("encryption/decryption")}</Link>
+            <Link to="/Attacks">{t("attack_simulation")}</Link>
+            <a href="/Passwordtesting">{t("password_testing")}</a>
+            <a href="/Timeprediction">{t("time_prediction")}</a>
           </div>
         </div>
-        <Link className="links" to='/#about' onClick={() => scrollToSection('about')} >About us</Link>
-        <Link className="links" to='/#contact' onClick={() => scrollToSection('contact')} >Contact us</Link>
-        <Link className="links" to='/#faq' onClick={() => scrollToSection('faq')} >FAQ</Link>
+        <Link className="links" to='/#about' onClick={() => scrollToSection('about')} >{t("about")}</Link>
+        <Link className="links" to='/#contact' onClick={() => scrollToSection('contact')} >{t("contact")}</Link>
+        <Link className="links" to='/#faq' onClick={() => scrollToSection('faq')} >{t("faq")}</Link>
       </nav>
 
       <div className='buttons'>
@@ -72,7 +73,7 @@ const Navbar = () => {
             variant="light"
             onClick={logout}
           >
-            Logout
+            {t('logout')} 
           </Button>
         ) : (
           <Button
@@ -80,7 +81,7 @@ const Navbar = () => {
             variant="light"
             onClick={login}
           >
-            Start now <TbSquareArrowRightFilled style={{ marginLeft: '8px', color: '#0CB074' }} />
+            {t('Start now')} <TbSquareArrowRightFilled style={{ marginLeft: '8px', color: '#0CB074' }} />
           </Button>
         )}
         {keycloak.authenticated && <Userprofile />}

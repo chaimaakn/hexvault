@@ -283,7 +283,7 @@ async def test_password(password: str) -> dict:
         if entry.password == password:
             return {
                 "success": True,
-                "message": "Votre mot de passe est considéré comme faible (trop commun).",
+                "message": "Your password is considered weak (too common).",
                 "timeestimation": "0 jours, 0 heures, 0 minutes, 0 secondes"
             }
 
@@ -291,7 +291,7 @@ async def test_password(password: str) -> dict:
     if len(password) < 12:
         return {
             "success": True,
-            "message": f"Votre mot de passe est trop court. Il doit contenir au moins 12 caractères.",
+            "message": f"Your password is too short. It must be at least 12 characters long.",
                        #f"Estimation du temps nécessaire pour le casser au pire cas:",
             "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
         }
@@ -299,7 +299,7 @@ async def test_password(password: str) -> dict:
     if not any(char.isupper() for char in password):
         return {
             "success": True,
-            "message": f"Votre mot de passe doit contenir au moins une majuscule.",
+            "message": f"Your password must contain at least one uppercase letter.",
                        #f"Estimation du temps nécessaire pour le casser au pire cas:",
             "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
                        
@@ -308,7 +308,7 @@ async def test_password(password: str) -> dict:
     if not any(char in string.punctuation for char in password):
         return {
             "success": True,
-            "message": f"Votre mot de passe doit contenir au moins un caractère spécial.",
+            "message": f"Your password must contain at least one special character.",
                        #f"Estimation du temps nécessaire pour le casser au pire cas:",
             "timeestimation": f"{format_time(estimate_total_time(len(password), 2))}",
         }
@@ -316,14 +316,14 @@ async def test_password(password: str) -> dict:
     if not any(char.isdigit() for char in password):
         return {
             "success": True,
-            "message": f"Votre mot de passe doit contenir au moins un chiffre.",
+            "message": f"Your password must contain at least one number.",
                        #f"Estimation du temps nécessaire pour le casser au pire cas:",
             "timeestimation":f"{format_time(estimate_total_time(len(password), 4))}",
         }
 
     return {
         "success": True,
-        "message": f"Votre mot de passe est considéré comme sûr.",
+        "message": f"Your password is considered secure.",
                    #f"Estimation du temps nécessaire pour le casser au pire cas:",
         "timeestimation":f"{format_time(estimate_total_time(len(password), 1))}",
     }

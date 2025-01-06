@@ -1,8 +1,9 @@
 import React from 'react'
 import '../styles/Sections.css'
 import Globe from '../components/three.js'
-
+import { useTranslation } from 'react-i18next';
 function Section3() {
+  const { t } = useTranslation();
   return (
     <div className='section-3'>
       <div className='globe'>
@@ -10,14 +11,10 @@ function Section3() {
       </div>
 
        <div className='intro-text'>
-        <h1>what is hexvault?</h1>
+        <h1>{t('intro-text')}</h1>
         <div className='parag-text'>
           <p>
-          HexVault is a web platform dedicated to password security.
-           It tests password strength through realistic attack simulations and
-            provides advanced encryption and decryption tools. Our goal is 
-            to raise awareness about the importance of choosing secure passwords
-             while offering a comprehensive solution to protect data and stay ahead of cyber threats.
+          {t('parag-text')}
           </p>
         </div>
        </div>

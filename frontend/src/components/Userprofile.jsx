@@ -3,12 +3,17 @@ import { FaUserCircle } from 'react-icons/fa';
 import { Offcanvas } from 'react-bootstrap';
 import { useKeycloak } from '@react-keycloak/web';
 import '../styles/Userprofile.css';
+import { useTranslation } from 'react-i18next';
+import icon_hist1 from '../assets/Group 102.svg';
+import icon_hist2 from '../assets/Group 205.svg';
+
 
 const Userprofile = () => {
   const [show, setShow] = useState(false);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+   const { t } = useTranslation();
   
   const { keycloak } = useKeycloak();
   const userInfo = keycloak.tokenParsed;
@@ -69,21 +74,21 @@ const Userprofile = () => {
       
       <Offcanvas show={show} onHide={handleClose} placement="end" className="offcanvas-main" scroll={true}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>My profile</Offcanvas.Title>
+          <Offcanvas.Title>{t('profil')}</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div className="container-menu-profile">
             <div className="user-profile">
-              <h4>User Information</h4>
-              <p><strong>Email:</strong> {userInfo.email}</p>
-              <p><strong>First Name:</strong> {userInfo.given_name}</p>
-              <p><strong>Last Name:</strong> {userInfo.family_name}</p>
-              <p><strong>Username:</strong> {userInfo.preferred_username}</p>
+              <h4>{t('user-info')}</h4>
+              <p><strong>{t('email')}:</strong> {userInfo.email}</p>
+              <p><strong>{t('firstname')}:</strong> {userInfo.given_name}</p>
+              <p><strong>{t('lastname')}:</strong> {userInfo.family_name}</p>
+              <p><strong>{t('username')}:</strong> {userInfo.preferred_username}</p>
             </div>
             <div className="history">
-              <h4>History</h4>
-              {loading && <p>Loading...</p>}
-              {error && <p className="error">Error: {error}</p>}
+              <h4>{t('history')}</h4>
+              {loading && <p>{t('loading')}</p>}
+              {error && <p className="error">{t('error')} {error}</p>}
               <div className="history-titles">
                 {history.map((item, index) => (
                   <div className="hist1" key={item.id}>
@@ -91,17 +96,20 @@ const Userprofile = () => {
                       <div className="icon-line">
                         <div className="line"></div>
                         <div className="service-icon">
-                          {item.type === 'encrypt' ? '🔒' : '🔍'}
+                        <img 
+                            src={item.type === 'encrypt' || item.type === 'decrypt'  ? icon_hist1 : icon_hist2} 
+                            className="icon-image"
+                          />
                         </div>
                       </div>
                       <div className="history-content">
-                        <p>password : </p>
+                        <p>{t("password")}:</p>
                         <p>{item.entree}</p>
-                        <p>result :</p>
+                        <p>{t('resultt')}:</p>
                         <p>{item.sortie}</p>
-                        <p>service-name :</p>
+                        <p>{t('service-name')}:</p>
                         <p>{item.nom}</p>
-                        <p>time :</p>
+                        <p>{t('datetime')}:</p>
                         <p>{new Date(item.date_creation).toLocaleString()}</p>
                       </div>
                     </div>

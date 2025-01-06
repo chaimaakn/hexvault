@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Navbar2 from '../components/Navbar/Navbar2';
 import '../styles/Services.css';
+import { useTranslation } from 'react-i18next';
 
 function Passwordtesting() {
   const [password, setPassword] = useState(''); // État pour le mot de passe
   const [popupContent, setPopupContent] = useState(''); // Contenu de la popup
   const [showPopup, setShowPopup] = useState(false); // État pour afficher/masquer la popup
   const [isLoading, setIsLoading] = useState(false); // État pour le chargement
+  const { t } = useTranslation();
 
   // Fonction pour tester le mot de passe
   const handleTestPassword = async () => {
@@ -29,7 +31,7 @@ function Passwordtesting() {
       setPopupContent(`${data.message} `); // Met à jour le contenu de la popup
     } catch (error) {
       console.error('Erreur:', error);
-      setPopupContent('An error occurred while testing the password'); // Met à jour le contenu de la popup
+      setPopupContent(t('pw-test-error')); // Met à jour le contenu de la popup
     } finally {
       setIsLoading(false); // Arrête le chargement
       setShowPopup(true); // Affiche la popup
@@ -49,14 +51,13 @@ function Passwordtesting() {
         </div>
         <div className="container-2">
           <div className="container-3">
-            <h1>Password Testing</h1>
+            <h1>{t('password_testing')}</h1>
             <p>
-              To test the strength of your password, enter your password in the
-              input field below and click the "Test Password" button.
+              {t('pw-test-text')}
             </p>
             <input
               type="text"
-              placeholder="Enter your password..."
+              placeholder={t('pw-placeholder')}
               value={password}
               onChange={(e) => setPassword(e.target.value)} // Met à jour l'état avec la valeur saisie
             />
@@ -70,7 +71,7 @@ function Passwordtesting() {
       {/* Message de traitement */}
       {isLoading && (
         <div className="loading-message">
-          <p>Your request is being processed...</p>
+          <p>{t('loading-msg')}</p>
         </div>
       )}
 
@@ -80,9 +81,9 @@ function Passwordtesting() {
           <div className="overlay"></div>
           <div className="popup">
             <div className="popup-content">
-              <h2>Result!</h2>
+              <h2>{t('result')}</h2>
               <p>{popupContent}</p>
-              <button onClick={handleClosePopup}>Close</button>
+              <button onClick={handleClosePopup}>{t('close')}</button>
             </div>
           </div>
         </>

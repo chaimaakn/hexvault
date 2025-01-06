@@ -2,7 +2,7 @@
     display: flex;
     justify-self: center;
     background-color: rgb(71 69 69 / 0.3);
-    gap: 5px;
+    gap: 2px;
     padding: 8px 20px; 
     border-radius: 1000px;
    
@@ -25,7 +25,7 @@
        border: 2px solid transparent; 
        box-sizing: border-box; 
        border-radius: 1000px;
-       font-size: 14px; 
+       font-size: 13px; 
        transition: background-color 0.3s ease, transform 0.3s ease;
       
      }
@@ -34,7 +34,7 @@
       display: flex;
       align-items: center;
       padding-right: 5%;
-      gap: 40px;
+      gap: 10px;
       white-space: nowrap;
        
    }
