@@ -11,19 +11,7 @@ import Footer from '../components/Footer';
 
 
 function LandingPage() {
-  useEffect(() => {
-    
-    const hash = window.location.hash;
-    if (hash) {
-      // const element = document.querySelector(hash);
-      // if (element) {
-      //   window.scrollTo({
-      //     top: element.offsetTop,
-      //     behavior: 'smooth',
-      //   });
-      // }
-    }
-  }, []);
+
   return (
     <div ClassName="landing-page">
       <div className='nb'>
