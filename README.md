@@ -13,7 +13,7 @@ Pour le projet du module web, nous avons décidé de donner vie à cette idée e
 
 ## Technologies Utilisées
 **Frontend** : HTML, CSS, JavaScript, React.js, Three.js (pour les objets 3D).  
-**Backend** : FastAPI, Django.  
+**Backend** : FastAPI.  
 **Base de données** : MongoDB, PostgreSQL.  
 **Authentification** : Keycloak.
 
