@@ -21,6 +21,7 @@ https://www.figma.com/design/8jlyWezwaFMTgBZFvRHpU1/web-project?node-id=0-1&t=7X
 
 ## Répartition des fichiers 
 **/Fronted**:ce Dossier contient le frontend de notre site web
+
 **/fastAPI/featuresservices**:ce Dossier contient le backend de notre site web
 
 ## Comment Notre Code Marche
