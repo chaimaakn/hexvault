@@ -54,7 +54,10 @@ npm start
 ```
 3-Configurer Keycloak :
 
-Exécutez Keycloak via Docker Compose et démarrez les composants nécessaires dans Docker.
+Exécutez Keycloak via Docker Compose pour cela il fauderait ce déplacer vers le dossier Frontend et démarrez les composants nécessaires dans Docker.
+```bash
+docker-compose up -d
+```
 
 4-Créer les utilisateurs et les clients :
 
