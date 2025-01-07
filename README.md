@@ -96,7 +96,7 @@ Exemple de format :
 salt:GhE59K.G
 hash:Ue3N0/dj.Sdutcb5E1vcN1
 ```
-Placez le hash et le salt dans les champs appropriés du programme ou de l'outil que vous utilisez.
+Placez le hash et le salt dans les champs appropriés du programme .
 
 **Étape 3 :** Remplir le champs de la méthode du hash (md5/sha256/sha2 elle indique dans le hach)
 
