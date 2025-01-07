@@ -84,4 +84,23 @@ Configurez les utilisateurs et clients nécessaires à votre application dans Ke
 
 Une fois tout en place, testez votre site et ses fonctionnalités pour vous assurer que tout fonctionne correctement.
 
+## Comment utiliser les attaques
+**Étape 1 :** Récupérer le hash du mot de passe
+Identifiez la source du hash (base de données, fichier, etc.).
+
+**Étape 2 :** Identifier et séparer les composants
+Si le hash utilise un salt , isolez-le.
+
+Exemple de format :
+```bash
+salt:GhE59K.G
+hash:Ue3N0/dj.Sdutcb5E1vcN1
+```
+Placez le hash et le salt dans les champs appropriés du programme ou de l'outil que vous utilisez.
+
+**Étape 3 :** Remplir le champs de la méthode du hash (md5/sha256/sha2 elle indique dans le hach)
+
+**Étape 4 :** Lancer l'attaque .
+
+
 
