@@ -44,7 +44,7 @@ const Navbar = () => {
   };
   return (
     <div className="header">
-      <Link className="Logo" to='/#home' onClick={() => scrollToSection('home')}><img src={Logo} alt="" /></Link>
+      <Link className="Logo" to='/#home' onClick={() => scrollToSection('home')}><img src={Logo} alt="" /><label>Hexvault</label></Link>
 
       <nav className="custom-navbar">
         <Link className="links" to='/#home' onClick={() => scrollToSection('home')}>{t('home')}</Link>

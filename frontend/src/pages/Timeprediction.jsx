@@ -28,7 +28,7 @@ function Timeprediction() {
       });
 
       if (!response.ok) {
-        throw new Error('Erreur lors de la connexion au serveur');
+        throw new Error(t('error2'));
       }
 
       const data = await response.json();

@@ -43,6 +43,19 @@
        height: auto;
        
      }
+     .Logo label{
+      margin-left: 20px;
+       color: white;
+       font-weight: bold;
+       
+     }
+     .Logo label:hover{
+      background: linear-gradient(90deg, #00DF82, white);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+     }
      .header .Logo img:hover{
       transform: scale(1.1);
       

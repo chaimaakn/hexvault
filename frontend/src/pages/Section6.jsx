@@ -13,7 +13,7 @@ function Section6() {
        <div className='icons'>
               <a className="socials-icons" href=""><IoLogoGithub/></a>
               <a className="socials-icons" href="" ><FaLinkedin/></a>
-              <a className="socials-icons" href=""><ImMail4/></a>
+              <a className="socials-icons" href="mailto:equipen6projet08@gmail.com"><ImMail4/></a>
        </div>
     </div>
   )

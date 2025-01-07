@@ -78,7 +78,8 @@
     "datetime":"date & time",
     "email":"Email",
     "loading":"Loading...",
-    "error":"Error"
+    "error":"Error",
+    "error2":"Error connecting to server"
 
 
 
