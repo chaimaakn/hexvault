@@ -34,13 +34,15 @@ Notre mission est de sensibiliser à l'importance de choisir des mots de passe s
 **Authentification** : Keycloak.
 ## Lien design
 https://www.figma.com/design/8jlyWezwaFMTgBZFvRHpU1/web-project?node-id=0-1&t=7XTX6i36BTDGupdW-1
+## Lien Vidéo
+https://drive.google.com/file/d/1zzMctOWtO_2xrssLDkVrYG7Hj0LLzEW3/view?usp=drive_link
 
 ## Répartition de notre code  
 **/Fronted**:ce Dossier contient le frontend de notre site web
 
 **/fastAPI/featuresservices**:ce Dossier contient le backend de notre site web
 
-**Démonstration vidéo**:une démonstration de notre code et toutes ses fonctionnalités. 
+
 
 ## Comment Notre Code Marche
 Nous utilisons un concept de multiservices pour optimiser les performances et la gestion des opérations coûteuses, comme les attaques. Pour cela, nous avons attribué une base de données spécialisée pour ces tâches, utilisant MongoDB pour stocker les dictionnaires, car elle est rapide et bien adaptée à ces besoins spécifiques.
