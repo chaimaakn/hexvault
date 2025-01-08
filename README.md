@@ -1,14 +1,15 @@
 # Projet Web - La création d'un site web
 
 ## Introduction
-L'année dernière, dans le cadre de notre projet multidisciplinaire, nous avons travaillé sur un thème lié à la sécurité. Nous avons développé un projet en Python qui simulait différentes attaques sur les mots de passe, telles que les attaques par force brute, les attaques par dictionnaire, et bien d'autres.  
+Le hachage des mots de passe est une technique utilisée pour sécuriser les mots de passe en les transformant en une chaîne de caractères unique et fixe à l'aide d'algorithmes comme SHA-256 ou bcrypt. Contrairement au chiffrement, le hachage est unidirectionnel : une fois un mot de passe haché, il ne peut pas être facilement converti en texte clair. Cependant, des attaques comme le brute force, où des combinaisons sont testées jusqu'à trouver une correspondance, ou les rainbow tables, qui exploitent des bases de données de hachages pré-calculés, menacent cette sécurité. Les bonnes pratiques, comme l'utilisation de salage (salt), rendent ces attaques plus difficiles.
+
 Pour le projet du module web, nous avons décidé de donner vie à cette idée en créant une interface interactive et complète. Notre site **HexVault** permet aux utilisateurs d'explorer et de comprendre ces différentes attaques de manière intuitive, tout en offrant une expérience utilisateur fluide et moderne.
 
 ## Fonctionnalités
-- Simulations d'attaques (force brute, dictionnaire, etc.).
+- Simulations d'attaques (force brute, dictionnaire, dictionnaire amélioré, hybrid).
 - Tester votre mot de passe.
 - Prédiction de temps pour casser un mot de passe.
-- Fonctions de cryptage et décryptage (divers algorithmes).
+- Fonctions de cryptage et décryptage (AES,DES,3DES,CHACHA20,RC4).
 - Compte utilisateur et historique.
 ## Présentation Générale
 
@@ -90,7 +91,9 @@ Identifiez la source du hash (base de données, fichier, etc.).
 
 **Étape 2 :** Identifier et séparer les composants
 Si le hash utilise un salt , isolez-le.
-
+```bash
+$1$GhE59K.G$Ue3N0/dj.Sdutcb5E1vcN1
+```
 Exemple de format :
 ```bash
 salt:GhE59K.G
@@ -101,6 +104,14 @@ Placez le hash et le salt dans les champs appropriés du programme .
 **Étape 3 :** Remplir le champs de la méthode du hash (md5/sha256/sha2 elle indique dans le hach)
 
 **Étape 4 :** Lancer l'attaque .
+
+## Pourquoi crypter les mots de passe stockés localement ?
+
+Beaucoup de personnes conservent leurs mots de passe dans des fichiers locaux sur leur ordinateur pour ne pas les oublier. Cependant, ces fichiers peuvent être accessibles en cas de piratage, de vol de l’appareil ou d’accès non autorisé. Crypter ces mots de passe permet de les protéger en les rendant illisibles sans la clé de déchiffrement. Cela ajoute une couche de sécurité essentielle, réduisant les risques que des informations sensibles tombent entre de mauvaises mains, même si le fichier est compromis.
+
+## Le principe du chiffrement symétrique :
+
+Le chiffrement symétrique utilise une seule clé pour à la fois chiffrer et déchiffrer les données. Lors du chiffrement, l'algorithme prend le texte en clair et la clé, puis transforme le texte en une version illisible, appelée texte chiffré. Ce texte chiffré ne peut être retrouvé sous sa forme originale qu'en utilisant la même clé pour le décryptage. Le chiffrement avec une clé unique est rapide, mais nécessite de protéger cette clé pour garantir la sécurité des données.
 
 
 
