@@ -62,6 +62,9 @@ Bases de données :
 **MongoDB** est utilisé pour les attaques et l’historique, en raison de sa rapidité et de sa capacité à gérer efficacement des données non relationnelles.
 **PostgreSQL** est utilisé pour les utilisateurs et leurs informations personnelles, grâce à sa robustesse et à son support des relations complexes.
 
+## Gestion des Utilisateurs 
+
+Dans notre projet, la gestion des utilisateurs permet de créer un compte avec validation par e-mail, de se connecter en toute sécurité et de réinitialiser son mot de passe via un lien envoyé par e-mail en cas d'oubli. Lors de l'inscription ou de la modification du mot de passe, des e-mails de confirmation personnalisés sont envoyés. Les utilisateurs peuvent également consulter l’historique de leurs activités pour un meilleur suivi. Ces fonctionnalités sont centralisées et sécurisées grâce à l’intégration de Keycloak.
 
 ## Comment Démarrer Nos Serveurs
 Pour démarrer les serveurs, suivez ces étapes :
