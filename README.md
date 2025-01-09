@@ -5,21 +5,24 @@ Le hachage des mots de passe est une technique utilisée pour sécuriser les mot
 
 Pour le projet du module web, nous avons décidé de donner vie à cette idée en créant une interface interactive et complète. Notre site **HexVault** permet aux utilisateurs d'explorer et de comprendre ces différentes attaques de manière intuitive, tout en offrant une expérience utilisateur fluide et moderne.
 
+## Présentation Générale
+
+HexVault est une plateforme web innovante dédiée à la sécurité des mots de passe. Elle combine des technologies de pointe avec des outils conviviaux pour aider les particuliers et les organisations à se protéger efficacement contre les menaces cybernétiques.
+
+## Pourquoi crypter les mots de passe stockés localement ?
+
+Beaucoup de personnes conservent leurs mots de passe dans des fichiers locaux sur leur ordinateur pour ne pas les oublier. Cependant, ces fichiers peuvent être accessibles en cas de piratage, de vol de l’appareil ou d’accès non autorisé. Crypter ces mots de passe permet de les protéger en les rendant illisibles sans la clé de déchiffrement. Cela ajoute une couche de sécurité essentielle, réduisant les risques que des informations sensibles tombent entre de mauvaises mains, même si le fichier est compromis.
+
+## Le principe du chiffrement symétrique :
+
+Le chiffrement symétrique utilise une seule clé pour à la fois chiffrer et déchiffrer les données. Lors du chiffrement, l'algorithme prend le texte en clair et la clé, puis transforme le texte en une version illisible, appelée texte chiffré. Ce texte chiffré ne peut être retrouvé sous sa forme originale qu'en utilisant la même clé pour le décryptage. Le chiffrement avec une clé unique est rapide, mais nécessite de protéger cette clé pour garantir la sécurité des données.
+
 ## Fonctionnalités
 - Simulations d'attaques (force brute, dictionnaire, dictionnaire amélioré, hybrid).
 - Tester votre mot de passe.
 - Prédiction de temps pour casser un mot de passe.
 - Fonctions de cryptage et décryptage (AES,DES,3DES,CHACHA20,RC4).
 - Compte utilisateur et historique.
-
-
-## Présentation Générale
-
-HexVault est une plateforme web innovante dédiée à la sécurité des mots de passe. Elle combine des technologies de pointe avec des outils conviviaux pour aider les particuliers et les organisations à se protéger efficacement contre les menaces cybernétiques.
-
-## Mission
-
-Notre mission est de sensibiliser à l'importance de choisir des mots de passe sécurisés tout en offrant aux utilisateurs les outils nécessaires pour tester, renforcer et protéger leurs identifiants de manière efficace.
 
 ## Nos Objectifs
 
@@ -58,7 +61,8 @@ Notre architecture est divisée en plusieurs services distincts :
 Bases de données :
 **MongoDB** est utilisé pour les attaques et l’historique, en raison de sa rapidité et de sa capacité à gérer efficacement des données non relationnelles.
 **PostgreSQL** est utilisé pour les utilisateurs et leurs informations personnelles, grâce à sa robustesse et à son support des relations complexes.
- 
+
+
 ## Comment Démarrer Nos Serveurs
 Pour démarrer les serveurs, suivez ces étapes :
 
@@ -111,13 +115,7 @@ Placez le hash et le salt dans les champs appropriés du programme .
 
 **Étape 4 :** Lancer l'attaque .
 
-## Pourquoi crypter les mots de passe stockés localement ?
 
-Beaucoup de personnes conservent leurs mots de passe dans des fichiers locaux sur leur ordinateur pour ne pas les oublier. Cependant, ces fichiers peuvent être accessibles en cas de piratage, de vol de l’appareil ou d’accès non autorisé. Crypter ces mots de passe permet de les protéger en les rendant illisibles sans la clé de déchiffrement. Cela ajoute une couche de sécurité essentielle, réduisant les risques que des informations sensibles tombent entre de mauvaises mains, même si le fichier est compromis.
-
-## Le principe du chiffrement symétrique :
-
-Le chiffrement symétrique utilise une seule clé pour à la fois chiffrer et déchiffrer les données. Lors du chiffrement, l'algorithme prend le texte en clair et la clé, puis transforme le texte en une version illisible, appelée texte chiffré. Ce texte chiffré ne peut être retrouvé sous sa forme originale qu'en utilisant la même clé pour le décryptage. Le chiffrement avec une clé unique est rapide, mais nécessite de protéger cette clé pour garantir la sécurité des données.
 
 
 
