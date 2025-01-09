@@ -11,8 +11,9 @@ Pour le projet du module web, nous avons décidé de donner vie à cette idée e
 - Prédiction de temps pour casser un mot de passe.
 - Fonctions de cryptage et décryptage (AES,DES,3DES,CHACHA20,RC4).
 - Compte utilisateur et historique.
-## Présentation Générale
 
+
+## Présentation Générale
 
 HexVault est une plateforme web innovante dédiée à la sécurité des mots de passe. Elle combine des technologies de pointe avec des outils conviviaux pour aider les particuliers et les organisations à se protéger efficacement contre les menaces cybernétiques.
 
@@ -21,6 +22,7 @@ HexVault est une plateforme web innovante dédiée à la sécurité des mots de 
 Notre mission est de sensibiliser à l'importance de choisir des mots de passe sécurisés tout en offrant aux utilisateurs les outils nécessaires pour tester, renforcer et protéger leurs identifiants de manière efficace.
 
 ## Nos Objectifs
+
 -**Promouvoir les Bonnes Pratiques** : Encourager les utilisateurs à adopter des mots de passe forts et uniques pour leurs comptes.
 
 -**Proposer des Simulations Réalistes** : Aider les utilisateurs à comprendre les risques associés aux mots de passe faibles grâce à des scénarios d'attaques réalistes.
