@@ -50,7 +50,7 @@ Cette stratégie consiste à utiliser des threads multiples. Concrètement, dans
 
 ## Technologies Utilisées
 **Frontend** : HTML, CSS, JavaScript, React.js, Three.js (pour les objets 3D).  
-**Backend** : FastAPI.  
+**Backend** : FastAPI(python).  
 **Base de données** : MongoDB, PostgreSQL.  
 **Authentification** : Keycloak.
 ## Lien design
