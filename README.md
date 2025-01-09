@@ -38,6 +38,8 @@ Notre mission est de sensibiliser à l'importance de choisir des mots de passe s
 https://www.figma.com/design/8jlyWezwaFMTgBZFvRHpU1/web-project?node-id=0-1&t=7XTX6i36BTDGupdW-1
 ## Lien Vidéo
 https://drive.google.com/file/d/1zzMctOWtO_2xrssLDkVrYG7Hj0LLzEW3/view?usp=drive_link
+## Lien Présentation
+https://www.canva.com/design/DAGD-LyEHIs/YXl-gaPa3HC-PMqfov0qCA/edit
 
 ## Répartition de notre code  
 **/Fronted**:ce Dossier contient le frontend de notre site web
