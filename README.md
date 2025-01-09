@@ -24,7 +24,9 @@ Le chiffrement symétrique utilise une seule clé pour à la fois chiffrer et d�
 - Fonctions de cryptage et décryptage (AES,DES,3DES,CHACHA20,RC4).
 - Compte utilisateur et historique.
 
-## Les Attaques
+## Les Attaques 
+les méthodes de hachage utilisé pour ses attaques sont : SHA256,SHA1,MD5
+
  **Attaque par brut force**: Cette attaque consiste à essayer, une par une, toutes les combinaisons de caractères jusqu'à trouver la bonne. Elle est considérée comme la méthode la plus simple mais aussi la plus lente pour casser un mot de passe ou une clé. La complexité de cette attaque dépend de la longueur du mot de passe ou de la clé et de la puissance du matériel informatique utilisé. Sa complexité est l’exponentielle de la longueur du mot de passe, ce qui la rend en principe impossible pour des mots de passe de longueur moyenne. Cependant, des optimisations heuristiques peuvent réduire considérablement le temps nécessaire pour réussir une attaque  par force brute.
 
  **Attaque par dictionnaire**: L'attaque par dictionnaire est une méthode de piratage de mots de passe qui repose sur l'utilisation d'une liste préétablie de mots courants, de phrases et de combinaisons de caractères qui sont ensuite comparés aux mots de passe cryptés stockés dans une base de données. Elle cible spécifiquement les mots de passe les plus susceptibles d'être utilisés, tels que des mots simples, des noms communs, des expressions courantes et des variantes de mots de passe par défaut. Sa complexité dépend de la taille du dictionnaire.
